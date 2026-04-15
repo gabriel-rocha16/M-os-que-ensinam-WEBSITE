@@ -1,0 +1,2 @@
+class Deficiencia < ApplicationRecord
+end

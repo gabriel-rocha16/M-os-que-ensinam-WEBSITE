@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  usuario: one
+  cidade: MyString
+  estado: MyString
+  data_nascimento: 2026-04-15
+  escolaridade: MyString
+  trabalhando: false
+  possui_beneficio: false
+  possui_deficiencia: false
+  curriculo_url: MyString
+
+two:
+  usuario: two
+  cidade: MyString
+  estado: MyString
+  data_nascimento: 2026-04-15
+  escolaridade: MyString
+  trabalhando: false
+  possui_beneficio: false
+  possui_deficiencia: false
+  curriculo_url: MyString
