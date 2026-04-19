@@ -1,6 +1,26 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  username: <%= ENV.fetch("DB_USER", "postgres") %>
+  password: <%= ENV["DB_PASSWORD"] %>
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+
+development:
+  <<: *default
+  database: maos_que_ensinam_development
+
+test:
+  <<: *default
+  database: maos_que_ensinam_test
+
+production:
+  <<: *default
+  database: <%= ENV.fetch("DB_NAME", "maos_que_ensinam_production") %>  env:
+    RAILS_ENV: test
+  run: bin/rails db:test:prepare testdefault: &default
+  adapter: postgresql
+  encoding: unicode
   # Ele tenta ler uma variável de ambiente, se não achar, usa 'postgres' (padrão do banco)
   username: <%= ENV['DB_USER'] || 'postgres' %>
   password: <%= ENV['DB_PASSWORD'] %>

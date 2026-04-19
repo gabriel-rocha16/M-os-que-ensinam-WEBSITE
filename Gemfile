@@ -67,3 +67,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# pacote de estilização do tailwindcss para rails
+gem "tailwindcss-rails"
