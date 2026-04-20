@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 require "fileutils"
 
 APP_ROOT = File.expand_path("..", __dir__)
@@ -11,7 +10,6 @@ FileUtils.chdir APP_ROOT do
   puts "== Installing dependencies =="
   system("bundle check") || system!("bundle install")
 
-  # --- PASSO CRÍTICO: Criar o .env ANTES do Rails carregar ---
   puts "\n== Preparing environment files =="
   unless File.exist?(".env")
     if File.exist?(".env.example")

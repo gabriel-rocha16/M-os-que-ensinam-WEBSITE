@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  usuario: one
+  bio: MyText
+  capacitacao: MyString
+  formacao_academica: MyString
+
+two:
+  usuario: two
+  bio: MyText
+  capacitacao: MyString
+  formacao_academica: MyString
