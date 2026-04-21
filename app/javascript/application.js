@@ -4,7 +4,7 @@ import "controllers";
 
 import { createIcons, House, GraduationCap, User, Phone } from "lucide";
 
-document.addEventListener("turbo:load", () => {
+document.addEventListener("DOMContentLoaded", () => {
   createIcons({
     icons: {
       house: House,
@@ -13,4 +13,6 @@ document.addEventListener("turbo:load", () => {
       phone: Phone,
     },
   });
+  console.log("Icons created");
+  console.log("Icons created");
 });

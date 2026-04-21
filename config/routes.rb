@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   get "pages/home"
   devise_for :usuarios
 
+  get "/login", to: "devise/sessions#new", as: :login
+  get "/signup", to: "devise/registrations#new", as: :signup
+
   resources :candidatos, only: [ :new, :create ]
   resources :instrutores, only: [ :new, :create ]
 

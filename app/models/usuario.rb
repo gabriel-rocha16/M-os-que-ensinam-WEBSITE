@@ -18,13 +18,19 @@ class Usuario < ApplicationRecord
 
   # Promove o usuário atual a Instrutor, se ele ainda não for
   def promover_a_instrutor!
-    unless instrutor.present?
-      create_instrutor!(
-        formacao_academica: "Pendente",
-        capacitacao: "Pendente",
-        bio: "Pendente"
-      )
-    end
+    return true if instrutor.present?
+
+    novo_instrutor = build_instrutor(
+      formacao_academica: "Pendente",
+      capacitacao: "Pendente",
+      bio: "Pendente"
+    )
+    novo_instrutor.save
+  end
+
+  # Verifica se o perfil de candidato está completo
+  def perfil_completo?
+    candidato.present? && candidato.escolaridade.present?
   end
 
   # Lógica para o Devise aceitar CPF ou Email no login

@@ -1,3 +1,30 @@
-<div class="bg-red-500 text-white p-4">
-  Teste Tailwind
-</div>
+<nav data-controller="navbar" 
+     data-action="scroll@window->navbar#update" 
+     data-navbar-target="container"
+     class="fixed top-0 left-0 z-50 w-full transition-all duration-300 bg-transparent">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between h-20">
+
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-blue-500 rounded-full"></div>
+      </div>
+
+      <div class="hidden md:flex items-center gap-10 font-medium">
+        <%= link_to "Início", root_path, data: { navbar_target: "link" }, class: "text-white hover:text-yellow-400 transition-colors duration-300" %>
+        <%= link_to "Cursos", cursos_path, data: { navbar_target: "link" }, class: "text-white hover:text-yellow-400 transition-colors duration-300" %>
+        <%= link_to "Sobre", about_path, data: { navbar_target: "link" }, class: "text-white hover:text-yellow-400 transition-colors duration-300" %>
+        <%= link_to "Contato", contact_path, data: { navbar_target: "link" }, class: "text-white hover:text-yellow-400 transition-colors duration-300" %>
+      </div>
+
+      <div class="hidden md:flex items-center gap-4">
+        <%= link_to "Entrar", login_path,
+          data: { navbar_target: "loginBtn" },
+          class: "px-5 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300" %>
+
+        <%= link_to "Começar Agora", signup_path,
+          class: "px-6 py-2 rounded-full bg-yellow-400 text-black font-semibold hover:bg-yellow-500 transition duration-300" %>
+      </div>
+
+    </div>
+  </div>
+</nav>
