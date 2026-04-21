@@ -10,3 +10,7 @@ default: &default
 development:
   <<: *default
   database: maos_que_ensinam_development
+
+test:
+  <<: *default
+  database: maos_que_ensinam_test

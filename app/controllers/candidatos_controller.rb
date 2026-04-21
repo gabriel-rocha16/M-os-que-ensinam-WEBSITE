@@ -19,7 +19,7 @@ class CandidatosController < ApplicationController
 
   def candidato_params
     params.require(:candidato).permit(
-      :cidade, :estado, :data_nascimento, :escolaridade, 
+      :cidade, :estado, :data_nascimento, :escolaridade,
       :trabalhando, :possui_beneficio, :possui_deficiencia, :curriculo_url
     )
   end
