@@ -69,3 +69,7 @@ group :test do
 end
 
 gem "cpf_cnpj", "~> 1.0"
+
+gem "tailwindcss-rails"
+
+gem "hotwire-livereload", group: :development
