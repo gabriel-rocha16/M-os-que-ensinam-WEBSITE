@@ -73,11 +73,14 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_PASSWORD: postgres
+          POSTGRES_INITDB_ARGS: "-c max_connections=200"
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
     #  redis:
     #    image: valkey/valkey:8
     #    ports:
@@ -101,6 +104,7 @@ jobs:
           DB_USER: postgres
           DB_PASSWORD: postgres
           DB_HOST: localhost
+          DB_PORT: 5432
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
@@ -113,11 +117,14 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_PASSWORD: postgres
+          POSTGRES_INITDB_ARGS: "-c max_connections=200"
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
     #  redis:
     #    image: valkey/valkey:8
     #    ports:
@@ -141,6 +148,7 @@ jobs:
           DB_USER: postgres
           DB_PASSWORD: postgres
           DB_HOST: localhost
+          DB_PORT: 5432
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test:system
