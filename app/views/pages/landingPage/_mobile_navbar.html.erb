@@ -1,0 +1,29 @@
+<div class="fixed bottom-0 left-0 w-full bg-white border-t shadow-md">
+  <div class="flex justify-around items-center h-16">
+
+    <!-- Início -->
+    <%= link_to root_path, class: "flex flex-col items-center text-blue-600" do %>
+      <i data-lucide="house" class="w-7 h-7"></i>
+      <span class="text-xs">Início</span>
+    <% end %>
+
+    <!-- Cursos -->
+    <%= link_to cursos_path, class: "flex flex-col items-center text-gray-500" do %>
+      <i data-lucide="graduation-cap" class="w-7 h-7"></i>
+      <span class="text-xs">Cursos</span>
+    <% end %>
+
+    <!-- Sobre -->
+    <%= link_to about_path, class: "flex flex-col items-center text-gray-500" do %>
+      <i data-lucide="user" class="w-7 h-7"></i>
+      <span class="text-xs">Sobre</span>
+    <% end %>
+
+    <!-- Contato -->
+    <%= link_to contact_path, class: "flex flex-col items-center text-gray-500" do %>
+      <i data-lucide="phone" class="w-7 h-7"></i>
+      <span class="text-xs">Contato</span>
+    <% end %>
+
+  </div>
+</div>

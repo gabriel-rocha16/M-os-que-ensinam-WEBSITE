@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
+  get "pages/home"
   devise_for :usuarios
-  
-  resources :candidatos, only: [:new, :create]
-  resources :instrutores, only: [:new, :create]
 
-  get 'dashboard_admin', to: 'dashboards#admin'
-  get 'dashboard_aluno', to: 'dashboards#aluno'
+  resources :candidatos, only: [ :new, :create ]
+  resources :instrutores, only: [ :new, :create ]
+
+  get "dashboard_admin", to: "dashboards#admin"
+  get "dashboard_aluno", to: "dashboards#aluno"
+
+  get "about", to: "pages#about"
+  get "cursos", to: "pages#cursos"
+  get "contact", to: "pages#contact"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -14,5 +19,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "rails/health#show"
+  root "pages#home"
 end
