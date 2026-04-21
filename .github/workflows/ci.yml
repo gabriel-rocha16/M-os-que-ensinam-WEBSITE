@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   scan_ruby:
@@ -20,10 +20,10 @@ jobs:
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
-      
+
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
-      
+
   scan_js:
     runs-on: ubuntu-latest
 
@@ -68,7 +68,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # services:
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     #  redis:
     #    image: valkey/valkey:8
     #    ports:
@@ -89,6 +98,9 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_HOST: localhost
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
@@ -96,7 +108,16 @@ jobs:
   system-test:
     runs-on: ubuntu-latest
 
-    # services:
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     #  redis:
     #    image: valkey/valkey:8
     #    ports:
@@ -117,6 +138,9 @@ jobs:
       - name: Run System Tests
         env:
           RAILS_ENV: test
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_HOST: localhost
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test:system
