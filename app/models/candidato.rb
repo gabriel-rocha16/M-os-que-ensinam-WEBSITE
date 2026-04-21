@@ -11,7 +11,8 @@ class Candidato < ApplicationRecord
   has_many :laudos, dependent: :destroy
 
   # Validações para garantir que o formulário obrigatório seja preenchido
-  validates :cidade, :estado, :data_nascimento, presence: true
+  validates :cidade, :estado, :data_nascimento, :escolaridade, presence: true
+  validates :trabalhando, :possui_deficiencia, :possui_beneficio, inclusion: { in: [true, false] }
 
   # Método auxiliar para o fluxo de acessibilidade
   def pode_acessar_cursos_gratuitos?
