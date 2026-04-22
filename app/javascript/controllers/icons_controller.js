@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-// Adicionado o Calendar na importação
+// Adicionamos a Star na importação
 import {
   createIcons,
   Home,
@@ -10,6 +10,7 @@ import {
   UserPlus,
   ArrowDown,
   Calendar,
+  Star,
 } from "lucide";
 
 export default class extends Controller {
@@ -23,7 +24,8 @@ export default class extends Controller {
         Heart,
         UserPlus,
         ArrowDown,
-        Calendar, // Adicionado aqui também
+        Calendar,
+        Star, // Adicionado aqui
       },
     });
   }
