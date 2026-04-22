@@ -63,10 +63,10 @@
             <span class="text-gray-500">Pessoa com Deficiência?</span>
             <span class="font-medium text-gray-900"><%= @candidato.possui_deficiencia ? 'Sim' : 'Não' %></span>
           </div>
-          <% if @candidato.possui_deficiencia && @candidato.deficiencia_tipo.present? %>
+          <% if @candidato.possui_deficiencia && @candidato.try(:tipo_deficiencia).present? %>
             <div class="flex justify-between items-center pb-2">
               <span class="text-gray-500">Tipo de Deficiência</span>
-              <span class="font-medium text-gray-900"><%= @candidato.deficiencia_tipo %></span>
+              <span class="font-medium text-gray-900"><%= @candidato.try(:tipo_deficiencia) %></span>
             </div>
           <% end %>
         </div>

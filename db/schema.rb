@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_22_200030) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_22_215233) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -65,6 +65,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_200030) do
     t.boolean "possui_beneficio"
     t.boolean "possui_deficiencia"
     t.integer "status", default: 0
+    t.string "tipo_deficiencia"
     t.boolean "trabalhando"
     t.datetime "updated_at", null: false
     t.bigint "usuario_id", null: false

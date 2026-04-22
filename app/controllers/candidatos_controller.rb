@@ -27,7 +27,7 @@ class CandidatosController < ApplicationController
     params.require(:candidato).permit(
       :cidade, :estado, :data_nascimento, :escolaridade,
       :trabalhando, :possui_beneficio, :possui_deficiencia, 
-      :deficiencia_tipo, :beneficio_tipo, :curriculo_url,
+      :tipo_deficiencia, :beneficio_tipo, :curriculo_url,
       laudos_medicos: []
     )
   end
