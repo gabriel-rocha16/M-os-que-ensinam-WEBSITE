@@ -1,28 +1,36 @@
-<div class="fixed bottom-0 left-0 w-full border-t z-50 transition-all duration-300 bg-white/80 backdrop-blur-md md:hidden">
-  <div class="flex justify-around items-center h-16">
+<div class="fixed bottom-0 left-0 w-full border-t border-gray-200 z-50 bg-white md:hidden">
+  <div class="flex justify-around items-center h-16 px-2">
 
-    <!-- Início -->
-    <%= link_to root_path, class: "flex flex-col items-center nav-link-mobile" do %>
-      <i data-lucide="house" class="w-6 h-6"></i>
-      <span class="text-xs">Início</span>
+<% inicio_ativo = current_page?(root_path) %>
+    <%= link_to root_path, class: "flex flex-col items-center gap-1 w-16" do %>
+      <div class="flex items-center justify-center w-10 h-10 rounded-full <%= inicio_ativo ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50' %> transition-colors">
+        <i data-lucide="home" class="w-5 h-5"></i>
+      </div>
+      <span class="text-[11px] font-medium <%= inicio_ativo ? 'text-blue-600' : 'text-gray-500' %>">Início</span>
     <% end %>
 
-    <!-- Cursos -->
-    <%= link_to cursos_path, class: "flex flex-col items-center nav-link-mobile" do %>
-      <i data-lucide="graduation-cap" class="w-6 h-6"></i>
-      <span class="text-xs">Cursos</span>
+    <% cursos_ativo = current_page?(cursos_path) %>
+    <%= link_to cursos_path, class: "flex flex-col items-center gap-1 w-16" do %>
+      <div class="flex items-center justify-center w-10 h-10 rounded-full <%= cursos_ativo ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50' %> transition-colors">
+        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+      </div>
+      <span class="text-[11px] font-medium <%= cursos_ativo ? 'text-blue-600' : 'text-gray-500' %>">Cursos</span>
     <% end %>
 
-    <!-- Sobre -->
-    <%= link_to about_path, class: "flex flex-col items-center nav-link-mobile" do %>
-      <i data-lucide="user" class="w-6 h-6"></i>
-      <span class="text-xs">Sobre</span>
+    <% sobre_ativo = current_page?(about_path) %>
+    <%= link_to about_path, class: "flex flex-col items-center gap-1 w-16" do %>
+      <div class="flex items-center justify-center w-10 h-10 rounded-full <%= sobre_ativo ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50' %> transition-colors">
+        <i data-lucide="book-open" class="w-5 h-5"></i>
+      </div>
+      <span class="text-[11px] font-medium <%= sobre_ativo ? 'text-blue-600' : 'text-gray-500' %>">Sobre</span>
     <% end %>
 
-    <!-- Contato -->
-    <%= link_to contact_path, class: "flex flex-col items-center nav-link-mobile" do %>
-      <i data-lucide="phone" class="w-6 h-6"></i>
-      <span class="text-xs">Contato</span>
+    <% contato_ativo = current_page?(contact_path) %>
+    <%= link_to contact_path, class: "flex flex-col items-center gap-1 w-16" do %>
+      <div class="flex items-center justify-center w-10 h-10 rounded-full <%= contato_ativo ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50' %> transition-colors">
+        <i data-lucide="phone" class="w-5 h-5"></i>
+      </div>
+      <span class="text-[11px] font-medium <%= contato_ativo ? 'text-blue-600' : 'text-gray-500' %>">Contato</span>
     <% end %>
 
   </div>
