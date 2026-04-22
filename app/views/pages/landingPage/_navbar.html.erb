@@ -5,10 +5,10 @@
   <div class="max-w-7xl mx-auto px-5 md:px-6">
     <div class="flex items-center justify-between h-20">
 
-      <div class="flex items-center gap-2">
-        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center overflow-hidden border-2 border-white/20">
-           <div class="w-4 h-4 bg-white rounded-full"></div>
-        </div>
+<div class="flex items-center gap-2">
+        <%= link_to root_path, class: "block transition-transform hover:scale-105" do %>
+          <%= image_tag "logo.png", class: "h-12 md:h-14 w-auto object-contain" %>
+        <% end %>
       </div>
 
       <div class="hidden md:flex items-center gap-10 font-medium">
