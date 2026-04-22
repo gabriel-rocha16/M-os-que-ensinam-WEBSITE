@@ -9,7 +9,7 @@ class Candidato < ApplicationRecord
   has_and_belongs_to_many :deficiencias
 
   # Status da validação de laudos
-  enum status: { pendente: 0, validado: 1, rejeitado: 2 }
+  enum :status, { pendente: 0, validado: 1, rejeitado: 2 }, default: :pendente
 
   # Um candidato pode enviar vários arquivos de laudo (ActiveStorage)
   has_many_attached :laudos_medicos

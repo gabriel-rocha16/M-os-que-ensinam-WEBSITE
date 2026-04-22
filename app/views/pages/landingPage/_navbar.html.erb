@@ -22,9 +22,9 @@
         <% if usuario_signed_in? %>
           <span data-navbar-target="greeting" class="text-white hidden md:inline-block font-medium mr-2 transition-colors duration-300">Olá, <%= current_usuario.email.split('@').first %></span>
           
-          <% if current_usuario.gestor.present? %>
+          <% if current_usuario.gestor&.present? %>
             <%= link_to "Painel", admin_dashboard_path, data: { navbar_target: "loginBtn" }, class: "px-6 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 text-sm md:text-base font-medium" %>
-          <% elsif current_usuario.candidato.present? %>
+          <% elsif current_usuario.candidato&.present? %>
             <%= link_to "Painel", aluno_dashboard_path, data: { navbar_target: "loginBtn" }, class: "px-6 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 text-sm md:text-base font-medium" %>
           <% end %>
 
