@@ -2,11 +2,13 @@
      data-action="scroll@window->navbar#update" 
      data-navbar-target="container"
      class="fixed top-0 left-0 z-50 w-full transition-all duration-300 bg-transparent">
-  <div class="max-w-7xl mx-auto px-6">
+  <div class="max-w-7xl mx-auto px-5 md:px-6">
     <div class="flex items-center justify-between h-20">
 
       <div class="flex items-center gap-2">
-        <div class="w-10 h-10 bg-blue-500 rounded-full"></div>
+        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center overflow-hidden border-2 border-white/20">
+           <div class="w-4 h-4 bg-white rounded-full"></div>
+        </div>
       </div>
 
       <div class="hidden md:flex items-center gap-10 font-medium">
@@ -16,25 +18,15 @@
         <%= link_to "Contato", contact_path, data: { navbar_target: "link" }, class: "text-white hover:text-yellow-400 transition-colors duration-300" %>
       </div>
 
-      <div class="hidden md:flex items-center gap-4">
-        <% if usuario_signed_in? %>
-          <span class="text-white font-medium mr-2">Olá, <%= current_usuario.nome.split(" ").first %></span>
+      <div class="flex items-center gap-4">
+        
+        <%= link_to "Entrar", login_path,
+          data: { navbar_target: "loginBtn" },
+          class: "px-6 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 text-sm md:text-base font-medium" %>
+
+        <%= link_to "Começar Agora", signup_path,
+          class: "hidden md:inline-flex px-6 py-2 rounded-full bg-yellow-400 text-blue-900 font-semibold hover:bg-yellow-500 transition duration-300" %>
           
-          <% if current_usuario.gestor.present? %>
-            <%= link_to "Painel Admin", admin_dashboard_path, class: "px-5 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300" %>
-          <% elsif current_usuario.candidato.present? %>
-            <%= link_to "Meu Painel", aluno_dashboard_path, class: "px-5 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300" %>
-          <% end %>
-
-          <%= link_to "Sair", logout_path, data: { turbo_method: :delete }, class: "px-6 py-2 rounded-full bg-red-500 text-white font-semibold hover:bg-red-600 transition duration-300" %>
-        <% else %>
-          <%= link_to "Entrar", login_path,
-            data: { navbar_target: "loginBtn" },
-            class: "px-5 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300" %>
-
-          <%= link_to "Começar Agora", signup_path,
-            class: "px-6 py-2 rounded-full bg-yellow-400 text-black font-semibold hover:bg-yellow-500 transition duration-300" %>
-        <% end %>
       </div>
 
     </div>
