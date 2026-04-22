@@ -25,7 +25,7 @@
           <% if current_usuario.gestor&.present? %>
             <%= link_to "Painel", admin_dashboard_path, data: { navbar_target: "loginBtn" }, class: "px-6 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 text-sm md:text-base font-medium" %>
           <% elsif current_usuario.candidato&.present? %>
-            <%= link_to "Painel", aluno_dashboard_path, data: { navbar_target: "loginBtn" }, class: "px-6 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 text-sm md:text-base font-medium" %>
+            <%= link_to "Meu Perfil", candidato_path, data: { navbar_target: "loginBtn" }, class: "px-6 py-2 rounded-full border border-white text-white hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300 text-sm md:text-base font-medium" %>
           <% end %>
 
           <%= link_to "Sair", destroy_usuario_session_path, data: { turbo_method: :delete }, class: "hidden md:inline-flex px-6 py-2 rounded-full bg-red-500 text-white font-semibold hover:bg-red-600 transition duration-300" %>

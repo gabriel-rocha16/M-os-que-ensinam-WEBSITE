@@ -1,0 +1,109 @@
+<div class="max-w-5xl mx-auto mt-10 px-5 pb-10">
+  <!-- Cabeçalho -->
+  <div class="bg-white shadow-md rounded-lg p-6 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-l-4 <%= @candidato.pendente? ? 'border-yellow-500' : (@candidato.validado? ? 'border-green-500' : 'border-red-500') %>">
+    <div class="mb-4 md:mb-0">
+      <h1 class="text-3xl font-bold text-blue-900"><%= @candidato.usuario.nome %></h1>
+      <p class="text-gray-500 mt-1"><%= @candidato.usuario.email %></p>
+    </div>
+    <div>
+      <% if @candidato.pendente? %>
+        <span class="bg-yellow-100 text-yellow-800 text-sm font-semibold px-4 py-2 rounded-full inline-flex items-center">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Pendente de Validação
+        </span>
+      <% elsif @candidato.validado? %>
+        <span class="bg-green-100 text-green-800 text-sm font-semibold px-4 py-2 rounded-full inline-flex items-center">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          Perfil Validado
+        </span>
+      <% else %>
+        <span class="bg-red-100 text-red-800 text-sm font-semibold px-4 py-2 rounded-full inline-flex items-center">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          Documentos Rejeitados
+        </span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Seção de Dados -->
+    <div class="md:col-span-2">
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4">Dados Pessoais</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <p class="text-sm text-gray-500">CPF</p>
+            <p class="font-medium text-gray-900"><%= @candidato.usuario.cpf %></p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Escolaridade</p>
+            <p class="font-medium text-gray-900"><%= @candidato.escolaridade %></p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Data de Nascimento</p>
+            <p class="font-medium text-gray-900"><%= @candidato.data_nascimento&.strftime("%d/%m/%Y") %></p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Localização</p>
+            <p class="font-medium text-gray-900"><%= @candidato.cidade %> - <%= @candidato.estado %></p>
+          </div>
+        </div>
+
+        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mt-8 mb-4">Perfil Social</h2>
+        <div class="space-y-4">
+          <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+            <span class="text-gray-500">Trabalhando atualmente?</span>
+            <span class="font-medium text-gray-900"><%= @candidato.trabalhando ? 'Sim' : 'Não' %></span>
+          </div>
+          <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+            <span class="text-gray-500">Recebe Benefício do Governo?</span>
+            <span class="font-medium text-gray-900"><%= @candidato.possui_beneficio ? 'Sim' : 'Não' %></span>
+          </div>
+          <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+            <span class="text-gray-500">Pessoa com Deficiência?</span>
+            <span class="font-medium text-gray-900"><%= @candidato.possui_deficiencia ? 'Sim' : 'Não' %></span>
+          </div>
+          <% if @candidato.possui_deficiencia && @candidato.deficiencia_tipo.present? %>
+            <div class="flex justify-between items-center pb-2">
+              <span class="text-gray-500">Tipo de Deficiência</span>
+              <span class="font-medium text-gray-900"><%= @candidato.deficiencia_tipo %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="mt-4 flex gap-4">
+        <%= link_to "Ir para Meus Cursos", aluno_dashboard_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold transition-colors" if @candidato.validado? %>
+        <button class="bg-gray-200 text-gray-500 px-6 py-2 rounded-full font-semibold cursor-not-allowed border border-gray-300" disabled>Editar Dados (Em breve)</button>
+      </div>
+    </div>
+
+    <!-- Seção de Documentos -->
+    <div class="md:col-span-1">
+      <div class="bg-blue-50 border border-blue-100 shadow-sm rounded-lg p-6">
+        <h2 class="text-lg font-bold text-blue-900 mb-4 flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          Laudos Médicos
+        </h2>
+        
+        <% if @candidato.laudos_medicos.attached? %>
+          <ul class="space-y-3">
+            <% @candidato.laudos_medicos.each do |laudo| %>
+              <li class="flex items-center justify-between bg-white p-3 rounded shadow-sm border border-gray-200 hover:border-blue-300 transition-colors">
+                <span class="text-sm truncate text-gray-700 w-3/4 font-medium" title="<%= laudo.filename %>"><%= laudo.filename %></span>
+                <%= link_to "Ver", rails_blob_path(laudo, disposition: "inline"), target: "_blank", class: "text-blue-600 text-sm font-bold hover:text-blue-800 bg-blue-50 px-3 py-1 rounded" %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <div class="text-center py-6">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            </svg>
+            <p class="mt-2 text-sm text-gray-500 italic">Nenhum documento anexado.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

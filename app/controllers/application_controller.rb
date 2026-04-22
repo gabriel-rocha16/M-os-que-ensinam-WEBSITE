@@ -38,8 +38,8 @@ class ApplicationController < ActionController::Base
     if usuario_signed_in? && !current_usuario.gestor.present?
       if current_usuario.candidato.present?
         if current_usuario.candidato.pendente?
-          unless request.path == aluno_dashboard_path
-            redirect_to aluno_dashboard_path, alert: "Seu perfil está pendente de validação."
+          unless request.path == candidato_path
+            redirect_to candidato_path, alert: "Seu perfil está pendente de validação."
           end
         end
       elsif !current_usuario.instrutor.present?

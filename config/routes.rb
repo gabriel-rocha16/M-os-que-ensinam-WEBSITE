@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   resources :candidatos, only: [ :new, :create ]
+  resource :candidato, only: [ :show ]
   resources :instrutores, only: [ :new, :create ]
   
   resources :cursos do

@@ -2,6 +2,11 @@ class CandidatosController < ApplicationController
   before_action :authenticate_usuario!
   skip_before_action :verificar_onboarding, only: [:new, :create]
 
+  def show
+    @candidato = current_usuario.candidato
+    redirect_to new_candidato_path unless @candidato.present?
+  end
+
   def new
     @candidato = current_usuario.build_candidato
   end
