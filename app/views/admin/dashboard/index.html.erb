@@ -1,9 +1,14 @@
 <div class="max-w-7xl mx-auto mt-10 px-4 pb-10">
   <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-bold text-gray-800">Oficina de Cursos</h1>
-    <% if current_usuario.gestor.present? || current_usuario.instrutor.present? %>
-      <%= link_to "+ Novo Curso", new_curso_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-md transition-colors" %>
-    <% end %>
+    <div class="flex space-x-4">
+      <% if current_usuario.gestor.present? %>
+        <%= link_to "Fila de Aprovação", admin_usuarios_path, class: "bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full shadow-md transition-colors" %>
+      <% end %>
+      <% if current_usuario.gestor.present? || current_usuario.instrutor.present? %>
+        <%= link_to "+ Novo Curso", new_curso_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-md transition-colors" %>
+      <% end %>
+    </div>
   </div>
 
   <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100">
