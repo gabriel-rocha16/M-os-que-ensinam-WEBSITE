@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-// Adicionamos ArrowRight, Clock, PlayCircle e Users
+// Adicionando os ícones da seção de Acessibilidade
 import {
   createIcons,
   Home,
@@ -16,6 +16,13 @@ import {
   PlayCircle,
   Users,
   User,
+  Keyboard,
+  Volume2,
+  Contrast,
+  Type,
+  Captions,
+  HeartHandshake,
+  ShieldCheck,
 } from "lucide";
 
 export default class extends Controller {
@@ -31,11 +38,18 @@ export default class extends Controller {
         ArrowDown,
         Calendar,
         Star,
-        ArrowRight, // Novo
-        Clock, // Novo
-        PlayCircle, // Novo
-        Users, // Novo
-        User, // Novo
+        ArrowRight,
+        Clock,
+        PlayCircle,
+        Users,
+        User,
+        Keyboard, // Novo
+        Volume2, // Novo
+        Contrast, // Novo
+        Type, // Novo
+        Captions, // Novo
+        HeartHandshake, // Novo
+        ShieldCheck, // Novo
       },
     });
   }
