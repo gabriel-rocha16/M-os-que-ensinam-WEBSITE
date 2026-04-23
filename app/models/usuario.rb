@@ -10,6 +10,7 @@ class Usuario < ApplicationRecord
   has_one :candidato, dependent: :destroy
   has_one :instrutor, dependent: :destroy
   has_one :gestor,    dependent: :destroy
+  has_many :cursos,   dependent: :nullify
 
   # Validações de segurança
   validates :cpf, presence: true, uniqueness: true, length: { is: 11, message: "deve conter 11 dígitos" }

@@ -9,6 +9,10 @@ class CursosController < ApplicationController
 
   def show
     @curso = Curso.find(params[:id])
+    
+    unless @curso.publicado? || (current_usuario && (@curso.usuario_id == current_usuario.id || current_usuario.gestor.present?))
+      redirect_to cursos_path, alert: "Este curso ainda não está disponível publicamente."
+    end
   end
 
   def new
@@ -44,8 +48,8 @@ class CursosController < ApplicationController
 
   def autorizar_edicao_curso!
     @curso = Curso.find(params[:id])
-    if current_usuario.instrutor.present? && @curso.instrutor_id != current_usuario.instrutor.id
-      redirect_to cursos_path, alert: "Você não tem permissão para editar este curso."
+    unless current_usuario.gestor.present? || @curso.usuario_id == current_usuario.id
+      redirect_to admin_dashboard_path, alert: "Você não tem permissão para editar este curso."
     end
   end
 end

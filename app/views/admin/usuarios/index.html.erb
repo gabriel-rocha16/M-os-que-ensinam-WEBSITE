@@ -1,0 +1,71 @@
+<div class="max-w-7xl mx-auto mt-10 px-4 pb-10">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-800">Fila de Aprovação (Triagem)</h1>
+    <%= link_to "Voltar ao Dashboard", admin_dashboard_path, class: "text-blue-600 hover:text-blue-800 font-medium transition-colors" %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-blue-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">Candidato</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">Contato</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">Cadastro</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">Documentos</th>
+          <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-blue-900 uppercase tracking-wider">Ações</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% @candidatos_pendentes.each do |candidato| %>
+          <tr class="hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm font-bold text-gray-900"><%= candidato.usuario.nome %></div>
+              <div class="text-xs text-gray-500">CPF: <%= candidato.usuario.cpf %></div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900"><%= candidato.telefone_formatado %></div>
+              <div class="text-sm text-gray-500"><%= candidato.usuario.email %></div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900"><%= candidato.created_at.strftime("%d/%m/%Y") %></div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex flex-col space-y-1">
+                <% if candidato.curriculo.attached? %>
+                  <%= link_to "Ver Currículo", rails_blob_path(candidato.curriculo, disposition: "inline"), target: "_blank", class: "text-xs text-blue-600 hover:text-blue-800 font-medium" %>
+                <% end %>
+                <% if candidato.laudos_medicos.attached? %>
+                  <% candidato.laudos_medicos.each_with_index do |laudo, idx| %>
+                    <%= link_to "Ver Laudo #{idx + 1}", rails_blob_path(laudo, disposition: "inline"), target: "_blank", class: "text-xs text-blue-600 hover:text-blue-800 font-medium" %>
+                  <% end %>
+                <% end %>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+              <div class="flex flex-col items-end space-y-2">
+                <div class="flex justify-end space-x-2">
+                  <%= button_to "✅ Aprovar", validar_candidato_admin_usuario_path(candidato.usuario), method: :patch, class: "bg-green-100 text-green-800 hover:bg-green-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer" %>
+                  <%= button_to "❌ Rejeitar", rejeitar_candidato_admin_usuario_path(candidato.usuario), method: :patch, class: "bg-red-100 text-red-800 hover:bg-red-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer" %>
+                  <%= button_to "🎓 Tornar Instrutor", promover_instrutor_admin_usuario_path(candidato.usuario), method: :patch, class: "bg-purple-100 text-purple-800 hover:bg-purple-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer", form: { data: { turbo_confirm: "Tem certeza que deseja promover #{candidato.usuario.nome} a Instrutor?" } } %>
+                </div>
+                <div class="flex justify-end space-x-2 border-t border-gray-100 pt-2 w-full mt-2">
+                  <%= button_to "✂️ Remover Perfil PcD", remover_candidatura_admin_usuario_path(candidato.usuario), method: :delete, class: "bg-orange-100 text-orange-800 hover:bg-orange-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer", form: { data: { turbo_confirm: "Isto removerá apenas a candidatura, mantendo a conta de usuário normal. Confirmar?" } } %>
+                  <%= button_to "🗑️ Excluir Sistema", admin_usuario_path(candidato.usuario), method: :delete, class: "bg-gray-100 text-gray-800 hover:bg-gray-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer", form: { data: { turbo_confirm: "Cuidado! Isto deletará completamente o usuário e todos os seus dados do banco. Deseja prosseguir?" } } %>
+                </div>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+
+        <% if @candidatos_pendentes.empty? %>
+          <tr>
+            <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+              <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Não há candidatos pendentes de validação no momento.
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

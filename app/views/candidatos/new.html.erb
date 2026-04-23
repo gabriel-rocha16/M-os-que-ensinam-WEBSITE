@@ -23,9 +23,15 @@
       </div>
     </div>
 
-    <div class="mb-4">
-      <%= f.label :data_nascimento, "Data de Nascimento", class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= f.date_field :data_nascimento, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div>
+        <%= f.label :data_nascimento, "Data de Nascimento", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.date_field :data_nascimento, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div>
+        <%= f.label :telefone, "Telefone", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.text_field :telefone, placeholder: "(00) 00000-0000 ou +55...", data: { controller: "telefone-mask" }, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
     </div>
 
     <div class="mb-4">
@@ -47,14 +53,24 @@
       </label>
     </div>
 
-    <div class="mb-6">
+    <div class="mb-4">
       <label class="flex items-center">
         <%= f.check_box :possui_deficiencia, class: "mr-2 leading-tight" %>
-        <span class="text-gray-700 text-sm font-bold">Possui alguma deficiência?</span>
+        <span class="text-gray-700 text-sm font-bold">Possui alguma deficiência? (Exclusivo para PcD)</span>
       </label>
     </div>
 
+    <div class="mb-6">
+      <%= f.label :tipo_deficiencia, "Qual tipo de deficiência?", class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= f.text_area :tipo_deficiencia, rows: 3, placeholder: "Descreva sua deficiência para que possamos adaptar a experiência (ex: Surdez leve, Visão subnormal, etc)...", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+
     <div class="mb-4">
+      <%= f.label :curriculo, "Currículo Atualizado (PDF)", class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= f.file_field :curriculo, direct_upload: true, class: "mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" %>
+    </div>
+
+    <div class="mb-6">
       <%= f.label :laudos_medicos, "Documentos Comprobatórios (Laudo, Exames, etc)", class: "block text-gray-700 text-sm font-bold mb-2" %>
       <%= f.file_field :laudos_medicos, multiple: true, direct_upload: true, class: "mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" %>
       <p class="text-xs text-gray-500 mt-1">Aceitamos PDF, PNG e JPG (Máx 5MB por arquivo. Selecione de 1 a 3 arquivos).</p>

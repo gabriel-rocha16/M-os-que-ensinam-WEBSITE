@@ -17,7 +17,26 @@ Rails.application.routes.draw do
     end
   end
 
-  get "admin/dashboard", to: "dashboards#admin", as: :admin_dashboard
+  namespace :admin do
+    get "dashboard", to: "dashboard#index"
+    resources :usuarios, only: [:index, :update, :destroy] do
+      member do
+        patch :validar_candidato
+        patch :rejeitar_candidato
+        patch :promover_instrutor
+        delete :remover_candidatura
+      end
+    end
+    
+    resources :cursos, only: [] do
+      member do
+        patch :solicitar_aprovacao
+        patch :publicar
+        patch :rejeitar
+      end
+    end
+  end
+
   get "aluno/dashboard", to: "dashboards#aluno", as: :aluno_dashboard
 
   get "about", to: "pages#about"

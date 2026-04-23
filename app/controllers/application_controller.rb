@@ -22,9 +22,13 @@ class ApplicationController < ActionController::Base
     if resource.gestor.present?
       admin_dashboard_path
     elsif resource.candidato.present?
-      aluno_dashboard_path
+      if resource.candidato.pendente? || resource.candidato.rejeitado?
+        candidato_path
+      else
+        aluno_dashboard_path
+      end
     else
-      root_path
+      new_candidato_path
     end
   end
 

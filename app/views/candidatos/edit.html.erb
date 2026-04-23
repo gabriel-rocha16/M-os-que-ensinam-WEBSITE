@@ -33,9 +33,14 @@
         <%= f.date_field :data_nascimento, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
       </div>
       <div>
-        <%= f.label :escolaridade, "Escolaridade", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.select :escolaridade, ["Ensino Fundamental Incompleto", "Ensino Fundamental Completo", "Ensino Médio Incompleto", "Ensino Médio Completo", "Ensino Superior Incompleto", "Ensino Superior Completo"], { include_blank: "Selecione..." }, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
+        <%= f.label :telefone, "Telefone", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.text_field :telefone, placeholder: "(00) 00000-0000 ou +55...", data: { controller: "telefone-mask" }, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
       </div>
+    </div>
+
+    <div class="mb-6">
+      <%= f.label :escolaridade, "Escolaridade", class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= f.select :escolaridade, ["Ensino Fundamental Incompleto", "Ensino Fundamental Completo", "Ensino Médio Incompleto", "Ensino Médio Completo", "Ensino Superior Incompleto", "Ensino Superior Completo"], { include_blank: "Selecione..." }, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
     </div>
 
     <h3 class="text-lg font-bold text-gray-800 border-b pb-2 mb-4 mt-8">Perfil Social</h3>
@@ -57,21 +62,31 @@
       
       <div class="pl-3 pr-3 pb-2">
         <%= f.label :tipo_deficiencia, "Se sim, qual tipo de deficiência?", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.text_field :tipo_deficiencia, placeholder: "Ex: Visual, Auditiva, Motora...", class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
+        <%= f.text_area :tipo_deficiencia, rows: 3, placeholder: "Ex: Visual, Auditiva, Motora...", class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
       </div>
     </div>
 
     <div class="mb-8 p-5 bg-blue-50 rounded-lg border border-blue-100">
-      <h3 class="font-bold text-blue-900 mb-2 flex items-center">
+      <h3 class="font-bold text-blue-900 mb-4 flex items-center">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-        Atualizar Documentos Comprobatórios
+        Atualizar Documentos
       </h3>
-      <p class="text-sm text-gray-600 mb-4">Selecione novos arquivos caso precise substituir ou adicionar laudos. Os arquivos selecionados aqui <strong>substituirão completamente</strong> os laudos enviados anteriormente. Se seus laudos antigos já estão corretos, <strong>deixe este campo em branco</strong>.</p>
       
-      <div class="bg-white p-3 rounded border border-blue-200">
-        <%= f.file_field :laudos_medicos, multiple: true, direct_upload: true, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer" %>
+      <div class="mb-4">
+        <%= f.label :curriculo, "Currículo Atualizado (PDF)", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <div class="bg-white p-2 rounded border border-blue-200">
+          <%= f.file_field :curriculo, direct_upload: true, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer" %>
+        </div>
       </div>
-      <p class="text-xs text-blue-600 mt-2 font-medium">PDF, PNG ou JPG (Máx 5MB). Envie todos juntos (até 3 arquivos).</p>
+
+      <div class="mb-2">
+        <%= f.label :laudos_medicos, "Documentos Comprobatórios (Laudos)", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <p class="text-sm text-gray-600 mb-2">Selecione novos arquivos caso precise substituir. Deixe em branco para manter os atuais.</p>
+        <div class="bg-white p-2 rounded border border-blue-200">
+          <%= f.file_field :laudos_medicos, multiple: true, direct_upload: true, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer" %>
+        </div>
+        <p class="text-xs text-blue-600 mt-2 font-medium">PDF, PNG ou JPG (Máx 5MB). Até 3 arquivos.</p>
+      </div>
     </div>
 
     <div class="flex items-center justify-between pt-6 border-t border-gray-100">
