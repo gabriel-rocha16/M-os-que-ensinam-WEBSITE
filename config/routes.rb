@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         patch :validar_candidato
         patch :rejeitar_candidato
         patch :promover_instrutor
+        delete :remover_candidatura
       end
     end
     

@@ -33,6 +33,22 @@ class Admin::UsuariosController < ApplicationController
     end
   end
 
+  def destroy
+    @usuario = Usuario.find(params[:id])
+    @usuario.destroy
+    redirect_to admin_usuarios_path, notice: "Usuário excluído fisicamente com sucesso."
+  end
+
+  def remover_candidatura
+    @usuario = Usuario.find(params[:id])
+    if @usuario.candidato.present?
+      @usuario.candidato.destroy
+      redirect_to admin_usuarios_path, notice: "Perfil PcD removido. O usuário agora é apenas um visitante."
+    else
+      redirect_to admin_usuarios_path, alert: "Este usuário não tem candidatura."
+    end
+  end
+
   private
 
   def verificar_gestor!

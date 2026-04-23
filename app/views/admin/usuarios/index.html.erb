@@ -42,10 +42,16 @@
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-              <div class="flex justify-end space-x-2">
-                <%= button_to "✅ Aprovar", validar_candidato_admin_usuario_path(candidato.usuario), method: :patch, class: "bg-green-100 text-green-800 hover:bg-green-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer" %>
-                <%= button_to "❌ Rejeitar", rejeitar_candidato_admin_usuario_path(candidato.usuario), method: :patch, class: "bg-red-100 text-red-800 hover:bg-red-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer" %>
-                <%= button_to "🎓 Tornar Instrutor", promover_instrutor_admin_usuario_path(candidato.usuario), method: :patch, class: "bg-purple-100 text-purple-800 hover:bg-purple-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer", form: { data: { turbo_confirm: "Tem certeza que deseja promover #{candidato.usuario.nome} a Instrutor?" } } %>
+              <div class="flex flex-col items-end space-y-2">
+                <div class="flex justify-end space-x-2">
+                  <%= button_to "✅ Aprovar", validar_candidato_admin_usuario_path(candidato.usuario), method: :patch, class: "bg-green-100 text-green-800 hover:bg-green-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer" %>
+                  <%= button_to "❌ Rejeitar", rejeitar_candidato_admin_usuario_path(candidato.usuario), method: :patch, class: "bg-red-100 text-red-800 hover:bg-red-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer" %>
+                  <%= button_to "🎓 Tornar Instrutor", promover_instrutor_admin_usuario_path(candidato.usuario), method: :patch, class: "bg-purple-100 text-purple-800 hover:bg-purple-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer", form: { data: { turbo_confirm: "Tem certeza que deseja promover #{candidato.usuario.nome} a Instrutor?" } } %>
+                </div>
+                <div class="flex justify-end space-x-2 border-t border-gray-100 pt-2 w-full mt-2">
+                  <%= button_to "✂️ Remover Perfil PcD", remover_candidatura_admin_usuario_path(candidato.usuario), method: :delete, class: "bg-orange-100 text-orange-800 hover:bg-orange-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer", form: { data: { turbo_confirm: "Isto removerá apenas a candidatura, mantendo a conta de usuário normal. Confirmar?" } } %>
+                  <%= button_to "🗑️ Excluir Sistema", admin_usuario_path(candidato.usuario), method: :delete, class: "bg-gray-100 text-gray-800 hover:bg-gray-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer", form: { data: { turbo_confirm: "Cuidado! Isto deletará completamente o usuário e todos os seus dados do banco. Deseja prosseguir?" } } %>
+                </div>
               </div>
             </td>
           </tr>
