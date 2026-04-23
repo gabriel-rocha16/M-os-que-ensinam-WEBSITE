@@ -1,0 +1,219 @@
+<section class="w-full bg-[#f8fafc] py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-5 md:px-6">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+      <div class="max-w-2xl">
+        <span class="text-blue-600 font-bold tracking-widest text-xs md:text-sm uppercase mb-3 block">
+          Nossos Cursos
+        </span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[#003366] mb-4">
+          Aprenda Novas <span class="text-blue-600">Habilidades</span>
+        </h2>
+        <p class="text-gray-500 text-sm md:text-base leading-relaxed">
+          Todos os cursos são gratuitos, acessíveis e desenvolvidos por especialistas comprometidos com a inclusão.
+        </p>
+      </div>
+      
+      <%= link_to cursos_path, class: "inline-flex items-center justify-center gap-2 border border-blue-600 text-blue-600 font-semibold px-6 py-2.5 rounded-full hover:bg-blue-50 transition-colors duration-300 w-full md:w-auto shrink-0" do %>
+        Ver todos os cursos
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      <% end %>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+        <div class="relative h-48 w-full bg-gray-100">
+          <%= image_tag "informatica.jpg", class: "w-full h-full object-cover", alt: "Informática Básica" %>
+          <span class="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-full text-[12px] font-bold text-blue-600 shadow-sm">
+            Tecnologia
+          </span>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="text-xl font-bold text-[#003366] mb-3">Informática Básica</h3>
+          <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed">
+            Aprenda os fundamentos da informática, desde o uso do computador até navegação na internet e uso de ferramentas de escritório.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-gray-400 mb-6">
+            <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 40h</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="play-circle" class="w-4 h-4"></i> 20 aulas</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> 128</span>
+          </div>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="w-4 h-4"></i>
+            </div>
+            <span class="text-sm text-gray-500 font-medium">Prof. Carlos Mendes</span>
+          </div>
+          <hr class="border-gray-200 mb-5">
+          <div class="mt-auto">
+            <%= link_to "#", class: "w-full bg-[#0066cc] text-white py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:bg-[#0052a3] transition-colors" do %>
+              <i data-lucide="user-plus" class="w-4 h-4"></i> Inscrever-se
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+        <div class="relative h-48 w-full bg-gray-100">
+          <%= image_tag "artesanato.jpg", class: "w-full h-full object-cover", alt: "Artesanato e Criatividade" %>
+          <span class="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-full text-[12px] font-bold text-yellow-600 shadow-sm">
+            Arte e Cultura
+          </span>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="text-xl font-bold text-[#003366] mb-3">Artesanato e Criatividade</h3>
+          <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed">
+            Desenvolva habilidades manuais e criativas através de técnicas de artesanato acessíveis para todos os tipos de deficiência.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-gray-400 mb-6">
+            <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 30h</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="play-circle" class="w-4 h-4"></i> 15 aulas</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> 95</span>
+          </div>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="w-4 h-4"></i>
+            </div>
+            <span class="text-sm text-gray-500 font-medium">Profa. Ana Lima</span>
+          </div>
+          <hr class="border-gray-200 mb-5">
+          <div class="mt-auto">
+            <%= link_to "#", class: "w-full bg-[#0066cc] text-white py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:bg-[#0052a3] transition-colors" do %>
+              <i data-lucide="user-plus" class="w-4 h-4"></i> Inscrever-se
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+        <div class="relative h-48 w-full bg-gray-100">
+          <%= image_tag "libras.jpg", class: "w-full h-full object-cover", alt: "Libras para Iniciantes" %>
+          <span class="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-full text-[12px] font-bold text-blue-600 shadow-sm">
+            Comunicação
+          </span>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="text-xl font-bold text-[#003366] mb-3">Libras para Iniciantes</h3>
+          <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed">
+            Aprenda a Língua Brasileira de Sinais e amplie sua comunicação com a comunidade surda.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-gray-400 mb-6">
+            <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 60h</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="play-circle" class="w-4 h-4"></i> 30 aulas</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> 210</span>
+          </div>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="w-4 h-4"></i>
+            </div>
+            <span class="text-sm text-gray-500 font-medium">Prof. Roberto Silva</span>
+          </div>
+          <hr class="border-gray-200 mb-5">
+          <div class="mt-auto">
+            <%= link_to "#", class: "w-full bg-[#0066cc] text-white py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:bg-[#0052a3] transition-colors" do %>
+              <i data-lucide="user-plus" class="w-4 h-4"></i> Inscrever-se
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+        <div class="relative h-48 w-full bg-gray-100">
+          <%= image_tag "empreendedorismo.jpg", class: "w-full h-full object-cover", alt: "Empreendedorismo Social" %>
+          <span class="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-full text-[12px] font-bold text-yellow-600 shadow-sm">
+            Negócios
+          </span>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="text-xl font-bold text-[#003366] mb-3">Empreendedorismo Social</h3>
+          <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed">
+            Descubra como criar e gerir um negócio social, gerando renda e impacto positivo na sua comunidade.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-gray-400 mb-6">
+            <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 45h</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="play-circle" class="w-4 h-4"></i> 22 aulas</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> 76</span>
+          </div>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="w-4 h-4"></i>
+            </div>
+            <span class="text-sm text-gray-500 font-medium">Profa. Fernanda Costa</span>
+          </div>
+          <hr class="border-gray-200 mb-5">
+          <div class="mt-auto">
+            <%= link_to "#", class: "w-full bg-[#0066cc] text-white py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:bg-[#0052a3] transition-colors" do %>
+              <i data-lucide="user-plus" class="w-4 h-4"></i> Inscrever-se
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+        <div class="relative h-48 w-full bg-gray-100">
+          <%= image_tag "culinaria.jpg", class: "w-full h-full object-cover", alt: "Culinária Adaptada" %>
+          <span class="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-full text-[12px] font-bold text-blue-600 shadow-sm">
+            Gastronomia
+          </span>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="text-xl font-bold text-[#003366] mb-3">Culinária Adaptada</h3>
+          <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed">
+            Técnicas culinárias adaptadas para pessoas com diferentes tipos de deficiência, promovendo autonomia na cozinha.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-gray-400 mb-6">
+            <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 35h</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="play-circle" class="w-4 h-4"></i> 18 aulas</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> 143</span>
+          </div>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="w-4 h-4"></i>
+            </div>
+            <span class="text-sm text-gray-500 font-medium">Chef Maria Oliveira</span>
+          </div>
+          <hr class="border-gray-200 mb-5">
+          <div class="mt-auto">
+            <%= link_to "#", class: "w-full bg-[#0066cc] text-white py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:bg-[#0052a3] transition-colors" do %>
+              <i data-lucide="user-plus" class="w-4 h-4"></i> Inscrever-se
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+        <div class="relative h-48 w-full bg-gray-100">
+          <%= image_tag "idioma.jpg", class: "w-full h-full object-cover", alt: "Inglês Básico Acessível" %>
+          <span class="absolute top-4 left-4 bg-white px-3 py-1.5 rounded-full text-[12px] font-bold text-yellow-600 shadow-sm">
+            Idiomas
+          </span>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="text-xl font-bold text-[#003366] mb-3">Inglês Básico Acessível</h3>
+          <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed">
+            Aprenda inglês com metodologia adaptada, materiais visuais e auditivos para diferentes necessidades.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-gray-400 mb-6">
+            <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> 50h</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="play-circle" class="w-4 h-4"></i> 25 aulas</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4"></i> 189</span>
+          </div>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center shrink-0">
+              <i data-lucide="user" class="w-4 h-4"></i>
+            </div>
+            <span class="text-sm text-gray-500 font-medium">Prof. João Ferreira</span>
+          </div>
+          <hr class="border-gray-200 mb-5">
+          <div class="mt-auto">
+            <%= link_to "#", class: "w-full bg-[#0066cc] text-white py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:bg-[#0052a3] transition-colors" do %>
+              <i data-lucide="user-plus" class="w-4 h-4"></i> Inscrever-se
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,75 @@
+<footer class="w-full bg-[#f8fafc] pt-16 pb-28 md:pb-8 border-t border-gray-100 relative">
+  <div class="max-w-7xl mx-auto px-5 md:px-6">
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8 mb-12">
+
+      <div class="md:col-span-2 flex flex-col gap-6">
+        
+        <%= link_to root_path, class: "inline-block mb-2" do %>
+          <%= image_tag "logo.png", class: "h-10 md:h-12 w-auto object-contain", alt: "Logo Mãos que Ensinam" %>
+        <% end %>
+
+        <p class="text-sm text-gray-500 leading-relaxed max-w-sm">
+          ONG dedicada à educação inclusiva e acessível para pessoas com deficiência. Transformando vidas através do conhecimento desde 2009.
+        </p>
+
+        <div class="flex items-center gap-3">
+          <a href="#" class="w-10 h-10 bg-[#eff6ff] text-blue-500 hover:bg-[#003366] hover:text-white rounded-full flex items-center justify-center transition-colors">
+            <i class="ri-facebook-fill text-xl"></i>
+          </a>
+          <a href="#" class="w-10 h-10 bg-[#eff6ff] text-blue-500 hover:bg-[#003366] hover:text-white rounded-full flex items-center justify-center transition-colors">
+            <i class="ri-instagram-line text-xl"></i>
+          </a>
+          <a href="#" class="w-10 h-10 bg-[#eff6ff] text-blue-500 hover:bg-[#003366] hover:text-white rounded-full flex items-center justify-center transition-colors">
+            <i class="ri-youtube-fill text-xl"></i>
+          </a>
+          <a href="#" class="w-10 h-10 bg-[#eff6ff] text-blue-500 hover:bg-[#003366] hover:text-white rounded-full flex items-center justify-center transition-colors">
+            <i class="ri-whatsapp-line text-xl"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-5">
+        <h4 class="text-base font-bold text-[#003366]">Plataforma</h4>
+        <ul class="flex flex-col gap-3">
+          <li><%= link_to "Cursos", cursos_path, class: "text-sm text-gray-500 hover:text-blue-600 transition-colors" %></li>
+          <li><%= link_to "Cadastro", signup_path, class: "text-sm text-gray-500 hover:text-blue-600 transition-colors" %></li>
+          <li><%= link_to "Login", login_path, class: "text-sm text-gray-500 hover:text-blue-600 transition-colors" %></li>
+          <li><%= link_to "Acessibilidade", "#", class: "text-sm text-gray-500 hover:text-blue-600 transition-colors" %></li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col gap-5">
+        <h4 class="text-base font-bold text-[#003366]">Contato</h4>
+        <ul class="flex flex-col gap-4">
+          <li class="flex items-center gap-3 text-sm text-gray-500">
+            <i data-lucide="mail" class="w-4 h-4 text-blue-500 shrink-0"></i>
+            contato@maosqueensinam.org.br
+          </li>
+          <li class="flex items-center gap-3 text-sm text-gray-500">
+            <i data-lucide="phone" class="w-4 h-4 text-blue-500 shrink-0"></i>
+            (11) 3456-7890
+          </li>
+          <li class="flex items-center gap-3 text-sm text-gray-500">
+            <i data-lucide="map-pin" class="w-4 h-4 text-blue-500 shrink-0"></i>
+            São Paulo, SP – Brasil
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="border-gray-200 mb-6 md:mb-8">
+
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] md:text-xs text-gray-400 text-center md:text-left">
+      <p>&copy; 2026 Mãos que Ensinam. Todos os direitos reservados.</p>
+      <p>Plataforma acessível – WCAG 2.1 Nível AA</p>
+    </div>
+
+  </div>
+
+  <button class="fixed bottom-24 md:bottom-6 right-6 w-14 h-14 bg-yellow-400 text-[#003366] rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-500 hover:scale-105 transition-all duration-300 z-50">
+    <i class="ri-user-heart-line text-2xl"></i>
+  </button>
+
+</footer>

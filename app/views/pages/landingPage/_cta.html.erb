@@ -1,0 +1,36 @@
+<section class="relative w-full bg-[#003366] py-16 md:py-28 overflow-hidden">
+  
+  <div class="absolute -top-40 -right-20 w-80 h-80 md:w-[40rem] md:h-[40rem] bg-blue-400/20 rounded-full blur-[80px] md:blur-[130px] pointer-events-none"></div>
+  
+  <div class="absolute -bottom-40 -left-20 w-80 h-80 md:w-[40rem] md:h-[40rem] bg-cyan-500/10 rounded-full blur-[80px] md:blur-[130px] pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-5 md:px-6 relative z-10 text-center flex flex-col items-center">
+    
+    <span class="inline-block border border-yellow-500 text-yellow-500 font-bold px-5 py-1.5 rounded-full text-xs md:text-sm mb-8 backdrop-blur-sm">
+      100% gratuito
+    </span>
+
+    <h2 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+      Comece sua jornada de <br class="hidden md:block">
+      <span class="text-yellow-400">aprendizado</span> hoje mesmo
+    </h2>
+
+    <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-10 max-w-2xl mx-auto">
+      Junte-se a mais de 2.400 pessoas que já transformaram suas vidas através da educação inclusiva. Cadastre-se agora e acesse todos os cursos gratuitamente.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+      
+      <%= link_to signup_path, class: "w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-yellow-400 text-[#003366] font-bold px-10 py-4 rounded-full hover:bg-yellow-500 transition-all duration-300 text-base shadow-lg hover:scale-105" do %>
+        <i data-lucide="user-plus" class="w-5 h-5"></i>
+        Criar Conta Grátis
+      <% end %>
+
+      <%= link_to login_path, class: "w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-white text-white font-bold px-10 py-4 rounded-full hover:bg-white/10 transition-all duration-300 text-base hover:scale-105" do %>
+        <i data-lucide="log-in" class="w-5 h-5"></i>
+        Já tenho conta
+      <% end %>
+
+    </div>
+  </div>
+</section>

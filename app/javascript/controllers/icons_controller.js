@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus";
-// Adicionamos a Star na importação
 import {
   createIcons,
   Home,
@@ -11,6 +10,23 @@ import {
   ArrowDown,
   Calendar,
   Star,
+  ArrowRight,
+  Clock,
+  PlayCircle,
+  Users,
+  User,
+  Keyboard,
+  Volume2,
+  Contrast,
+  Type,
+  Captions,
+  HeartHandshake,
+  ShieldCheck,
+  LogIn,
+  Mail,
+  MessageCircle,
+  MapPin,
+  Send,
 } from "lucide";
 
 export default class extends Controller {
@@ -25,7 +41,24 @@ export default class extends Controller {
         UserPlus,
         ArrowDown,
         Calendar,
-        Star, // Adicionado aqui
+        Star,
+        ArrowRight,
+        Clock,
+        PlayCircle,
+        Users,
+        User,
+        Keyboard,
+        Volume2,
+        Contrast,
+        Type,
+        Captions,
+        HeartHandshake,
+        ShieldCheck,
+        LogIn,
+        Mail, // Novo (E-mail)
+        MessageCircle, // Novo (WhatsApp)
+        MapPin, // Novo (Endereço)
+        Send, // Novo (Botão Enviar)
       },
     });
   }

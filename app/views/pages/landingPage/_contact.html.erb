@@ -1,0 +1,148 @@
+<section class="w-full bg-[#f8fafc] py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-5 md:px-6">
+    
+    <div class="text-center max-w-2xl mx-auto mb-12 md:mb-16">
+      <span class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 font-bold px-4 py-1.5 rounded-full text-xs md:text-sm mb-4">
+        <i data-lucide="mail" class="w-4 h-4"></i> Fale Conosco
+      </span>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-[#003366] mb-4">
+        Entre em Contato
+      </h2>
+      <p class="text-gray-500 text-sm md:text-base leading-relaxed">
+        Tem dúvidas, quer ser voluntário ou firmar uma parceria? Adoramos ouvir você!
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+      
+      <div class="flex flex-col gap-6">
+        
+        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+          <h3 class="text-xl font-bold text-[#003366] mb-6">Informações de Contato</h3>
+          
+          <div class="flex flex-col gap-6">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center shrink-0">
+                <i data-lucide="mail" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-xs text-gray-400 mb-0.5">E-mail</p>
+                <p class="text-sm font-semibold text-[#003366]">contato@maosqueensinam.org.br</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-green-50 text-green-600 rounded-full flex items-center justify-center shrink-0">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-xs text-gray-400 mb-0.5">Telefone</p>
+                <p class="text-sm font-semibold text-[#003366]">(11) 3456-7890</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center shrink-0">
+                <i class="ri-whatsapp-line text-xl"></i>
+              </div>
+              <div>
+                <p class="text-xs text-gray-400 mb-0.5">WhatsApp</p>
+                <p class="text-sm font-semibold text-[#003366]">(11) 98765-4321</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-yellow-50 text-yellow-600 rounded-full flex items-center justify-center shrink-0">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-xs text-gray-400 mb-0.5">Endereço</p>
+                <p class="text-sm font-semibold text-[#003366] leading-snug">Rua da Inclusão, 123 – São Paulo, SP</p>
+              </div>
+            </div>
+
+            <hr class="border-gray-100 my-1">
+
+            <div>
+              <p class="text-xs text-gray-400 mb-3">Nossas Redes Sociais</p>
+              <div class="flex items-center gap-3">
+                <a href="#" class="w-9 h-9 bg-gray-50 text-gray-600 hover:bg-[#003366] hover:text-white rounded-full flex items-center justify-center transition-colors">
+                  <i class="ri-instagram-line text-lg"></i>
+                </a>
+                <a href="#" class="w-9 h-9 bg-gray-50 text-gray-600 hover:bg-[#003366] hover:text-white rounded-full flex items-center justify-center transition-colors">
+                  <i class="ri-facebook-circle-fill text-lg"></i>
+                </a>
+                <a href="#" class="w-9 h-9 bg-gray-50 text-gray-600 hover:bg-[#003366] hover:text-white rounded-full flex items-center justify-center transition-colors">
+                  <i class="ri-linkedin-fill text-lg"></i>
+                </a>
+                <a href="#" class="w-9 h-9 bg-gray-50 text-gray-600 hover:bg-[#003366] hover:text-white rounded-full flex items-center justify-center transition-colors">
+                  <i class="ri-youtube-fill text-lg"></i>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="bg-[#003366] rounded-2xl p-6 md:p-8 shadow-sm">
+          <h3 class="text-xl font-bold text-white mb-6">Horário de Atendimento</h3>
+          
+          <div class="flex flex-col gap-4 text-sm">
+            <div class="flex justify-between items-center border-b border-[#004080] pb-3">
+              <span class="text-blue-100">Segunda a Sexta</span>
+              <span class="font-bold text-yellow-400">8h – 18h</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-[#004080] pb-3">
+              <span class="text-blue-100">Sábado</span>
+              <span class="font-bold text-yellow-400">9h – 13h</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-blue-100">Domingo</span>
+              <span class="font-medium text-blue-300">Fechado</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-gray-100 lg:col-span-2">
+        <h3 class="text-xl font-bold text-[#003366] mb-8">Envie uma Mensagem</h3>
+        
+        <%= form_with url: "#", class: "flex flex-col gap-6" do |f| %>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <%= f.label :nome, "Nome completo", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+              <%= f.text_field :nome, placeholder: "Seu nome", class: "w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors" %>
+            </div>
+            
+            <div>
+              <%= f.label :email, "E-mail", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+              <%= f.email_field :email, placeholder: "seu@email.com", class: "w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors" %>
+            </div>
+          </div>
+
+          <div>
+            <%= f.label :assunto, "Assunto", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+            <%= f.select :assunto, options_for_select(["Selecione um assunto", "Dúvida sobre cursos", "Quero ser voluntário", "Proposta de parceria", "Outros"]), {}, class: "w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors bg-white appearance-none" %>
+          </div>
+
+          <div>
+            <%= f.label :mensagem, "Mensagem", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+            <%= f.text_area :mensagem, rows: 5, placeholder: "Escreva sua mensagem aqui...", class: "w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none" %>
+            <p class="text-xs text-gray-400 mt-2">Máximo 500 caracteres</p>
+          </div>
+
+          <div class="mt-2">
+            <%= f.button type: "submit", class: "w-full bg-[#003366] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-[#002244] transition-colors" do %>
+              <i data-lucide="send" class="w-5 h-5"></i>
+              Enviar Mensagem
+            <% end %>
+          </div>
+
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</section>
