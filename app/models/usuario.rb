@@ -12,9 +12,11 @@ class Usuario < ApplicationRecord
   has_one :gestor,    dependent: :destroy
 
   # Validações de segurança
-  validates :cpf, presence: true, uniqueness: true
+  validates :cpf, presence: true, uniqueness: true, length: { is: 11, message: "deve conter 11 dígitos" }
   validates :nome, presence: true
   validate :cpf_valido
+
+  before_validation :limpar_cpf
 
   # Promove o usuário atual a Instrutor, se ele ainda não for
   def promover_a_instrutor!
@@ -44,6 +46,10 @@ class Usuario < ApplicationRecord
   end
 
   private
+
+  def limpar_cpf
+    self.cpf = cpf.gsub(/\D/, '') if cpf.present?
+  end
 
   def cpf_valido
     if cpf.present? && !CPF.valid?(cpf)

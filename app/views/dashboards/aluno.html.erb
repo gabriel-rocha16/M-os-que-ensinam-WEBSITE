@@ -1,19 +1,26 @@
 <h1>Área do Aluno</h1>
 
-<h2>Meus Cursos</h2>
-<ul>
-  <% if current_usuario.candidato.cursos.any? %>
-    <% current_usuario.candidato.cursos.each do |curso| %>
+<% if current_usuario.candidato.pendente? %>
+  <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mt-6 mb-6" role="alert">
+    <p class="font-bold">Aguardando Validação</p>
+    <p>Seu perfil está pendente de validação pela nossa equipe técnica. Após a verificação dos seus documentos, o acesso aos cursos será liberado.</p>
+  </div>
+<% else %>
+  <h2>Meus Cursos</h2>
+  <ul>
+    <% if current_usuario.candidato.cursos.any? %>
+      <% current_usuario.candidato.cursos.each do |curso| %>
+        <li><%= curso.nome %> - <%= link_to "Ver Detalhes", curso_path(curso) %></li>
+      <% end %>
+    <% else %>
+      <p>Você ainda não está matriculado em nenhum curso.</p>
+    <% end %>
+  </ul>
+
+  <h2>Cursos Disponíveis</h2>
+  <ul>
+    <% Curso.publicado.each do |curso| %>
       <li><%= curso.nome %> - <%= link_to "Ver Detalhes", curso_path(curso) %></li>
     <% end %>
-  <% else %>
-    <p>Você ainda não está matriculado em nenhum curso.</p>
-  <% end %>
-</ul>
-
-<h2>Cursos Disponíveis</h2>
-<ul>
-  <% Curso.publicado.each do |curso| %>
-    <li><%= curso.nome %> - <%= link_to "Ver Detalhes", curso_path(curso) %></li>
-  <% end %>
-</ul>
+  </ul>
+<% end %>

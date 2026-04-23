@@ -1,0 +1,82 @@
+<div class="max-w-3xl mx-auto mt-10 px-5 pb-10">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+    <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+    Editar Perfil
+  </h2>
+
+  <%= form_with model: @candidato, url: candidato_path, method: :patch, local: true, html: { class: "bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 border border-gray-100" } do |f| %>
+    <% if @candidato.errors.any? %>
+      <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-r" role="alert">
+        <p class="font-bold">Atenção!</p>
+        <ul class="list-disc pl-5 mt-1">
+          <% @candidato.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div>
+        <%= f.label :cidade, "Cidade", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.text_field :cidade, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
+      </div>
+      <div>
+        <%= f.label :estado, "Estado", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.text_field :estado, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div>
+        <%= f.label :data_nascimento, "Data de Nascimento", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.date_field :data_nascimento, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
+      </div>
+      <div>
+        <%= f.label :escolaridade, "Escolaridade", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.select :escolaridade, ["Ensino Fundamental Incompleto", "Ensino Fundamental Completo", "Ensino Médio Incompleto", "Ensino Médio Completo", "Ensino Superior Incompleto", "Ensino Superior Completo"], { include_blank: "Selecione..." }, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
+      </div>
+    </div>
+
+    <h3 class="text-lg font-bold text-gray-800 border-b pb-2 mb-4 mt-8">Perfil Social</h3>
+    <div class="space-y-4 mb-6">
+      <label class="flex items-center p-3 hover:bg-gray-50 rounded cursor-pointer transition-colors border border-transparent hover:border-gray-200">
+        <%= f.check_box :trabalhando, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mr-3" %>
+        <span class="text-gray-700 text-sm font-medium">Está trabalhando atualmente?</span>
+      </label>
+
+      <label class="flex items-center p-3 hover:bg-gray-50 rounded cursor-pointer transition-colors border border-transparent hover:border-gray-200">
+        <%= f.check_box :possui_beneficio, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mr-3" %>
+        <span class="text-gray-700 text-sm font-medium">Recebe algum benefício do governo?</span>
+      </label>
+
+      <label class="flex items-center p-3 hover:bg-gray-50 rounded cursor-pointer transition-colors border border-transparent hover:border-gray-200">
+        <%= f.check_box :possui_deficiencia, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mr-3" %>
+        <span class="text-gray-700 text-sm font-medium">Possui alguma deficiência?</span>
+      </label>
+      
+      <div class="pl-3 pr-3 pb-2">
+        <%= f.label :tipo_deficiencia, "Se sim, qual tipo de deficiência?", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= f.text_field :tipo_deficiencia, placeholder: "Ex: Visual, Auditiva, Motora...", class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
+      </div>
+    </div>
+
+    <div class="mb-8 p-5 bg-blue-50 rounded-lg border border-blue-100">
+      <h3 class="font-bold text-blue-900 mb-2 flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+        Atualizar Documentos Comprobatórios
+      </h3>
+      <p class="text-sm text-gray-600 mb-4">Selecione novos arquivos caso precise substituir ou adicionar laudos. Os arquivos selecionados aqui <strong>substituirão completamente</strong> os laudos enviados anteriormente. Se seus laudos antigos já estão corretos, <strong>deixe este campo em branco</strong>.</p>
+      
+      <div class="bg-white p-3 rounded border border-blue-200">
+        <%= f.file_field :laudos_medicos, multiple: true, direct_upload: true, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer" %>
+      </div>
+      <p class="text-xs text-blue-600 mt-2 font-medium">PDF, PNG ou JPG (Máx 5MB). Envie todos juntos (até 3 arquivos).</p>
+    </div>
+
+    <div class="flex items-center justify-between pt-6 border-t border-gray-100">
+      <%= link_to "Cancelar", candidato_path, class: "text-gray-500 hover:text-gray-800 font-medium px-4 py-2 transition-colors" %>
+      <%= f.submit "Salvar Alterações", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors cursor-pointer shadow-md" %>
+    </div>
+  <% end %>
+</div>

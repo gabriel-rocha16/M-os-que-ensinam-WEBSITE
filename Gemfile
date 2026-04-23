@@ -74,3 +74,5 @@ gem "cpf_cnpj", "~> 1.0"
 gem "tailwindcss-rails"
 
 gem "hotwire-livereload", group: :development
+
+gem "active_storage_validations", "~> 3.0"
