@@ -1,0 +1,93 @@
+<aside class="fixed bottom-6 right-6 z-[100]" data-controller="accessibility" aria-label="Menu de Acessibilidade">
+  <%# Botão Flutuante - com toggle de estado %>
+  <button 
+    class="w-14 h-14 bg-[#FFD700] text-[#003366] rounded-full flex items-center justify-center shadow-lg active:scale-90 hover:scale-110 transition-all duration-300 focus:ring-4 focus:ring-yellow-400/50"
+    aria-label="Abrir recursos de acessibilidade"
+    aria-haspopup="dialog"
+    data-action="click->accessibility#togglePanel">
+    <i class="ri-user-heart-line text-2xl" aria-hidden="true"></i>
+  </button>
+
+  <%# Painel de Acessibilidade - Usando a tag <section> %>
+  <section 
+    id="accessibility-panel" 
+    data-accessibility-target="panel"
+    class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-2xl shadow-2xl border border-[#E0E0E0] p-6 transition-all"
+    role="dialog" 
+    aria-labelledby="accessibility-title">
+    
+    <header class="flex items-center justify-between mb-5">
+      <h2 id="accessibility-title" class="text-lg font-bold text-[#003366]">Acessibilidade</h2>
+      <button 
+        class="text-[#666] hover:text-red-500 p-1" 
+        data-action="click->accessibility#togglePanel" 
+        aria-label="Fechar painel de acessibilidade">
+        <i class="ri-close-line text-xl" aria-hidden="true"></i>
+      </button>
+    </header>
+
+    <%# Tamanho da Fonte %>
+    <fieldset class="mb-5 border-none p-0">
+      <legend class="text-sm font-semibold text-[#003366] mb-3">Tamanho da Fonte</legend>
+      <div class="flex items-center gap-2" role="group" aria-label="Ajustar tamanho do texto">
+        <button class="notranslate flex-1 h-10 rounded-xl border-2 border-[#D0D0D0] text-[#333] font-bold text-sm hover:border-[#0066CC] hover:text-[#0066CC] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0066CC]"
+                translate="no" data-action="click->accessibility#decreaseFont" aria-label="Diminuir tamanho da fonte">A-</button>
+        <button class="notranslate flex-1 h-10 rounded-xl border-2 border-[#D0D0D0] text-[#333] font-bold text-sm hover:border-[#0066CC] hover:text-[#0066CC] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0066CC]"
+                translate="no" data-action="click->accessibility#resetFont" aria-label="Redefinir tamanho da fonte">A</button>
+        <button class="notranslate flex-1 h-10 rounded-xl border-2 border-[#D0D0D0] text-[#333] font-bold text-sm hover:border-[#0066CC] hover:text-[#0066CC] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0066CC]"
+                translate="no" data-action="click->accessibility#increaseFont" aria-label="Aumentar tamanho da fonte">A+</button>
+      </div>
+      <p class="text-xs text-[#666] mt-1 text-center" aria-live="polite">
+        Atual: <span data-accessibility-target="percentage">100</span>%
+      </p>
+    </fieldset>
+
+    <%# Alto Contraste %>
+    <div class="mb-5 flex items-center justify-between">
+      <div>
+        <p id="label-contrast" class="text-sm font-semibold text-[#003366]">Alto Contraste</p>
+        <p class="text-xs text-[#666]">Melhora a visibilidade</p>
+      </div>
+      <button 
+        type="button"
+        role="switch"
+        aria-checked="false"
+        aria-labelledby="label-contrast"
+        data-action="click->accessibility#toggleContrast"
+        data-accessibility-target="contrastBtn"
+        class="relative w-14 h-7 rounded-full bg-[#D0D0D0] transition-colors focus:ring-2 focus:ring-[#0066CC] focus:ring-offset-2">
+        <span class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform translate-x-0"
+              data-accessibility-target="contrastDot" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <%# Reduzir Animações %>
+    <div class="mb-5 flex items-center justify-between">
+      <div translate="no">
+        <p id="label-animations" class="text-sm font-semibold text-[#003366]">Reduzir Animações</p>
+        <p class="text-xs text-[#666]">Para sensibilidade ao movimento</p>
+      </div>
+      <button 
+        type="button"
+        role="switch" 
+        aria-checked="false"
+        aria-labelledby="label-animations"
+        data-action="click->accessibility#toggleAnimations"
+        data-accessibility-target="animationBtn"
+        class="relative w-14 h-7 rounded-full bg-[#D0D0D0] transition-colors duration-200 focus:ring-2 focus:ring-[#0066CC] focus:ring-offset-2">
+        <span 
+          class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 translate-x-0"
+          data-accessibility-target="animationDot" aria-hidden="true">
+        </span>
+      </button>
+    </div>
+
+    <footer class="mt-2">
+      <button 
+        class="w-full h-10 rounded-xl border-2 border-[#D0D0D0] text-[#333] font-bold text-sm hover:border-[#0066CC] hover:text-[#0066CC] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0066CC]"
+        data-action="click->accessibility#resetAll">
+        Restaurar padrões
+      </button>
+    </footer>
+  </section>
+</aside>

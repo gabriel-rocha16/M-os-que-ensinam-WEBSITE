@@ -1,26 +1,102 @@
-<h2>Log in</h2>
+<div class="min-h-screen bg-gradient-to-br from-[#F5F7FA] to-[#E6F2FF] flex flex-col">
+  
+  <%# Header Responsivo %>
+  <%# Header e navbar %>
+  <header class="bg-white border-b border-[#E0E0E0] h-16 md:h-20 sticky top-0 z-40">
+    <nav class="max-w-7xl mx-auto h-full px-4 md:px-10 flex items-center justify-between" aria-label="Navegação superior">
+      <%= link_to root_path, class: "block transition-transform active:scale-95 hover:scale-105", aria: { label: "Ir para a Home" } do %>
+        <%= image_tag "logo.png", class: "h-10 md:h-14 w-auto object-contain" %>
+      <% end %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
-  </div>
+      <div class="flex items-center gap-2 md:gap-4">
+        <p class="text-xs md:text-sm text-[#666] hidden xs:block">Não tem conta?</p>
+        <%= link_to "Cadastre-se", new_registration_path(resource_name), 
+            class: "text-[#0066CC] font-semibold hover:underline text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-[#0066CC] rounded px-2 py-1" %>
+      </div>
+    </nav>
+  </header>
 
-  <div class="field">
-    <p><%= f.label :password %></p>
-    <p><%= f.password_field :password, autocomplete: "current-password" %></p>
-  </div>
+  <%# Conteúdo Principal com Scroll para telas pequenas %>
+  <main id="main-content" class="flex-1 flex items-center justify-center p-4 md:py-12">
+    
+    <section class="w-full max-w-md my-auto" aria-labelledby="login-heading">
+      <div class="bg-white rounded-[2rem] border border-[#E0E0E0] p-6 md:p-10 shadow-xl shadow-blue-900/5">
+        
+        <header class="text-center mb-6 md:mb-8">
+          <div class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-[#E6F2FF] mx-auto mb-4" aria-hidden="true">
+            <i class="ri-login-box-line text-2xl md:text-3xl text-[#0066CC]"></i>
+          </div>
+          <h1 id="login-heading" class="text-xl md:text-2xl font-extrabold text-[#003366]">Bem-vindo de volta!</h1>
+          <p class="text-[#666] text-xs md:text-sm mt-2">Entre na sua conta para continuar aprendendo</p>
+        </header>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <p><%= f.check_box :remember_me %></p>
-      <p><%= f.label :remember_me %></p>
-    </div>
-  <% end %>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-4 md:gap-5", aria: { label: "Formulário de acesso" } }) do |f| %>
+          
+          <%# Sessão de email %>
+          <div class="flex flex-col gap-1">
+            <%= f.label :email, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
+              E-mail <span class="text-red-500">*</span>
+            <% end %>
+            <div class="relative flex items-center">
+              <span class="absolute left-4 text-[#666]" aria-hidden="true"><i class="ri-mail-line"></i></span>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "seu@email.com", required: true,
+                  class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
+            </div>
+          </div>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
+          <%# Sessão de senha %>
+          <div class="flex flex-col gap-1">
+            <%= f.label :password, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
+              Senha <span class="text-red-500">*</span>
+            <% end %>
+            <div class="relative flex items-center">
+              <span class="absolute left-4 text-[#666]" aria-hidden="true"><i class="ri-lock-line"></i></span>
+              <%= f.password_field :password, autocomplete: "current-password", placeholder: "Sua senha", required: true,
+                  class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-12 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
+              <button type="button" class="absolute right-4 text-[#666] hover:text-[#0066CC] p-1" aria-label="Mostrar senha">
+                <i class="ri-eye-line text-lg"></i>
+              </button>
+            </div>
+          </div>
 
-<%= render "devise/shared/links" %>
+          <%# Sessão de recuperação de senha %>
+          <div class="text-right -mt-1">
+            <%= link_to "Esqueci minha senha", new_password_path(resource_name), class: "text-xs md:text-sm text-[#0066CC] hover:underline" %>
+          </div>
+
+          <%# Sessão Lembrar de mim %>
+          <% if devise_mapping.rememberable? %>
+            <div class="flex items-center gap-2 my-1">
+              <%= f.check_box :remember_me, 
+                  class: "w-4 h-4 rounded border-2 border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC]/20 cursor-pointer" %>
+              <%= f.label :remember_me, "Lembrar de mim", 
+                  class: "text-xs md:text-sm text-[#003366] font-medium cursor-pointer select-none", translate: "no" %>
+            </div>
+          <% end %>
+
+          <%= f.submit "Entrar", class: "bg-[#0066CC] text-white hover:bg-[#0052a3] active:scale-[0.98] px-8 py-3 md:py-4 text-base md:text-lg font-semibold rounded-full w-full cursor-pointer transition-all shadow-md hover:shadow-lg" %>
+        <% end %>
+
+        <footer class="mt-6 pt-6 border-t border-[#E0E0E0] text-center">
+          <p class="text-xs md:text-sm text-[#666]">
+            Ainda não tem conta? <%= link_to "Criar conta", new_registration_path(resource_name), class: "text-[#0066CC] font-bold hover:underline" %>
+          </p>
+        </footer>
+      </div>
+
+      <p class="text-center text-[10px] md:text-xs text-[#999] mt-6 px-4">
+        Plataforma acessível conforme normas <abbr title="Web Content Accessibility Guidelines">WCAG</abbr> 2.1 Nível AA
+      </p>
+    </section>
+  </main>
+
+  <%# Botão de Acessibilidade Fixo %>
+  <footer role="contentinfo"> 
+    <button class="fixed bottom-6 right-6 w-12 h-12 md:w-14 md:h-14 bg-[#FFD700] text-[#003366] rounded-full flex items-center justify-center shadow-lg active:scale-90 hover:scale-110 transition-all duration-300 z-50 focus:ring-4 focus:ring-yellow-400/50" 
+            aria-label="Recursos de acessibilidade">
+      <i class="ri-user-heart-line text-xl md:text-2xl"></i>
+    </button>
+    <%= render "shared/accessibility_panel", translate: "no" %>
+  </footer>
+
+</div>
