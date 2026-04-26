@@ -69,7 +69,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "cpf_cnpj", "~> 1.0"
+gem "cpf_cnpj", "~> 1.1"
 
 gem "tailwindcss-rails"
 
