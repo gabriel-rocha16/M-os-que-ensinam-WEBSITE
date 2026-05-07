@@ -1,6 +1,6 @@
 class CursosController < ApplicationController
   skip_before_action :authenticate_usuario!, only: [:index]
-  before_action :verificar_instrutor_ou_admin!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :verificar_instrutor_ativo!, only: [:new, :create, :edit, :update, :destroy]
   before_action :autorizar_edicao_curso!, only: [:edit, :update, :destroy]
 
   def index

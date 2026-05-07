@@ -5,13 +5,40 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_usuario!
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :verificar_onboarding, unless: :devise_controller?
+  helper_method :perfil_ativo, :perfis_disponiveis
+
+  def perfis_disponiveis
+    return [] unless current_usuario
+    perfis = []
+    perfis << 'gestor' if current_usuario.gestor.present?
+    perfis << 'instrutor' if current_usuario.instrutor.present?
+    perfis << 'aluno' if current_usuario.candidato.present?
+    perfis
+  end
+
+  def perfil_ativo
+    return nil unless current_usuario
+    return session[:active_role] if session[:active_role].present? && perfis_disponiveis.include?(session[:active_role])
+
+    novo_papel = perfis_disponiveis.first
+    session[:active_role] = novo_papel
+    novo_papel
+  end
+
+  def verificar_gestor_ativo!
+    unless perfil_ativo == 'gestor'
+      redirect_back fallback_location: root_path, alert: "Modo Gestor é necessário para acessar esta área. Alterne o seu perfil."
+    end
+  end
+
+  def verificar_instrutor_ativo!
+    unless perfil_ativo == 'instrutor'
+      redirect_back fallback_location: root_path, alert: "Modo Instrutor é necessário para acessar esta área. Alterne o seu perfil."
+    end
+  end
 
   def verificar_admin!
     redirect_to root_path, alert: "Acesso negado. Apenas administradores." unless current_usuario&.gestor.present?
-  end
-
-  def verificar_instrutor_ou_admin!
-    redirect_to root_path, alert: "Acesso negado." unless current_usuario&.gestor.present? || current_usuario&.instrutor.present?
   end
 
   def after_sign_up_path_for(resource)
