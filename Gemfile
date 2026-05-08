@@ -76,3 +76,6 @@ gem "tailwindcss-rails"
 gem "hotwire-livereload", group: :development
 
 gem "active_storage_validations", "~> 3.0"
+
+# Abrindo arquivos simulando tela de email real
+gem "letter_opener", group: :development

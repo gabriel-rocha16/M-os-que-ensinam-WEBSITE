@@ -1,16 +1,57 @@
-<h2>Forgot your password?</h2>
+<div class="min-h-screen bg-gradient-to-br from-[#F5F7FA] to-[#E6F2FF] flex flex-col">
+   <header class="bg-white border-b border-[#E0E0E0] h-16 md:h-20 sticky top-0 z-40">
+    <nav class="max-w-7xl mx-auto h-full px-4 md:px-10 flex items-center justify-between" aria-label="Navegação superior">
+      <%= link_to root_path, class: "block transition-transform active:scale-95 hover:scale-105", aria: { label: "Ir para a Home" } do %>
+        <%= image_tag "logo.png", class: "h-10 md:h-14 w-auto object-contain" %>
+      <% end %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="flex items-center gap-2 md:gap-4">
+        <%= link_to new_session_path(resource_name), 
+            class: "group flex items-center gap-2 text-[#0066CC] font-semibold focus:outline-none focus:ring-2 focus:ring-[#0066CC] rounded px-2 py-1",
+            aria: { label: "Voltar para a tela de login" } do %>
+    
+            <%# setinha %>
+            <i class="ri-arrow-left-line text-lg transition-transform group-hover:-translate-x-1" aria-hidden="true"></i>
+    
+            <span class="text-xs md:text-sm hover:underline">Voltar para o login</span>
+        <% end %>
+      </div>
+    </nav>
+  </header>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
-  </div>
+  <main class="flex-1 flex items center justify-center p-4 md:py-12">
+    <section class="w-full max-w-md my-auto">
+      <div class="bg-white rounded-[2rem] border border-[#E0E0E0] p-6 md:p-10 shadow-xl shadow-blue-900/5">
+        <%# Cabeçalho do Card %>
+        <header class="text-center mb-6 md:mb-8">
+          <div class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-[#E6F2FF] mx-auto mb-4">
+            <i class="ri-lock-password-line text-2xl md:text-3xl text-[#0066CC]"></i>
+          </div>
+          <h1 class="text-xl md:text-2xl font-extrabold text-[#003366]">Recuperar Senha</h1>
+          <p class="text-[#666] text-xs md:text-sm mt-2">Enviaremos as instruções para o seu e-mail</p>
+        </header>
 
-  <div class="actions">
-    <%= f.submit "Send me password reset instructions" %>
-  </div>
-<% end %>
+        <%# Formulário e campos do card %>
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+          <div class="flex flex-col gap-1 mb-5">
+            <%= f.label :email, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
+              E-mail <span class="text-red-500">*</span>
+            <% end %>
 
-<%= render "devise/shared/links" %>
+            <div class="relative flex items-center">
+              <span class="absolute left-4 text-[#666]"><i class="ri-mail-line"></i></span>
+              <%= f.email_field :email, autocomplete: "email", autofocus: true, class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
+            </div>
+          </div>
+          <%# Botão enviar %>
+          <%= f.submit "Enviar instruções", class: "bg-[#0066CC] text-white py-3 rounded-full w-full font-bold cursor-pointer" %>
+        <% end %> 
+      </div>
+    </section>
+  </main>
+
+   <%# Botão de Acessibilidade Fixo %>
+  <footer role="contentinfo"> 
+    <%= render "shared/accessibility_panel", translate: "no" %>
+  </footer>
