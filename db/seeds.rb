@@ -1,7 +1,11 @@
 require 'cpf_cnpj'
 
 puts "Limpando banco de dados..."
+Configuracao.destroy_all
 Usuario.destroy_all
+
+puts "Inicializando Configuração..."
+Configuracao.atual
 
 puts "Criando Gestor Admin..."
 admin_cpf = CPF.generate
@@ -24,7 +28,7 @@ user1 = Usuario.create!(
   password: "password123",
   password_confirmation: "password123"
 )
-user1.create_candidato!(
+candidato1 = user1.build_candidato(
   cidade: "São Paulo",
   estado: "SP",
   data_nascimento: "1995-05-10",
@@ -33,6 +37,7 @@ user1.create_candidato!(
   possui_beneficio: true,
   possui_deficiencia: true
 )
+candidato1.save!(validate: false)
 puts "Candidato 1 criado! CPF: #{candidato1_cpf} | Senha: password123"
 
 candidato2_cpf = CPF.generate
@@ -43,7 +48,7 @@ user2 = Usuario.create!(
   password: "password123",
   password_confirmation: "password123"
 )
-user2.create_candidato!(
+candidato2 = user2.build_candidato(
   cidade: "Rio de Janeiro",
   estado: "RJ",
   data_nascimento: "1998-12-20",
@@ -52,6 +57,7 @@ user2.create_candidato!(
   possui_beneficio: false,
   possui_deficiencia: false
 )
+candidato2.save!(validate: false)
 puts "Candidato 2 criado! CPF: #{candidato2_cpf} | Senha: password123"
 
 puts "Seeds concluídos com sucesso!"

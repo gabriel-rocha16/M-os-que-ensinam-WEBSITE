@@ -11,11 +11,11 @@ class Candidato < ApplicationRecord
   # Status da validação de laudos
   enum :status, { pendente: 0, validado: 1, rejeitado: 2 }, default: :pendente
 
-  # Um candidato pode enviar vários arquivos de laudo (ActiveStorage)
   has_many_attached :laudos_medicos
   has_one_attached :curriculo
 
   before_validation :limpar_telefone
+  before_create :verificar_aprovacao_automatica
 
   validates :laudos_medicos, attached: true,
                              content_type: ['application/pdf', 'image/jpeg', 'image/png'],
@@ -58,6 +58,12 @@ class Candidato < ApplicationRecord
       if telefone.length == 10 || telefone.length == 11
         self.telefone = "55#{telefone}"
       end
+    end
+  end
+
+  def verificar_aprovacao_automatica
+    if Configuracao.atual.aprovacao_automatica?
+      self.status = :validado
     end
   end
 end

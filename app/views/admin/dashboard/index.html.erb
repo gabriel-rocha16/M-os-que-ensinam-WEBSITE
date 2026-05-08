@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto mt-10 px-4 pb-10">
-  <% if current_usuario.gestor.present? %>
+  <% if perfil_ativo == 'gestor' %>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <div class="bg-white p-6 rounded-lg shadow-sm border border-blue-100 flex items-center justify-between">
         <div>
@@ -36,10 +36,11 @@
   <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-bold text-gray-800">Oficina de Cursos</h1>
     <div class="flex space-x-4">
-      <% if current_usuario.gestor.present? %>
+      <% if perfil_ativo == 'gestor' %>
+        <%= button_to Configuracao.atual.aprovacao_automatica? ? "Aprovação Auto: ON" : "Aprovação Auto: OFF", toggle_aprovacao_path, method: :patch, class: "bg-gray-100 border border-gray-300 text-gray-800 hover:bg-gray-200 font-bold py-2 px-6 rounded-full shadow-sm transition-colors cursor-pointer" %>
         <%= link_to "Fila de Aprovação", admin_usuarios_path, class: "bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full shadow-md transition-colors" %>
       <% end %>
-      <% if current_usuario.gestor.present? || current_usuario.instrutor.present? %>
+      <% if perfil_ativo == 'gestor' || perfil_ativo == 'instrutor' %>
         <%= link_to "+ Novo Curso", new_curso_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-md transition-colors" %>
       <% end %>
     </div>
@@ -50,7 +51,7 @@
       <thead class="bg-gray-50">
         <tr>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Curso</th>
-          <% if current_usuario.gestor.present? %>
+          <% if perfil_ativo == 'gestor' %>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autor</th>
           <% end %>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -68,7 +69,7 @@
                 </div>
               </div>
             </td>
-            <% if current_usuario.gestor.present? %>
+            <% if perfil_ativo == 'gestor' %>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-900"><%= curso.usuario&.nome || "Sistema" %></div>
               </td>
@@ -84,11 +85,11 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
               <div class="flex justify-end items-center space-x-2">
-                <% if curso.rascunho? && (current_usuario.gestor.present? || curso.usuario_id == current_usuario.id) %>
+                <% if curso.rascunho? && (perfil_ativo == 'gestor' || curso.usuario_id == current_usuario.id) %>
                   <%= button_to "🚀 Solicitar Aprovação", solicitar_aprovacao_admin_curso_path(curso), method: :patch, class: "bg-blue-100 text-blue-800 hover:bg-blue-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer" %>
                 <% end %>
                 
-                <% if curso.aguardando_aprovacao? && current_usuario.gestor.present? %>
+                <% if curso.aguardando_aprovacao? && perfil_ativo == 'gestor' %>
                   <%= button_to "✅ Publicar", publicar_admin_curso_path(curso), method: :patch, class: "bg-green-100 text-green-800 hover:bg-green-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer" %>
                   <%= button_to "❌ Rejeitar", rejeitar_admin_curso_path(curso), method: :patch, class: "bg-red-100 text-red-800 hover:bg-red-200 px-3 py-1 rounded text-xs font-bold transition-colors cursor-pointer" %>
                 <% end %>
@@ -102,7 +103,7 @@
         
         <% if @cursos.empty? %>
           <tr>
-            <td colspan="<%= current_usuario.gestor.present? ? 4 : 3 %>" class="px-6 py-10 text-center text-gray-500">
+            <td colspan="<%= perfil_ativo == 'gestor' ? 4 : 3 %>" class="px-6 py-10 text-center text-gray-500">
               <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
               Nenhum curso encontrado.
             </td>

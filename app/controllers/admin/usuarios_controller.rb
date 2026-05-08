@@ -1,6 +1,6 @@
 class Admin::UsuariosController < ApplicationController
   before_action :authenticate_usuario!
-  before_action :verificar_gestor!
+  before_action :verificar_gestor_ativo!
 
   def index
     @candidatos_pendentes = Candidato.pendente.includes(:usuario).order(created_at: :desc)
@@ -46,14 +46,6 @@ class Admin::UsuariosController < ApplicationController
       redirect_to admin_usuarios_path, notice: "Perfil PcD removido. O usuário agora é apenas um visitante."
     else
       redirect_to admin_usuarios_path, alert: "Este usuário não tem candidatura."
-    end
-  end
-
-  private
-
-  def verificar_gestor!
-    unless current_usuario.gestor.present?
-      redirect_to root_path, alert: "Acesso negado. Apenas gestores podem realizar esta ação."
     end
   end
 end
