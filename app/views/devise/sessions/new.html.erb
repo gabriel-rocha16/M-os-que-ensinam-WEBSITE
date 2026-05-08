@@ -45,16 +45,20 @@
           </div>
 
           <%# Sessão de senha %>
-          <div class="flex flex-col gap-1">
+          <div class="flex flex-col gap-1" data-controller="password-visibility">
             <%= f.label :password, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
               Senha <span class="text-red-500">*</span>
             <% end %>
             <div class="relative flex items-center">
-              <span class="absolute left-4 text-[#666]" aria-hidden="true"><i class="ri-lock-line"></i></span>
+              <span class="absolute left-4 text-[#666]"><i class="ri-lock-line"></i></span>
               <%= f.password_field :password, autocomplete: "current-password", placeholder: "Sua senha", required: true,
+                  data: { password_visibility_target: "input" },
                   class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-12 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
-              <button type="button" class="absolute right-4 text-[#666] hover:text-[#0066CC] p-1" aria-label="Mostrar senha">
-                <i class="ri-eye-line text-lg"></i>
+              <button type="button" 
+                      data-action="click->password-visibility#toggle"
+                      class="absolute right-4 text-[#666] hover:text-[#0066CC] p-1" 
+                      aria-label="Mostrar ou ocultar senha">
+                <i class="ri-eye-line text-lg" data-password_visibility_target="icon"></i>
               </button>
             </div>
           </div>
@@ -63,16 +67,6 @@
           <div class="text-right -mt-1">
             <%= link_to "Esqueci minha senha", new_password_path(resource_name), class: "text-xs md:text-sm text-[#0066CC] hover:underline" %>
           </div>
-
-          <%# Sessão Lembrar de mim %>
-          <% if devise_mapping.rememberable? %>
-            <div class="flex items-center gap-2 my-1">
-              <%= f.check_box :remember_me, 
-                  class: "w-4 h-4 rounded border-2 border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC]/20 cursor-pointer" %>
-              <%= f.label :remember_me, "Lembrar de mim", 
-                  class: "text-xs md:text-sm text-[#003366] font-medium cursor-pointer select-none", translate: "no" %>
-            </div>
-          <% end %>
 
           <%= f.submit "Entrar", class: "bg-[#0066CC] text-white hover:bg-[#0052a3] active:scale-[0.98] px-8 py-3 md:py-4 text-base md:text-lg font-semibold rounded-full w-full cursor-pointer transition-all shadow-md hover:shadow-lg" %>
         <% end %>
