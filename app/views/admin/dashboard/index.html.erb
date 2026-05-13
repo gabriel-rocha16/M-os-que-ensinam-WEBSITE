@@ -1,4 +1,21 @@
 <div class="max-w-7xl mx-auto mt-10 px-4 pb-10">
+
+  <% if perfis_disponiveis.count > 1 %>
+    <div class="bg-indigo-50 p-6 rounded-lg shadow-sm border border-indigo-200 mb-8 flex flex-col md:flex-row justify-between items-center">
+      <div class="mb-4 md:mb-0">
+        <h2 class="text-lg font-bold text-indigo-800">Troca de Contexto (Protótipo)</h2>
+        <p class="text-sm text-indigo-600">Você possui múltiplos papéis nesta plataforma. Atualmente navegando como: <span class="font-bold capitalize"><%= perfil_ativo %></span>.</p>
+      </div>
+      <div class="flex space-x-3">
+        <% perfis_disponiveis.each do |perfil| %>
+          <% unless perfil == perfil_ativo %>
+            <%= button_to "Mudar para #{perfil.capitalize}", switch_role_path(role: perfil), method: :patch, class: "bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded shadow-sm transition-colors text-sm cursor-pointer" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <% if perfil_ativo == 'gestor' %>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <div class="bg-white p-6 rounded-lg shadow-sm border border-blue-100 flex items-center justify-between">
