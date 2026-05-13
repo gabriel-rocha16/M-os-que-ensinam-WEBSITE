@@ -1,9 +1,10 @@
 class PerfisController < ApplicationController
+  skip_before_action :verificar_gestor_ativo!, raise: false
+  skip_before_action :verificar_instrutor_ativo!, raise: false
+
   def gateway
-    unless session[:active_role].present? && perfis_disponiveis.include?(session[:active_role])
-      session[:active_role] = perfis_disponiveis.first
-    end
-    
+    set_default_role
+
     papel = session[:active_role]
     if papel == 'gestor' || papel == 'instrutor'
       redirect_to admin_dashboard_path
