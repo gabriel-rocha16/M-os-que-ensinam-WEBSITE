@@ -46,17 +46,7 @@ class ApplicationController < ActionController::Base
   end
   # Redireciona após o login normal (caso já tenha conta)
   def after_sign_in_path_for(resource)
-    if resource.gestor.present?
-      admin_dashboard_path
-    elsif resource.candidato.present?
-      if resource.candidato.pendente? || resource.candidato.rejeitado?
-        candidato_path
-      else
-        aluno_dashboard_path
-      end
-    else
-      new_candidato_path
-    end
+    dashboard_gateway_path
   end
 
   def not_found

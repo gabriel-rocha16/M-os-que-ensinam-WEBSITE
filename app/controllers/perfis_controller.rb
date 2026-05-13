@@ -1,16 +1,28 @@
 class PerfisController < ApplicationController
+  def gateway
+    unless session[:active_role].present? && perfis_disponiveis.include?(session[:active_role])
+      session[:active_role] = perfis_disponiveis.first
+    end
+    
+    papel = session[:active_role]
+    if papel == 'gestor' || papel == 'instrutor'
+      redirect_to admin_dashboard_path
+    elsif papel == 'aluno'
+      if current_usuario.candidato&.pendente? || current_usuario.candidato&.rejeitado?
+        redirect_to candidato_path
+      else
+        redirect_to aluno_dashboard_path
+      end
+    else
+      redirect_to new_candidato_path
+    end
+  end
+
   def switch
     novo_perfil = params[:role]
     if perfis_disponiveis.include?(novo_perfil)
       session[:active_role] = novo_perfil
-      
-      if novo_perfil == 'gestor'
-        redirect_to admin_dashboard_path, notice: "Perfil alterado para #{novo_perfil.capitalize}"
-      elsif novo_perfil == 'instrutor'
-        redirect_to admin_dashboard_path, notice: "Perfil alterado para #{novo_perfil.capitalize}"
-      else
-        redirect_to aluno_dashboard_path, notice: "Perfil alterado para #{novo_perfil.capitalize}"
-      end
+      redirect_to dashboard_gateway_path, notice: "Perfil alterado para #{novo_perfil.capitalize}"
     else
       redirect_back fallback_location: root_path, alert: "Perfil não autorizado."
     end

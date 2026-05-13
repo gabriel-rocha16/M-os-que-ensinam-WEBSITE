@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_07_202453) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_13_174617) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -97,12 +97,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_202453) do
     t.datetime "created_at", null: false
     t.text "descricao"
     t.bigint "instrutor_id"
+    t.string "moodle_url"
     t.string "nome"
     t.integer "status", default: 0
     t.string "titulo"
     t.datetime "updated_at", null: false
     t.bigint "usuario_id"
     t.string "video_url"
+    t.string "youtube_url"
     t.index ["instrutor_id"], name: "index_cursos_on_instrutor_id"
     t.index ["usuario_id"], name: "index_cursos_on_usuario_id"
   end
