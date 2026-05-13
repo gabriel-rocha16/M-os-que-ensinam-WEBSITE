@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   end
   get "aluno/dashboard", to: "dashboards#aluno", as: :aluno_dashboard
 
-  patch "switch_perfil", to: "perfis#switch"
+  patch '/alternar_perfil/:role', to: 'perfis#switch', as: :switch_role
   patch "admin/toggle_aprovacao", to: "admin/dashboard#toggle_aprovacao", as: :toggle_aprovacao
 
   get "about", to: "pages#about"
