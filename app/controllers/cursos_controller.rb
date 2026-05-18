@@ -20,18 +20,33 @@ class CursosController < ApplicationController
   end
 
   def create
-    # Implementação padrão
+    @curso = Curso.new(curso_params)
+    @curso.usuario_id = current_usuario.id
+    
+    if @curso.save
+      redirect_to admin_dashboard_path, notice: "Curso criado com sucesso e está como Rascunho."
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
+    @curso = Curso.find(params[:id])
   end
 
   def update
-    # Implementação padrão
+    @curso = Curso.find(params[:id])
+    if @curso.update(curso_params)
+      redirect_to admin_dashboard_path, notice: "Curso atualizado com sucesso."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    # Implementação padrão
+    @curso = Curso.find(params[:id])
+    @curso.destroy
+    redirect_to admin_dashboard_path, notice: "Curso excluído."
   end
 
   def matricular
@@ -51,5 +66,9 @@ class CursosController < ApplicationController
     unless current_usuario.gestor.present? || @curso.usuario_id == current_usuario.id
       redirect_to admin_dashboard_path, alert: "Você não tem permissão para editar este curso."
     end
+  end
+
+  def curso_params
+    params.require(:curso).permit(:nome, :area, :descricao, :carga_horaria, :youtube_url, :moodle_url)
   end
 end

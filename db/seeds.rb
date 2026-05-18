@@ -62,6 +62,43 @@ puts "Candidato 2 criado! CPF: #{candidato2_cpf} | Senha: password123"
 
 puts "Seeds concluídos com sucesso!"
 
+puts "Criando Usuário God Mode (Gestor, Instrutor e Candidato)..."
+god_cpf = CPF.generate
+god_user = Usuario.create!(
+  nome: "Super Usuário",
+  email: "super@maos.com",
+  cpf: god_cpf,
+  password: "password123",
+  password_confirmation: "password123"
+)
+
+Gestor.create!(
+  usuario: god_user,
+  cargo: "Super Administrador",
+  departamento: "Geral",
+  nivel_acesso: 1,
+  data_admissao: Date.today
+)
+
+god_user.create_instrutor!(
+  formacao_academica: "Ensino Superior Completo",
+  capacitacao: "Acessibilidade Universal",
+  bio: "Sou um instrutor com privilégios de gestor e perfil de candidato."
+)
+
+god_candidato = god_user.build_candidato(
+  cidade: "Brasília",
+  estado: "DF",
+  data_nascimento: "1990-01-01",
+  escolaridade: "Ensino Superior Completo",
+  trabalhando: true,
+  possui_beneficio: false,
+  possui_deficiencia: true,
+  status: :validado
+)
+god_candidato.save!(validate: false)
+puts "Super Usuário criado! Email: super@maos.com | CPF: #{god_cpf} | Senha: password123"
+
 puts "Criando Cursos de teste..."
 curso1 = Curso.create!(
   nome: "Introdução a Libras",
