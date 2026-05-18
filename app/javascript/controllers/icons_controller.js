@@ -27,6 +27,12 @@ import {
   MessageCircle,
   MapPin,
   Send,
+  // --- Novos ícones para a tela de Cadastro ---
+  Lock, // Para os campos de senha
+  Eye, // Para o botão de visualizar senha
+  EyeOff, // Para quando a senha estiver visível
+  Contact, // Para o campo de CPF (ícone de crachá/documento)
+  BadgePlus, // Para o ícone do topo da página de criar conta
 } from "lucide";
 
 export default class extends Controller {
@@ -55,10 +61,15 @@ export default class extends Controller {
         HeartHandshake,
         ShieldCheck,
         LogIn,
-        Mail, // Novo (E-mail)
-        MessageCircle, // Novo (WhatsApp)
-        MapPin, // Novo (Endereço)
-        Send, // Novo (Botão Enviar)
+        Mail,
+        MessageCircle,
+        MapPin,
+        Send,
+        Lock,
+        Eye,
+        EyeOff,
+        Contact,
+        BadgePlus,
       },
     });
   }
