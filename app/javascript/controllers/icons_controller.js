@@ -27,6 +27,24 @@ import {
   MessageCircle,
   MapPin,
   Send,
+  // --- Ícones da tela de Cadastro ---
+  Lock,
+  Eye,
+  EyeOff,
+  Contact,
+  BadgePlus,
+  // --- Novos ícones para a tela de Completar Perfil ---
+  Map,
+  Briefcase,
+  FolderOpen,
+  ChevronDown,
+  EarOff,
+  Activity,
+  Brain,
+  BrainCircuit,
+  Folder,
+  FileText,
+  CloudUpload,
 } from "lucide";
 
 export default class extends Controller {
@@ -55,10 +73,27 @@ export default class extends Controller {
         HeartHandshake,
         ShieldCheck,
         LogIn,
-        Mail, // Novo (E-mail)
-        MessageCircle, // Novo (WhatsApp)
-        MapPin, // Novo (Endereço)
-        Send, // Novo (Botão Enviar)
+        Mail,
+        MessageCircle,
+        MapPin,
+        Send,
+        Lock,
+        Eye,
+        EyeOff,
+        Contact,
+        BadgePlus,
+        // --- Novos ícones ---
+        Map,
+        Briefcase,
+        FolderOpen,
+        ChevronDown,
+        EarOff,
+        Activity,
+        Brain,
+        BrainCircuit,
+        Folder,
+        FileText,
+        CloudUpload,
       },
     });
   }

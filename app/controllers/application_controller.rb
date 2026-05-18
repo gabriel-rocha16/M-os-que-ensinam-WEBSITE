@@ -3,9 +3,22 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, with: :not_found
 
   before_action :authenticate_usuario!
+  before_action :set_default_role
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :verificar_onboarding, unless: :devise_controller?
   helper_method :perfil_ativo, :perfis_disponiveis
+
+  def set_default_role
+    if usuario_signed_in? && session[:active_role].blank?
+      if current_usuario.gestor.present?
+        session[:active_role] = 'gestor'
+      elsif current_usuario.instrutor.present?
+        session[:active_role] = 'instrutor'
+      elsif current_usuario.candidato.present?
+        session[:active_role] = 'aluno'
+      end
+    end
+  end
 
   def perfis_disponiveis
     return [] unless current_usuario
@@ -18,11 +31,7 @@ class ApplicationController < ActionController::Base
 
   def perfil_ativo
     return nil unless current_usuario
-    return session[:active_role] if session[:active_role].present? && perfis_disponiveis.include?(session[:active_role])
-
-    novo_papel = perfis_disponiveis.first
-    session[:active_role] = novo_papel
-    novo_papel
+    session[:active_role]
   end
 
   def verificar_gestor_ativo!
@@ -46,17 +55,7 @@ class ApplicationController < ActionController::Base
   end
   # Redireciona após o login normal (caso já tenha conta)
   def after_sign_in_path_for(resource)
-    if resource.gestor.present?
-      admin_dashboard_path
-    elsif resource.candidato.present?
-      if resource.candidato.pendente? || resource.candidato.rejeitado?
-        candidato_path
-      else
-        aluno_dashboard_path
-      end
-    else
-      new_candidato_path
-    end
+    dashboard_gateway_path
   end
 
   def not_found
