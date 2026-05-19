@@ -4,7 +4,7 @@
   <header class="bg-white border-b border-[#E0E0E0] h-16 md:h-20 sticky top-0 z-40">
     <nav class="max-w-7xl mx-auto h-full px-4 md:px-10 flex items-center justify-between" aria-label="Navegação superior">
       <%= link_to root_path, class: "block transition-transform active:scale-95 hover:scale-105" do %>
-        <%= image_tag "logo.png", class: "h-10 md:h-14 w-auto object-contain" %>
+        <%= image_tag "logo.png", class: "h-10 md:h-12 w-auto object-contain" %>
       <% end %>
     </nav>
   </header>
@@ -12,95 +12,107 @@
   <%# Conteúdo Principal %>
   <main id="main-content" class="flex-1 flex items-center justify-center p-4 md:py-12">
     
-    <section class="w-full max-w-lg my-auto">
-      <div class="bg-white rounded-[2rem] border border-[#E0E0E0] p-6 md:p-10 shadow-xl shadow-blue-900/5">
+    <%# Container expandido para max-w-3xl para suportar as duas colunas em computadores %>
+    <section class="w-full max-w-3xl my-auto">
+      <div class="bg-white rounded-[2rem] border border-[#E0E0E0] p-6 md:p-12 shadow-lg">
         
-        <header class="text-center mb-8">
+        <header class="text-center mb-8 md:mb-10">
           <h1 class="text-2xl md:text-3xl font-extrabold text-[#003366]">Completar Perfil</h1>
-          <p class="text-[#666] text-sm mt-2">
-            Preencha suas informações pessoais e<br>envie seus documentos para concluir<br>seu cadastro.
+          <p class="text-[#666] text-sm md:text-base mt-2">
+            Preencha suas informações pessoais e envie seus documentos<br class="hidden md:block"> para concluir seu cadastro.
           </p>
         </header>
 
-        <%= form_with model: @candidato, local: true, html: { class: "flex flex-col gap-6" } do |f| %>
+        <%= form_with model: @candidato, local: true, html: { class: "flex flex-col gap-6 md:gap-8" } do |f| %>
           
           <%# --- SESSÃO 1: INFORMAÇÕES PESSOAIS --- %>
           <div>
-            <h2 class="text-base md:text-lg font-bold text-[#0066CC] flex items-center gap-2 border-b border-[#E0E0E0] pb-2 mb-4">
+            <h2 class="text-base md:text-lg font-bold text-[#0066CC] flex items-center gap-2 border-b border-[#E0E0E0] pb-2 mb-6">
               <div class="bg-[#E6F2FF] p-1.5 rounded-md">
-                <i data-lucide="contact" class="w-5 h-5 text-[#0066CC]"></i>
+                <i data-lucide="contact" class="w-5 h-5 md:w-6 md:h-6 text-[#0066CC]"></i>
               </div>
               Informações Pessoais
             </h2>
 
-            <div class="flex flex-col gap-4">
-              <%# Cidade %>
-              <div class="flex flex-col gap-1">
-                <%= f.label :cidade, class: "text-xs md:text-sm font-semibold text-[#003366]" %>
-                <div class="relative flex items-center">
-                  <i data-lucide="map-pin" class="absolute left-4 text-[#666] w-5 h-5"></i>
-                  <%= f.text_field :cidade, placeholder: "Digite sua cidade",
-                      class: "w-full h-12 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
-                </div>
-              </div>
-
-              <%# Estado %>
-              <div class="flex flex-col gap-1" data-controller="custom-select">
-                <%= f.label :estado, class: "text-xs md:text-sm font-semibold text-[#003366]" %>
-                <div class="relative">
-                  <%= f.hidden_field :estado, data: { custom_select_target: "input" } %>
-                  <button type="button" data-action="click->custom-select#toggle click@window->custom-select#hide" 
-                          class="w-full h-12 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm outline-none focus:border-[#0066CC] transition-all bg-white flex items-center justify-between text-[#666] hover:border-[#0066CC]">
-                    <i data-lucide="map" class="absolute left-4 w-5 h-5"></i>
-                    <span data-custom-select-target="displayText">Selecione seu estado</span>
-                    <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-200" data-custom-select-target="chevron"></i>
-                  </button>
-                  
-                  <div data-custom-select-target="menu" class="hidden absolute z-50 w-full mt-2 bg-white border border-[#D0D0D0] rounded-xl shadow-lg max-h-52 overflow-y-auto py-2">
-                    <% ["BA", "SP", "RJ", "MG", "PE", "CE", "PR", "SC", "RS", "Outros"].each do |uf| %>
-                      <div data-action="click->custom-select#select" data-value="<%= uf %>" class="px-4 py-2 hover:bg-[#F0F7FF] cursor-pointer text-sm text-[#333] transition-colors"><%= uf %></div>
-                    <% end %>
+            <div class="flex flex-col gap-4 md:gap-5">
+              
+              <%# GRID 1: Cidade e Estado lado a lado %>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                
+                <%# Cidade %>
+                <div class="flex flex-col gap-1.5">
+                  <%= f.label :cidade, class: "text-xs md:text-sm font-bold text-[#003366]" %>
+                  <div class="relative flex items-center">
+                    <i data-lucide="map-pin" class="absolute left-4 text-[#999] w-5 h-5"></i>
+                    <%= f.text_field :cidade, placeholder: "Digite sua cidade",
+                        class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
                   </div>
                 </div>
+
+                <%# Estado %>
+                <div class="flex flex-col gap-1.5" data-controller="custom-select">
+                  <%= f.label :estado, class: "text-xs md:text-sm font-bold text-[#003366]" %>
+                  <div class="relative">
+                    <%= f.hidden_field :estado, data: { custom_select_target: "input" } %>
+                    <button type="button" data-action="click->custom-select#toggle click@window->custom-select#hide" 
+                            class="w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] transition-all bg-white flex items-center justify-between text-[#666] hover:border-[#0066CC]">
+                      <i data-lucide="map" class="absolute left-4 text-[#999] w-5 h-5"></i>
+                      <span data-custom-select-target="displayText" class="truncate text-sm md:text-base">Selecione seu estado</span>
+                      <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-200 shrink-0" data-custom-select-target="chevron"></i>
+                    </button>
+                    
+                    <div data-custom-select-target="menu" class="hidden absolute z-50 w-full mt-2 bg-white border border-[#D0D0D0] rounded-xl shadow-lg max-h-52 overflow-y-auto py-2">
+                      <% ["BA", "SP", "RJ", "MG", "PE", "CE", "PR", "SC", "RS", "Outros"].each do |uf| %>
+                        <div data-action="click->custom-select#select" data-value="<%= uf %>" class="px-4 py-2 hover:bg-[#F0F7FF] cursor-pointer text-sm md:text-base text-[#333] transition-colors"><%= uf %></div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
               </div>
 
-              <%# Data de Nascimento %>
-              <div class="flex flex-col gap-1">
-                <%= f.label :data_nascimento, "Data de Nascimento", class: "text-xs md:text-sm font-semibold text-[#003366]" %>
-                <div class="relative flex items-center">
-                  <i data-lucide="calendar" class="absolute left-4 text-[#666] w-5 h-5"></i>
-                  <%= f.date_field :data_nascimento,
-                      class: "w-full h-12 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
-                </div>
-              </div>
+              <%# GRID 2: Data de Nascimento e Telefone lado a lado %>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 
-              <%# Telefone %>
-              <div class="flex flex-col gap-1">
-                <%= f.label :telefone, class: "text-xs md:text-sm font-semibold text-[#003366]" %>
-                <div class="relative flex items-center">
-                  <i data-lucide="phone" class="absolute left-4 text-[#666] w-5 h-5"></i>
-                  <%= f.text_field :telefone, placeholder: "(00) 0 0000-0000", data: { controller: "telefone-mask" },
-                      class: "w-full h-12 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
+                <%# Data de Nascimento %>
+                <div class="flex flex-col gap-1.5">
+                  <%= f.label :data_nascimento, "Data de Nascimento", class: "text-xs md:text-sm font-bold text-[#003366]" %>
+                  <div class="relative flex items-center">
+                    <i data-lucide="calendar" class="absolute left-4 text-[#999] w-5 h-5"></i>
+                    <%= f.date_field :data_nascimento,
+                        class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
+                  </div>
                 </div>
+
+                <%# Telefone %>
+                <div class="flex flex-col gap-1.5">
+                  <%= f.label :telefone, class: "text-xs md:text-sm font-bold text-[#003366]" %>
+                  <div class="relative flex items-center">
+                    <i data-lucide="phone" class="absolute left-4 text-[#999] w-5 h-5"></i>
+                    <%= f.text_field :telefone, placeholder: "(00) 0 0000-0000", data: { controller: "telefone-mask" },
+                        class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
+                  </div>
+                </div>
+
               </div>
 
               <%# Escolaridade %>
-              <div class="flex flex-col gap-1" data-controller="single-accordion">
-                <%= f.label :escolaridade, class: "text-xs md:text-sm font-semibold text-[#003366]" %>
+              <div class="flex flex-col gap-1.5" data-controller="single-accordion">
+                <%= f.label :escolaridade, class: "text-xs md:text-sm font-bold text-[#003366]" %>
                 <div class="w-full bg-white border border-[#D0D0D0] rounded-xl transition-all" data-single-accordion-target="container">
-                  <div class="h-12 px-4 flex items-center justify-between cursor-pointer" data-action="click->single-accordion#toggle">
-                    <div class="flex items-center gap-2 text-[#666]" data-single-accordion-target="headerText">
+                  <div class="h-12 md:h-14 px-4 flex items-center justify-between cursor-pointer" data-action="click->single-accordion#toggle">
+                    <div class="flex items-center gap-2 text-[#999]" data-single-accordion-target="headerText">
                       <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                      <span data-single-accordion-target="displayText" class="text-sm">Selecione sua escolaridade</span>
+                      <span data-single-accordion-target="displayText" class="text-sm md:text-base text-[#666]">Selecione sua escolaridade</span>
                     </div>
-                    <i data-lucide="chevron-down" class="w-5 h-5 text-[#666] transition-transform duration-200" data-single-accordion-target="chevron"></i>
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-[#666] transition-transform duration-200 shrink-0" data-single-accordion-target="chevron"></i>
                   </div>
                   <div data-single-accordion-target="menu" class="hidden flex-col gap-3 px-4 pb-4">
                     <hr class="border-[#E0E0E0] mb-1 -mt-1">
                     <% ["Sem escolaridade", "Ensino Fundamental Incompleto", "Ensino Fundamental Completo", "Ensino Medio Incompleto", "Ensino Medio Completo", "Ensino superior Incompleto", "Ensino superior Completo", "Pós Graduação"].each do |esc| %>
                       <label class="flex items-center gap-3 p-3 rounded-xl border border-[#D0D0D0] cursor-pointer hover:border-[#0066CC] transition-colors group">
                         <input type="radio" name="candidato[escolaridade]" value="<%= esc %>" data-action="change->single-accordion#select" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
-                        <span class="text-sm text-[#333] font-medium"><%= esc %></span>
+                        <span class="text-sm md:text-base text-[#333] font-medium"><%= esc %></span>
                       </label>
                     <% end %>
                   </div>
@@ -110,7 +122,7 @@
               <%# Checkbox: Trabalhando %>
               <label class="flex items-center gap-3 cursor-pointer mt-2 group w-fit">
                 <%= f.check_box :trabalhando, class: "w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer" %>
-                <div class="flex items-center gap-2 text-sm text-[#003366] font-medium group-hover:text-[#0066CC] transition-colors">
+                <div class="flex items-center gap-2 text-sm md:text-base text-[#333] font-medium group-hover:text-[#0066CC] transition-colors">
                   <i data-lucide="briefcase" class="w-5 h-5 text-[#666] group-hover:text-[#0066CC]"></i>
                   Está trabalhando atualmente?
                 </div>
@@ -120,7 +132,7 @@
               <div class="flex flex-col gap-2" data-controller="conditional">
                 <label class="flex items-center gap-3 cursor-pointer group w-fit">
                   <%= f.check_box :possui_beneficio, data: { action: "change->conditional#toggle", conditional_target: "checkbox" }, class: "w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer" %>
-                  <div class="flex items-center gap-2 text-sm text-[#003366] font-medium group-hover:text-[#0066CC] transition-colors">
+                  <div class="flex items-center gap-2 text-sm md:text-base text-[#333] font-medium group-hover:text-[#0066CC] transition-colors">
                     <i data-lucide="folder-open" class="w-5 h-5 text-[#666] group-hover:text-[#0066CC]"></i>
                     Recebe algum beneficio social?
                   </div>
@@ -128,8 +140,8 @@
 
                 <div data-conditional-target="content" class="hidden w-full mt-2">
                   <div class="w-full bg-white border border-[#D0D0D0] rounded-xl transition-all" data-controller="multi-dropdown" data-multi-dropdown-target="container">
-                    <div class="h-12 px-4 flex items-center justify-between cursor-pointer" data-action="click->multi-dropdown#toggle">
-                      <span class="text-sm text-[#B3B3B3]">Selecione o beneficio...</span>
+                    <div class="h-12 md:h-14 px-4 flex items-center justify-between cursor-pointer" data-action="click->multi-dropdown#toggle">
+                      <span class="text-sm md:text-base text-[#666]">Selecione o beneficio...</span>
                       <i data-lucide="chevron-down" class="w-5 h-5 text-[#666] transition-transform duration-200" data-multi-dropdown-target="chevron"></i>
                     </div>
                     <div data-multi-dropdown-target="menu" class="hidden flex-col gap-3 px-4 pb-4">
@@ -137,18 +149,18 @@
                       <% beneficios = ["Aposentadoria por Invalidez", "Auxílio-Doença", "Auxílio Brasil", "Bolsa Família", "Pensão por Morte", "BPC/LOAS\n(Benefício de Prestação Continuada)"] %>
                       <% beneficios.each do |ben| %>
                         <label class="flex items-center gap-3 p-3 rounded-xl border border-[#D0D0D0] cursor-pointer hover:border-[#0066CC] transition-colors group">
-                          <input type="checkbox" name="candidato[beneficios_lista][]" value="<%= ben %>" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
-                          <span class="text-sm text-[#333] font-medium whitespace-pre-line leading-tight"><%= ben %></span>
+                          <input type="checkbox" name="candidato[beneficios_lista][]" value="<%= ben %>" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer shrink-0">
+                          <span class="text-sm md:text-base text-[#333] font-medium whitespace-pre-line leading-tight"><%= ben %></span>
                         </label>
                       <% end %>
 
                       <div class="rounded-xl border border-[#D0D0D0] flex flex-col transition-colors overflow-hidden" data-multi-dropdown-target="otherContainer">
                         <label class="flex items-center gap-3 p-3 cursor-pointer group">
                           <input type="checkbox" name="candidato[beneficios_lista][]" value="Outros..." data-action="change->multi-dropdown#toggleOther" data-multi-dropdown-target="otherCheckbox" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
-                          <span class="text-sm text-[#333] font-medium">Outros...</span>
+                          <span class="text-sm md:text-base text-[#333] font-medium">Outros...</span>
                         </label>
                         <div data-multi-dropdown-target="otherInputWrapper" class="hidden px-4 pb-4 border-t border-[#E0E0E0] pt-3">
-                          <input type="text" name="candidato[outro_beneficio]" placeholder="Informe seu benefício..." class="w-full text-sm outline-none text-[#666] bg-transparent border-none p-0 focus:ring-0 placeholder-[#B3B3B3]">
+                          <input type="text" name="candidato[outro_beneficio]" placeholder="Informe seu benefício..." class="w-full text-sm md:text-base outline-none text-[#333] bg-transparent border-none p-0 focus:ring-0 placeholder-[#999]">
                         </div>
                       </div>
                     </div>
@@ -157,11 +169,11 @@
               </div>
 
               <%# Deficiências %>
-              <div class="flex flex-col gap-1 mt-2">
-                <label class="text-xs md:text-sm font-semibold text-[#003366]">Qual o seu tipo de deficiencia?</label>
+              <div class="flex flex-col gap-1.5 mt-2">
+                <label class="text-xs md:text-sm font-bold text-[#003366]">Qual o seu tipo de deficiência?</label>
                 <div class="w-full bg-white border border-[#D0D0D0] rounded-xl transition-all" data-controller="multi-dropdown" data-multi-dropdown-target="container">
-                  <div class="h-12 px-4 flex items-center justify-between cursor-pointer" data-action="click->multi-dropdown#toggle">
-                    <span class="text-sm text-[#B3B3B3]">Selecione sua deficiência...</span>
+                  <div class="h-12 md:h-14 px-4 flex items-center justify-between cursor-pointer" data-action="click->multi-dropdown#toggle">
+                    <span class="text-sm md:text-base text-[#666]">Selecione algumas das opções...</span>
                     <i data-lucide="chevron-down" class="w-5 h-5 text-[#666] transition-transform duration-200" data-multi-dropdown-target="chevron"></i>
                   </div>
                   <div data-multi-dropdown-target="menu" class="hidden flex-col gap-3 px-4 pb-4">
@@ -176,9 +188,9 @@
                     %>
                     <% deficiencias.each do |deficiencia| %>
                       <label class="flex items-center gap-3 p-3 rounded-xl border border-[#D0D0D0] cursor-pointer hover:border-[#0066CC] transition-colors group">
-                        <input type="checkbox" name="candidato[deficiencias_lista][]" value="<%= deficiencia[:nome] %>" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
-                        <i data-lucide="<%= deficiencia[:icon] %>" class="w-5 h-5 text-[#0066CC]"></i>
-                        <span class="text-sm text-[#333] font-medium leading-tight"><%= deficiencia[:nome] %></span>
+                        <input type="checkbox" name="candidato[deficiencias_lista][]" value="<%= deficiencia[:nome] %>" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer shrink-0">
+                        <i data-lucide="<%= deficiencia[:icon] %>" class="w-5 h-5 text-[#0066CC] shrink-0"></i>
+                        <span class="text-sm md:text-base text-[#333] font-medium leading-tight"><%= deficiencia[:nome] %></span>
                       </label>
                     <% end %>
 
@@ -186,10 +198,10 @@
                       <label class="flex items-center gap-3 p-3 cursor-pointer group">
                         <input type="checkbox" name="candidato[deficiencias_lista][]" value="Outros..." data-action="change->multi-dropdown#toggleOther" data-multi-dropdown-target="otherCheckbox" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
                         <i data-lucide="folder" class="w-5 h-5 text-[#0066CC]"></i>
-                        <span class="text-sm text-[#333] font-medium">Outros...</span>
+                        <span class="text-sm md:text-base text-[#333] font-medium">Outros...</span>
                       </label>
                       <div data-multi-dropdown-target="otherInputWrapper" class="hidden px-4 pb-4 border-t border-[#E0E0E0] pt-3">
-                        <input type="text" name="candidato[tipo_deficiencia]" placeholder="Descreva sua deficiência para que possamos adaptar melhor a sua experiência..." class="w-full text-sm outline-none text-[#666] bg-transparent border-none p-0 focus:ring-0 placeholder-[#B3B3B3]">
+                        <input type="text" name="candidato[tipo_deficiencia]" placeholder="Descreva sua deficiência para que possamos adaptar melhor a sua experiência..." class="w-full text-sm md:text-base outline-none text-[#333] bg-transparent border-none p-0 focus:ring-0 placeholder-[#999]">
                       </div>
                     </div>
                   </div>
@@ -198,25 +210,26 @@
             </div>
           </div>
 
-          <%# --- SESSÃO 2: DOCUMENTOS (COM FEEDBACK VISUAL) --- %>
-          <div class="mt-4">
+          <%# --- SESSÃO 2: DOCUMENTOS (PERFEITAMENTE SIMÉTRICA E ALINHADA) --- %>
+          <div class="mt-6 md:mt-8">
             <h2 class="text-base md:text-lg font-bold text-[#0066CC] flex items-center gap-2 border-b border-[#E0E0E0] pb-2 mb-6">
               <div class="bg-[#E6F2FF] p-1.5 rounded-md">
-                <i data-lucide="file-text" class="w-5 h-5 text-[#0066CC]"></i>
+                <i data-lucide="file-text" class="w-5 h-5 md:w-6 md:h-6 text-[#0066CC]"></i>
               </div>
               Documentos
             </h2>
 
-            <div class="flex flex-col gap-6">
-              <%# Currículo %>
-              <div class="flex flex-col gap-2" data-controller="file-upload">
-                <label for="candidato_curriculo" class="text-sm">
-                  <span class="font-bold text-[#333]">Currículo</span> 
-                  <span class="text-[#666] font-normal">(PDF - Máx. 5MB)</span>
+            <%# GRID 3: Ambos lado a lado no desktop e alinhados na base para evitar quebras de texto %>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-end">
+              
+              <%# Currículo - Borda tracejada (dashed) %>
+              <div class="flex flex-col gap-2 h-full" data-controller="file-upload">
+                <label for="candidato_curriculo" class="leading-tight">
+                  <span class="text-sm font-bold text-[#333]">Currículo</span> 
+                  <span class="text-xs text-[#666] font-normal">(PDF - Máx. 5MB)</span>
                 </label>
-                <%# Borda Sólida conforme o design %>
-                <div class="relative w-full h-24 border-2 border-[#0066CC] rounded-xl bg-[#F0F7FF] flex flex-col items-center justify-center text-[#0066CC] hover:bg-[#E6F2FF] transition-colors cursor-pointer group px-4">
-                  <i data-lucide="cloud-upload" class="w-7 h-7 mb-2 group-hover:scale-110 transition-transform"></i>
+                <div class="relative w-full h-28 md:h-32 border-2 border-dashed border-[#0066CC] rounded-xl bg-[#F0F7FF] flex flex-col items-center justify-center text-[#0066CC] hover:bg-[#E6F2FF] transition-colors cursor-pointer group px-4 mt-auto">
+                  <i data-lucide="cloud-upload" class="w-7 h-7 md:w-8 md:h-8 mb-2 group-hover:scale-110 transition-transform"></i>
                   <span class="text-sm font-medium text-center" data-file-upload-target="label">Clique ou arraste o arquivo aqui</span>
                   <%= f.file_field :curriculo, direct_upload: true, accept: ".pdf",
                       data: { file_upload_target: "input", action: "change->file-upload#updatePreview" },
@@ -224,39 +237,39 @@
                 </div>
               </div>
 
-              <%# Laudos Médicos %>
-              <div class="flex flex-col gap-2" data-controller="file-upload">
-                <label for="candidato_laudos_medicos" class="text-sm">
-                  <span class="font-bold text-[#333]">Laudos Médicos</span> 
-                  <span class="text-[#666] font-normal">(PDF, PNG, JPG - Máx. 5MB)</span>
+              <%# Laudos Médicos - Borda tracejada (dashed) %>
+              <div class="flex flex-col gap-2 h-full" data-controller="file-upload">
+                <label for="candidato_laudos_medicos" class="leading-tight">
+                  <span class="text-sm font-bold text-[#333]">Laudos Médicos</span> 
+                  <span class="text-xs text-[#666] font-normal">(PDF, PNG, JPG - Máx. 5MB)</span>
                 </label>
-                <%# Borda Tracejada (Dashed) conforme o design %>
-                <div class="relative w-full h-24 border-2 border-dashed border-[#0066CC] rounded-xl bg-[#F0F7FF] flex flex-col items-center justify-center text-[#0066CC] hover:bg-[#E6F2FF] transition-colors cursor-pointer group px-4">
-                  <i data-lucide="cloud-upload" class="w-7 h-7 mb-2 group-hover:scale-110 transition-transform"></i>
+                <div class="relative w-full h-28 md:h-32 border-2 border-dashed border-[#0066CC] rounded-xl bg-[#F0F7FF] flex flex-col items-center justify-center text-[#0066CC] hover:bg-[#E6F2FF] transition-colors cursor-pointer group px-4 mt-auto">
+                  <i data-lucide="cloud-upload" class="w-7 h-7 md:w-8 md:h-8 mb-2 group-hover:scale-110 transition-transform"></i>
                   <span class="text-sm font-medium text-center" data-file-upload-target="label">Clique ou arraste o arquivo aqui</span>
                   <%= f.file_field :laudos_medicos, multiple: true, direct_upload: true, accept: ".pdf,.png,.jpg,.jpeg",
                       data: { file_upload_target: "input", action: "change->file-upload#updatePreview" },
                       class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer" %>
                 </div>
-                <p class="text-xs text-center text-[#666] mt-1">
-                  Aceitamos PDF, PNG e JPG (Máx. 5MB por arquivo).<br>Selecione de 1 a 3 arquivos para laudos
-                </p>
               </div>
             </div>
+            
+            <%# Texto de apoio abaixo do grid %>
+            <p class="text-[11px] md:text-xs text-center md:text-left text-[#666] mt-3">
+              Aceitamos PDF, PNG e JPG (Máx. 5MB por arquivo). Selecione de 1 a 3 arquivos para laudos.
+            </p>
 
-            <%# Linha divisória exata do design %>
             <hr class="border-t border-[#E0E0E0] mt-8 mb-6">
 
             <%# Botão Finalizar %>
             <div>
-              <%= f.submit "Finalizar Cadastro", class: "bg-[#0066CC] text-white hover:bg-[#0052a3] active:scale-[0.98] px-8 py-4 text-base md:text-lg font-bold rounded-xl w-full cursor-pointer transition-all shadow-md" %>
+              <%= f.submit "Finalizar Cadastro", class: "bg-[#0066CC] text-white hover:bg-[#0052a3] active:scale-[0.98] px-8 py-3.5 md:py-4 text-base md:text-lg font-bold rounded-xl w-full cursor-pointer transition-all shadow-md" %>
             </div>
           </div>
         <% end %>
       </div>
 
-      <p class="text-center text-[10px] md:text-xs text-[#999] mt-6 px-4">
-        Plataforma acessível conforme normas <abbr title="Web Content Accessibility Guidelines">WCAG</abbr> 2.1 Nível AA
+      <p class="text-center text-xs text-[#999] mt-6 px-4">
+        Plataforma acessível – WCAG 2.1 Nível AA
       </p>
     </section>
   </main>

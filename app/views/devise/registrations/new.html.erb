@@ -1,16 +1,16 @@
-<div class="min-h-screen bg-gradient-to-br from-[#F5F7FA] to-[#E6F2FF] flex flex-col">
+<div class="min-h-screen bg-[#F0F6FF] flex flex-col font-sans" data-controller="lucide">
   
   <%# Header e navbar %>
   <header class="bg-white border-b border-[#E0E0E0] h-16 md:h-20 sticky top-0 z-40">
     <nav class="max-w-7xl mx-auto h-full px-4 md:px-10 flex items-center justify-between" aria-label="Navegação superior">
       <%= link_to root_path, class: "block transition-transform active:scale-95 hover:scale-105", aria: { label: "Ir para a Home" } do %>
-        <%= image_tag "logo.png", class: "h-10 md:h-14 w-auto object-contain" %>
+        <%= image_tag "logo.png", class: "h-10 md:h-12 w-auto object-contain" %>
       <% end %>
 
       <div class="flex items-center gap-2 md:gap-4">
         <p class="text-xs md:text-sm text-[#666] hidden xs:block">Já tem conta?</p>
         <%= link_to "Fazer login", new_session_path(resource_name), 
-            class: "text-[#0066CC] font-semibold hover:underline text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-[#0066CC] rounded px-2 py-1" %>
+            class: "text-[#0066CC] font-bold hover:underline text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-[#0066CC] rounded px-2 py-1" %>
       </div>
     </nav>
   </header>
@@ -18,110 +18,111 @@
   <%# Conteúdo Principal %>
   <main id="main-content" class="flex-1 flex items-center justify-center p-4 md:py-12">
     
-    <section class="w-full max-w-md my-auto" aria-labelledby="register-heading">
-      <div class="bg-white rounded-[2rem] border border-[#E0E0E0] p-6 md:p-10 shadow-xl shadow-blue-900/5">
+    <section class="w-full max-w-[440px] my-auto" aria-labelledby="register-heading">
+      <div class="bg-white rounded-[2rem] border border-[#E0E0E0] p-6 md:p-10 shadow-lg">
         
         <header class="text-center mb-6 md:mb-8">
-          <div class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-[#E6F2FF] mx-auto mb-4" aria-hidden="true">
-            <i class="ri-logout-box-r-line text-2xl md:text-3xl text-[#0066CC]"></i>
+          <div class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-[#E6F2FF] mx-auto mb-5" aria-hidden="true">
+            <i data-lucide="log-in" class="w-7 h-7 md:w-8 md:h-8 text-[#0066CC]"></i>
           </div>
-          <h1 id="register-heading" class="text-xl md:text-2xl font-extrabold text-[#003366]">Criar Conta</h1>
-          <p class="text-[#666] text-xs md:text-sm mt-2">Preencha os dados abaixo para<br>criar sua conta.</p>
+          <h1 id="register-heading" class="text-2xl md:text-3xl font-extrabold text-[#003366]">Criar Conta</h1>
+          <p class="text-[#666] text-sm mt-2">Preencha os dados abaixo para<br>criar sua conta.</p>
         </header>
 
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "flex flex-col gap-4 md:gap-5" }) do |f| %>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "flex flex-col gap-5" }) do |f| %>
           
           <%= render "devise/shared/error_messages", resource: resource %>
 
           <%# Sessão de Nome Completo %>
-          <div class="flex flex-col gap-1">
-            <%= f.label :nome, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
+          <div class="flex flex-col gap-1.5">
+            <%= f.label :nome, class: "text-xs md:text-sm font-bold text-[#003366]" do %>
               Nome Completo <span class="text-red-500">*</span>
             <% end %>
             <div class="relative flex items-center">
-              <span class="absolute left-4 text-[#666]" aria-hidden="true"><i class="ri-user-line"></i></span>
+              <i data-lucide="user" class="absolute left-4 text-[#999] w-5 h-5"></i>
               <%= f.text_field :nome, autofocus: true, placeholder: "Digite seu nome completo",
-                  class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
+                  class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
             </div>
           </div>
 
           <%# Sessão de CPF %>
-          <div class="flex flex-col gap-1">
-            <%= f.label :cpf, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
+          <div class="flex flex-col gap-1.5">
+            <%= f.label :cpf, class: "text-xs md:text-sm font-bold text-[#003366]" do %>
               CPF <span class="text-red-500">*</span>
             <% end %>
             <div class="relative flex items-center">
-              <span class="absolute left-4 text-[#666]" aria-hidden="true"><i class="ri-profile-line"></i></span>
+              <i data-lucide="contact" class="absolute left-4 text-[#999] w-5 h-5"></i>
               <%= f.text_field :cpf, data: { controller: "cpf-mask" }, maxlength: 14, placeholder: "000.000.000-00",
-                  class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
+                  class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
             </div>
           </div>
 
           <%# Sessão de E-mail %>
-          <div class="flex flex-col gap-1">
-            <%= f.label :email, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
+          <div class="flex flex-col gap-1.5">
+            <%= f.label :email, class: "text-xs md:text-sm font-bold text-[#003366]" do %>
               E-mail <span class="text-red-500">*</span>
             <% end %>
             <div class="relative flex items-center">
-              <span class="absolute left-4 text-[#666]" aria-hidden="true"><i class="ri-mail-line"></i></span>
+              <i data-lucide="mail" class="absolute left-4 text-[#999] w-5 h-5"></i>
               <%= f.email_field :email, autocomplete: "email", placeholder: "seu@email.com",
-                  class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
+                  class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
             </div>
           </div>
 
           <%# Sessão de Senha %>
-          <div class="flex flex-col gap-1" data-controller="password-visibility">
-            <%= f.label :password, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
+          <div class="flex flex-col gap-1.5" data-controller="password-visibility">
+            <%= f.label :password, class: "text-xs md:text-sm font-bold text-[#003366]" do %>
               Senha <span class="text-red-500">*</span>
             <% end %>
             <div class="relative flex items-center">
-              <span class="absolute left-4 text-[#666]"><i class="ri-lock-line"></i></span>
+              <i data-lucide="lock" class="absolute left-4 text-[#999] w-5 h-5"></i>
               <%= f.password_field :password, autocomplete: "new-password", placeholder: "Digite sua senha",
                   data: { password_visibility_target: "input" },
-                  class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-12 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
+                  class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-12 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
               <button type="button" 
                       data-action="click->password-visibility#toggle"
-                      class="absolute right-4 text-[#666] hover:text-[#0066CC] p-1" 
+                      class="absolute right-4 text-[#999] hover:text-[#0066CC] p-1 transition-colors" 
                       aria-label="Mostrar ou ocultar senha">
-                <i class="ri-eye-line text-lg" data-password_visibility_target="icon"></i>
+                <i data-lucide="eye" class="w-5 h-5" data-password_visibility_target="icon"></i>
               </button>
             </div>
           </div>
 
           <%# Sessão de Confirmar Senha %>
-          <div class="flex flex-col gap-1" data-controller="password-visibility">
-            <%= f.label :password_confirmation, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
+          <div class="flex flex-col gap-1.5" data-controller="password-visibility">
+            <%= f.label :password_confirmation, class: "text-xs md:text-sm font-bold text-[#003366]" do %>
               Confirmar Senha <span class="text-red-500">*</span>
             <% end %>
             <div class="relative flex items-center">
-              <span class="absolute left-4 text-[#666]"><i class="ri-lock-line"></i></span>
+              <i data-lucide="lock" class="absolute left-4 text-[#999] w-5 h-5"></i>
               <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirme sua senha",
                   data: { password_visibility_target: "input" },
-                  class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-12 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
+                  class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-12 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
               <button type="button" 
                       data-action="click->password-visibility#toggle"
-                      class="absolute right-4 text-[#666] hover:text-[#0066CC] p-1" 
+                      class="absolute right-4 text-[#999] hover:text-[#0066CC] p-1 transition-colors" 
                       aria-label="Mostrar ou ocultar senha">
-                <i class="ri-eye-line text-lg" data-password_visibility_target="icon"></i>
+                <i data-lucide="eye" class="w-5 h-5" data-password_visibility_target="icon"></i>
               </button>
             </div>
           </div>
 
           <%# Botão de Cadastro %>
-          <div class="mt-2">
-            <%= f.submit "Cadastrar", class: "bg-[#0066CC] text-white hover:bg-[#0052a3] active:scale-[0.98] px-8 py-3 md:py-4 text-base md:text-lg font-semibold rounded-full w-full cursor-pointer transition-all shadow-md hover:shadow-lg" %>
+          <div class="mt-4">
+            <%= f.submit "Cadastrar", class: "bg-[#0066CC] text-white hover:bg-[#0052a3] active:scale-[0.98] px-8 py-3.5 md:py-4 text-base md:text-lg font-bold rounded-full w-full cursor-pointer transition-all shadow-md" %>
           </div>
         <% end %>
 
-        <footer class="mt-6 pt-6 border-t border-[#E0E0E0] text-center">
-          <p class="text-xs md:text-sm text-[#666]">
-            Já tem conta? <%= link_to "Fazer login", new_session_path(resource_name), class: "text-[#0066CC] font-bold hover:underline" %>
+        <%# Linha separadora e Link de Login alinhados com o Design %>
+        <div class="mt-8 pt-6 border-t border-[#F0F0F0] text-center">
+          <p class="text-sm text-[#666]">
+            Já tem conta? <%= link_to "Fazer login", new_session_path(resource_name), class: "text-[#0066CC] font-bold hover:underline ml-1" %>
           </p>
-        </footer>
+        </div>
       </div>
 
-      <p class="text-center text-[10px] md:text-xs text-[#999] mt-6 px-4">
-        Plataforma acessível conforme normas <abbr title="Web Content Accessibility Guidelines">WCAG</abbr> 2.1 Nível AA
+      <p class="text-center text-xs text-[#999] mt-6 px-4">
+        Plataforma acessível – WCAG 2.1 Nível AA
       </p>
     </section>
   </main>
@@ -130,7 +131,7 @@
   <footer role="contentinfo"> 
     <button class="fixed bottom-6 right-6 w-12 h-12 md:w-14 md:h-14 bg-[#FFD700] text-[#003366] rounded-full flex items-center justify-center shadow-lg active:scale-90 hover:scale-110 transition-all duration-300 z-50 focus:ring-4 focus:ring-yellow-400/50" 
             aria-label="Recursos de acessibilidade">
-      <i class="ri-user-heart-line text-xl md:text-2xl"></i>
+      <i data-lucide="heart-handshake" class="w-6 h-6 md:w-7 md:h-7"></i>
     </button>
     <%= render "shared/accessibility_panel", translate: "no" %>
   </footer>
