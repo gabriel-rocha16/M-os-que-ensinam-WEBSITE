@@ -14,8 +14,11 @@ class Candidato < ApplicationRecord
   has_many_attached :laudos_medicos
   has_one_attached :curriculo
 
+  attr_accessor :beneficios_lista, :outro_beneficio, :deficiencias_lista
+
   before_validation :limpar_telefone
   before_create :verificar_aprovacao_automatica
+  before_save :processar_listas
 
   validates :laudos_medicos, attached: true,
                              content_type: ['application/pdf', 'image/jpeg', 'image/png'],
@@ -64,6 +67,34 @@ class Candidato < ApplicationRecord
   def verificar_aprovacao_automatica
     if Configuracao.atual.aprovacao_automatica?
       self.status = :validado
+    end
+  end
+
+  def processar_listas
+    if beneficios_lista.present?
+      lista_ben = Array(beneficios_lista).reject { |b| b == "Outros..." || b.blank? }
+      lista_ben << self.outro_beneficio if self.outro_beneficio.present?
+      
+      self.beneficios = lista_ben.map do |nome|
+        Beneficio.find_or_create_by!(nome: nome) do |b|
+          b.descricao = nome
+        end
+      end
+    end
+    
+    if deficiencias_lista.present?
+      lista_def = Array(deficiencias_lista).reject { |d| d == "Outros..." || d.blank? }
+      
+      self.deficiencias = lista_def.map do |nome|
+        Deficiencia.find_or_create_by!(tipo: nome) do |d|
+          d.descricao = nome
+        end
+      end
+
+      # Salvar também no campo texto nativo para retrocompatibilidade
+      lista_texto = lista_def.dup
+      lista_texto << self.tipo_deficiencia if self.tipo_deficiencia.present?
+      self.tipo_deficiencia = lista_texto.join(", ") if lista_texto.any?
     end
   end
 end
