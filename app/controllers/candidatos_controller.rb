@@ -50,7 +50,8 @@ class CandidatosController < ApplicationController
       :cidade, :estado, :data_nascimento, :escolaridade,
       :trabalhando, :possui_beneficio, :possui_deficiencia, 
       :tipo_deficiencia, :beneficio_tipo, :curriculo_url,
-      :telefone, :curriculo,
+      :telefone, :curriculo, :outro_beneficio,
+      beneficios_lista: [], deficiencias_lista: [],
       laudos_medicos: []
     )
   end
