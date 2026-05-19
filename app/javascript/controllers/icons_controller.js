@@ -45,7 +45,15 @@ import {
   Folder,
   FileText,
   CloudUpload,
-} from "lucide";
+  // --- Ícones adicionados para o Perfil Social, Documentos e Ações ---
+  Edit3,
+  IdCard,
+  DollarSign,
+  PlusCircle,
+  FileCheck,
+  Paperclip,
+  ExternalLink,
+} from "lucide"
 
 export default class extends Controller {
   connect() {
@@ -94,7 +102,15 @@ export default class extends Controller {
         Folder,
         FileText,
         CloudUpload,
+        // --- Ícones mapeados  ---
+        Edit3,
+        IdCard,
+        DollarSign,
+        PlusCircle,
+        FileCheck,
+        Paperclip,
+        ExternalLink,
       },
-    });
+    })
   }
 }
