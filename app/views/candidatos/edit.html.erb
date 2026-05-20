@@ -1,97 +1,304 @@
-<div class="max-w-3xl mx-auto mt-10 px-5 pb-10">
-  <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
-    <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-    Editar Perfil
-  </h2>
+<div class="min-h-screen bg-gradient-to-br from-[#F5F7FA] to-[#E6F2FF] flex flex-col font-sans" data-controller="lucide">
+  
+  <%# Header %>
+  <header class="bg-white border-b border-[#E0E0E0] h-16 md:h-20 sticky top-0 z-40">
+    <nav class="max-w-7xl mx-auto h-full px-4 md:px-10 flex items-center justify-between" aria-label="Navegação superior">
+      <%= link_to root_path, class: "block transition-transform active:scale-95 hover:scale-105" do %>
+        <%= image_tag "logo.png", class: "h-10 md:h-12 w-auto object-contain" %>
+      <% end %>
+    </nav>
+  </header>
 
-  <%= form_with model: @candidato, url: candidato_path, method: :patch, local: true, html: { class: "bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 border border-gray-100" } do |f| %>
-    <% if @candidato.errors.any? %>
-      <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-r" role="alert">
-        <p class="font-bold">Atenção!</p>
-        <ul class="list-disc pl-5 mt-1">
-          <% @candidato.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
+  <%# Conteúdo Principal %>
+  <main id="main-content" class="flex-1 flex items-center justify-center p-4 md:py-12">
+    
+    <section class="w-full max-w-3xl my-auto">
+      <div class="bg-white rounded-[2rem] border border-[#E0E0E0] p-6 md:p-12 shadow-lg">
+        
+        <header class="text-center mb-8 md:mb-10">
+          <h1 class="text-2xl md:text-3xl font-extrabold text-[#003366]">Editar Perfil</h1>
+          <p class="text-[#666] text-sm md:text-base mt-2">
+            Atualize suas informações pessoais e gerencie seus documentos salvos.
+          </p>
+        </header>
+
+        <%= form_with model: @candidato, url: candidato_path, method: :patch, local: true, html: { class: "flex flex-col gap-6 md:gap-8" } do |f| %>
+          
+          <%# Exibição de Erros de Validação %>
+          <% if @candidato.errors.any? %>
+            <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-r" role="alert">
+              <p class="font-bold text-sm md:text-base">Atenção ao preencher os campos:</p>
+              <ul class="list-disc pl-5 mt-1 text-xs md:text-sm">
+                <% @candidato.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
           <% end %>
-        </ul>
+
+          <%# --- SESSÃO 1: INFORMAÇÕES PESSOAIS --- %>
+          <div>
+            <h2 class="text-base md:text-lg font-bold text-[#0066CC] flex items-center gap-2 border-b border-[#E0E0E0] pb-2 mb-6">
+              <div class="bg-[#E6F2FF] p-1.5 rounded-md">
+                <i data-lucide="edit-3" class="w-5 h-5 md:w-6 md:h-6 text-[#0066CC]"></i>
+              </div>
+              Alterar Informações Pessoais
+            </h2>
+
+            <div class="flex flex-col gap-4 md:gap-5">
+              
+              <%# GRID 1: Cidade e Estado %>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                
+                <%# Cidade %>
+                <div class="flex flex-col gap-1.5">
+                  <%= f.label :cidade, class: "text-xs md:text-sm font-bold text-[#003366]" %>
+                  <div class="relative flex items-center">
+                    <i data-lucide="map-pin" class="absolute left-4 text-[#999] w-5 h-5"></i>
+                    <%= f.text_field :cidade, placeholder: "Digite sua cidade",
+                        class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
+                  </div>
+                </div>
+
+                <%# Estado (Custom Select igual ao New) %>
+                <div class="flex flex-col gap-1.5" data-controller="custom-select">
+                  <%= f.label :estado, class: "text-xs md:text-sm font-bold text-[#003366]" %>
+                  <div class="relative">
+                    <%= f.hidden_field :estado, data: { custom_select_target: "input" } %>
+                    <button type="button" data-action="click->custom-select#toggle click@window->custom-select#hide" 
+                            class="w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] transition-all bg-white flex items-center justify-between text-[#333] hover:border-[#0066CC]">
+                      <i data-lucide="map" class="absolute left-4 text-[#999] w-5 h-5"></i>
+                      <span data-custom-select-target="displayText" class="truncate text-sm md:text-base">
+                        <%= @candidato.estado.present? ? @candidato.estado : "Selecione seu estado" %>
+                      </span>
+                      <i data-lucide="chevron-down" class="w-5 h-5 text-[#666] transition-transform duration-200 shrink-0" data-custom-select-target="chevron"></i>
+                    </button>
+                    
+                    <div data-custom-select-target="menu" class="hidden absolute z-50 w-full mt-2 bg-white border border-[#D0D0D0] rounded-xl shadow-lg max-h-52 overflow-y-auto py-2">
+                      <% ["BA", "SP", "RJ", "MG", "PE", "CE", "PR", "SC", "RS", "Outros"].each do |uf| %>
+                        <div data-action="click->custom-select#select" data-value="<%= uf %>" class="px-4 py-2 hover:bg-[#F0F7FF] cursor-pointer text-sm md:text-base text-[#333] transition-colors"><%= uf %></div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <%# GRID 2: Data de Nascimento e Telefone %>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+
+                <%# Data de Nascimento %>
+                <div class="flex flex-col gap-1.5">
+                  <%= f.label :data_nascimento, "Data de Nascimento", class: "text-xs md:text-sm font-bold text-[#003366]" %>
+                  <div class="relative flex items-center">
+                    <i data-lucide="calendar" class="absolute left-4 text-[#999] w-5 h-5"></i>
+                    <%= f.date_field :data_nascimento,
+                        class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
+                  </div>
+                </div>
+
+                <%# Telefone %>
+                <div class="flex flex-col gap-1.5">
+                  <%= f.label :telefone, class: "text-xs md:text-sm font-bold text-[#003366]" %>
+                  <div class="relative flex items-center">
+                    <i data-lucide="phone" class="absolute left-4 text-[#999] w-5 h-5"></i>
+                    <%= f.text_field :telefone, placeholder: "(00) 0 0000-0000", data: { controller: "telefone-mask" },
+                        class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
+                  </div>
+                </div>
+
+              </div>
+
+              <%# Escolaridade (Accordion Dinâmico) %>
+              <div class="flex flex-col gap-1.5" data-controller="single-accordion">
+                <%= f.label :escolaridade, class: "text-xs md:text-sm font-bold text-[#003366]" %>
+                <div class="w-full bg-white border border-[#D0D0D0] rounded-xl transition-all" data-single-accordion-target="container">
+                  <div class="h-12 md:h-14 px-4 flex items-center justify-between cursor-pointer" data-action="click->single-accordion#toggle">
+                    <div class="flex items-center gap-2 text-[#333]" data-single-accordion-target="headerText">
+                      <i data-lucide="graduation-cap" class="w-5 h-5 text-[#999]"></i>
+                      <span data-single-accordion-target="displayText" class="text-sm md:text-base">
+                        <%= @candidato.escolaridade.present? ? @candidato.escolaridade : "Selecione sua escolaridade" %>
+                      </span>
+                    </div>
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-[#666] transition-transform duration-200 shrink-0" data-single-accordion-target="chevron"></i>
+                  </div>
+                  <div class="hidden flex-col gap-3 px-4 pb-4" data-single-accordion-target="menu">
+                    <hr class="border-[#E0E0E0] mb-1 -mt-1">
+                    <% ["Sem escolaridade", "Ensino Fundamental Incompleto", "Ensino Fundamental Completo", "Ensino Médio Incompleto", "Ensino Médio Completo", "Ensino Superior Incompleto", "Ensino Superior Completo", "Pós Graduação"].each do |esc| %>
+                      <label class="flex items-center gap-3 p-3 rounded-xl border border-[#D0D0D0] cursor-pointer hover:border-[#0066CC] transition-colors group">
+                        <input type="radio" name="candidato[escolaridade]" value="<%= esc %>" 
+                               <%= 'checked' if @candidato.escolaridade == esc %>
+                               data-action="change->single-accordion#select" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
+                        <span class="text-sm md:text-base text-[#333] font-medium"><%= esc %></span>
+                      </label>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <%# Checkbox: Trabalhando %>
+              <label class="flex items-center gap-3 cursor-pointer mt-2 group w-fit">
+                <%= f.check_box :trabalhando, class: "w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer" %>
+                <div class="flex items-center gap-2 text-sm md:text-base text-[#333] font-medium group-hover:text-[#0066CC] transition-colors">
+                  <i data-lucide="briefcase" class="w-5 h-5 text-[#666] group-hover:text-[#0066CC]"></i>
+                  Está trabalhando atualmente?
+                </div>
+              </label>
+
+              <%# Benefícios Sociais %>
+              <div class="flex flex-col gap-2" data-controller="conditional">
+                <label class="flex items-center gap-3 cursor-pointer group w-fit">
+                  <%= f.check_box :possui_beneficio, data: { action: "change->conditional#toggle", conditional_target: "checkbox" }, class: "w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer" %>
+                  <div class="flex items-center gap-2 text-sm md:text-base text-[#333] font-medium group-hover:text-[#0066CC] transition-colors">
+                    <i data-lucide="folder-open" class="w-5 h-5 text-[#666] group-hover:text-[#0066CC]"></i>
+                    Recebe algum benefício social?
+                  </div>
+                </label>
+
+                <div data-conditional-target="content" class="<%= @candidato.possui_beneficio ? '' : 'hidden' %> w-full mt-2">
+                  <div class="w-full bg-white border border-[#D0D0D0] rounded-xl transition-all" data-controller="multi-dropdown" data-multi-dropdown-target="container">
+                    <div class="h-12 md:h-14 px-4 flex items-center justify-between cursor-pointer" data-action="click->multi-dropdown#toggle">
+                      <span class="text-sm md:text-base text-[#666]">Gerenciar benefícios selecionados...</span>
+                      <i data-lucide="chevron-down" class="w-5 h-5 text-[#666] transition-transform duration-200" data-multi-dropdown-target="chevron"></i>
+                    </div>
+                    <div data-multi-dropdown-target="menu" class="hidden flex-col gap-3 px-4 pb-4">
+                      <hr class="border-[#E0E0E0] mb-1 -mt-1">
+                      <% beneficios = ["Aposentadoria por Invalidez", "Auxílio-Doença", "Auxílio Brasil", "Bolsa Família", "Pensão por Morte", "BPC/LOAS\n(Benefício de Prestação Continuada)"] %>
+                      <% beneficios.each do |ben| %>
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-[#D0D0D0] cursor-pointer hover:border-[#0066CC] transition-colors group">
+                          <input type="checkbox" name="candidato[beneficios_lista][]" value="<%= ben %>" 
+                                 <%= 'checked' if @candidato.respond_to?(:beneficios_lista) && @candidato.beneficios_lista&.include?(ben) %>
+                                 class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer shrink-0">
+                          <span class="text-sm md:text-base text-[#333] font-medium whitespace-pre-line leading-tight"><%= ben %></span>
+                        </label>
+                      <% end %>
+
+                      <div class="rounded-xl border border-[#D0D0D0] flex flex-col transition-colors overflow-hidden" data-multi-dropdown-target="otherContainer">
+                        <label class="flex items-center gap-3 p-3 cursor-pointer group">
+                          <input type="checkbox" name="candidato[beneficios_lista][]" value="Outros..." 
+                                 <%= 'checked' if @candidato.outro_beneficio.present? %>
+                                 data-action="change->multi-dropdown#toggleOther" data-multi-dropdown-target="otherCheckbox" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
+                          <span class="text-sm md:text-base text-[#333] font-medium">Outros...</span>
+                        </label>
+                        <div data-multi-dropdown-target="otherInputWrapper" class="<%= @candidato.outro_beneficio.present? ? '' : 'hidden' %> px-4 pb-4 border-t border-[#E0E0E0] pt-3">
+                          <input type="text" name="candidato[outro_beneficio]" value="<%= @candidato.outro_beneficio %>" placeholder="Informe seu benefício..." class="w-full text-sm md:text-base outline-none text-[#333] bg-transparent border-none p-0 focus:ring-0 placeholder-[#999]">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <%# Deficiências %>
+              <div class="flex flex-col gap-1.5 mt-2">
+                <label class="text-xs md:text-sm font-bold text-[#003366]">Qual o seu tipo de deficiência?</label>
+                <div class="w-full bg-white border border-[#D0D0D0] rounded-xl transition-all" data-controller="multi-dropdown" data-multi-dropdown-target="container">
+                  <div class="h-12 md:h-14 px-4 flex items-center justify-between cursor-pointer" data-action="click->multi-dropdown#toggle">
+                    <span class="text-sm md:text-base text-[#666]">Gerenciar deficiências selecionadas...</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-[#666] transition-transform duration-200" data-multi-dropdown-target="chevron"></i>
+                  </div>
+                  <div data-multi-dropdown-target="menu" class="hidden flex-col gap-3 px-4 pb-4">
+                    <hr class="border-[#E0E0E0] mb-1 -mt-1">
+                    <% deficiencias = [
+                        { nome: "Deficiência Visual", icon: "eye" },
+                        { nome: "Deficiência Auditiva", icon: "ear-off" },
+                        { nome: "Deficiência Física", icon: "activity" },
+                        { nome: "Transtorno do Espectro Autista (TEA)", icon: "brain" },
+                        { nome: "Transtorno do Déficit de Atenção com Hiperatividade", icon: "brain-circuit" }
+                      ] 
+                    %>
+                    <% deficiencias.each do |deficiencia| %>
+                      <label class="flex items-center gap-3 p-3 rounded-xl border border-[#D0D0D0] cursor-pointer hover:border-[#0066CC] transition-colors group">
+                        <input type="checkbox" name="candidato[deficiencias_lista][]" value="<%= deficiencia[:nome] %>"
+                               <%= 'checked' if @candidato.respond_to?(:deficiencias_lista) && @candidato.deficiencias_lista&.include?(deficiencia[:nome]) %>
+                               class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer shrink-0">
+                        <i data-lucide="<%= deficiencia[:icon] %>" class="w-5 h-5 text-[#0066CC] shrink-0"></i>
+                        <span class="text-sm md:text-base text-[#333] font-medium leading-tight"><%= deficiencia[:nome] %></span>
+                      </label>
+                    <% end %>
+
+                    <div class="rounded-xl border border-[#D0D0D0] flex flex-col transition-colors overflow-hidden" data-multi-dropdown-target="otherContainer">
+                      <label class="flex items-center gap-3 p-3 cursor-pointer group">
+                        <input type="checkbox" name="candidato[deficiencias_lista][]" value="Outros..." 
+                               <%= 'checked' if @candidato.tipo_deficiencia.present? %>
+                               data-action="change->multi-dropdown#toggleOther" data-multi-dropdown-target="otherCheckbox" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
+                        <i data-lucide="folder" class="w-5 h-5 text-[#0066CC]"></i>
+                        <span class="text-sm md:text-base text-[#333] font-medium">Outros...</span>
+                      </label>
+                      <div data-multi-dropdown-target="otherInputWrapper" class="<%= @candidato.tipo_deficiencia.present? ? '' : 'hidden' %> px-4 pb-4 border-t border-[#E0E0E0] pt-3">
+                        <input type="text" name="candidato[tipo_deficiencia]" value="<%= @candidato.tipo_deficiencia %>" placeholder="Descreva sua deficiência..." class="w-full text-sm md:text-base outline-none text-[#333] bg-transparent border-none p-0 focus:ring-0 placeholder-[#999]">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <%# --- SESSÃO 2: DOCUMENTOS --- %>
+          <div class="mt-6 md:mt-8">
+            <h2 class="text-base md:text-lg font-bold text-[#0066CC] flex items-center gap-2 border-b border-[#E0E0E0] pb-2 mb-6">
+              <div class="bg-[#E6F2FF] p-1.5 rounded-md">
+                <i data-lucide="file-check" class="w-5 h-5 md:w-6 md:h-6 text-[#0066CC]"></i>
+              </div>
+              Atualizar Documentos
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-end">
+              
+              <%# Currículo %>
+              <div class="flex flex-col gap-2 h-full" data-controller="file-upload">
+                <label for="candidato_curriculo" class="leading-tight">
+                  <span class="text-sm font-bold text-[#333]">Currículo Atualizado</span> 
+                  <span class="text-xs text-[#666] font-normal">(PDF - Máx. 5MB)</span>
+                </label>
+                <div class="relative w-full h-28 md:h-32 border-2 border-dashed border-[#0066CC] rounded-xl bg-[#F0F7FF] flex flex-col items-center justify-center text-[#0066CC] hover:bg-[#E6F2FF] transition-colors cursor-pointer group px-4 mt-auto">
+                  <i data-lucide="cloud-upload" class="w-7 h-7 md:w-8 md:h-8 mb-2 group-hover:scale-110 transition-transform"></i>
+                  <span class="text-sm font-medium text-center truncate max-w-full px-2" data-file-upload-target="label">
+                    <%= @candidato.curriculo.attached? ? "Substituir: #{@candidato.curriculo.filename.to_s.truncate(20)}" : "Clique ou arraste o arquivo aqui" %>
+                  </span>
+                  <%= f.file_field :curriculo, direct_upload: true, accept: ".pdf",
+                      data: { file_upload_target: "input", action: "change->file-upload#updatePreview" },
+                      class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer" %>
+                </div>
+              </div>
+
+              <%# Laudos Médicos %>
+              <div class="flex flex-col gap-2 h-full" data-controller="file-upload">
+                <label for="candidato_laudos_medicos" class="leading-tight">
+                  <span class="text-sm font-bold text-[#333]">Laudos Médicos Comprobatórios</span> 
+                  <span class="text-xs text-[#666] font-normal">(PDF, PNG, JPG)</span>
+                </label>
+                <div class="relative w-full h-28 md:h-32 border-2 border-dashed border-[#0066CC] rounded-xl bg-[#F0F7FF] flex flex-col items-center justify-center text-[#0066CC] hover:bg-[#E6F2FF] transition-colors cursor-pointer group px-4 mt-auto">
+                  <i data-lucide="cloud-upload" class="w-7 h-7 md:w-8 md:h-8 mb-2 group-hover:scale-110 transition-transform"></i>
+                  <span class="text-sm font-medium text-center truncate max-w-full px-2" data-file-upload-target="label">
+                    <%= @candidato.laudos_medicos.attached? ? "Substituir laudos salvos (#{@candidato.laudos_medicos.count})" : "Clique ou arraste os novos arquivos aqui" %>
+                  </span>
+                  <%= f.file_field :laudos_medicos, multiple: true, direct_upload: true, accept: ".pdf,.png,.jpg,.jpeg",
+                      data: { file_upload_target: "input", action: "change->file-upload#updatePreview" },
+                      class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer" %>
+                </div>
+              </div>
+            </div>
+            
+            <p class="text-[11px] md:text-xs text-center md:text-left text-[#666] mt-3">
+              Deixe os campos de arquivos em branco se desejar manter os documentos atuais. Aceitamos arquivos de até 5MB.
+            </p>
+
+            <hr class="border-t border-[#E0E0E0] mt-8 mb-6">
+
+            <%# Botões Ação: Cancelar e Salvar %>
+            <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+              <%= link_to "Cancelar", candidato_path, class: "text-gray-500 hover:text-gray-800 font-bold text-sm md:text-base px-6 py-2 transition-colors w-full sm:w-auto text-center" %>
+              <%= f.submit "Salvar Alterações", class: "bg-[#0066CC] text-white hover:bg-[#0052a3] active:scale-[0.98] px-8 py-3.5 text-sm md:text-base font-bold rounded-xl w-full sm:w-auto cursor-pointer transition-all shadow-md" %>
+            </div>
+          </div>
+        <% end %>
       </div>
-    <% end %>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-      <div>
-        <%= f.label :cidade, "Cidade", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.text_field :cidade, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
-      </div>
-      <div>
-        <%= f.label :estado, "Estado", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.text_field :estado, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-      <div>
-        <%= f.label :data_nascimento, "Data de Nascimento", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.date_field :data_nascimento, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
-      </div>
-      <div>
-        <%= f.label :telefone, "Telefone", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.text_field :telefone, placeholder: "(00) 00000-0000 ou +55...", data: { controller: "telefone-mask" }, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
-      </div>
-    </div>
-
-    <div class="mb-6">
-      <%= f.label :escolaridade, "Escolaridade", class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= f.select :escolaridade, ["Ensino Fundamental Incompleto", "Ensino Fundamental Completo", "Ensino Médio Incompleto", "Ensino Médio Completo", "Ensino Superior Incompleto", "Ensino Superior Completo"], { include_blank: "Selecione..." }, class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
-    </div>
-
-    <h3 class="text-lg font-bold text-gray-800 border-b pb-2 mb-4 mt-8">Perfil Social</h3>
-    <div class="space-y-4 mb-6">
-      <label class="flex items-center p-3 hover:bg-gray-50 rounded cursor-pointer transition-colors border border-transparent hover:border-gray-200">
-        <%= f.check_box :trabalhando, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mr-3" %>
-        <span class="text-gray-700 text-sm font-medium">Está trabalhando atualmente?</span>
-      </label>
-
-      <label class="flex items-center p-3 hover:bg-gray-50 rounded cursor-pointer transition-colors border border-transparent hover:border-gray-200">
-        <%= f.check_box :possui_beneficio, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mr-3" %>
-        <span class="text-gray-700 text-sm font-medium">Recebe algum benefício do governo?</span>
-      </label>
-
-      <label class="flex items-center p-3 hover:bg-gray-50 rounded cursor-pointer transition-colors border border-transparent hover:border-gray-200">
-        <%= f.check_box :possui_deficiencia, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mr-3" %>
-        <span class="text-gray-700 text-sm font-medium">Possui alguma deficiência?</span>
-      </label>
-      
-      <div class="pl-3 pr-3 pb-2">
-        <%= f.label :tipo_deficiencia, "Se sim, qual tipo de deficiência?", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.text_area :tipo_deficiencia, rows: 3, placeholder: "Ex: Visual, Auditiva, Motora...", class: "shadow-sm appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" %>
-      </div>
-    </div>
-
-    <div class="mb-8 p-5 bg-blue-50 rounded-lg border border-blue-100">
-      <h3 class="font-bold text-blue-900 mb-4 flex items-center">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-        Atualizar Documentos
-      </h3>
-      
-      <div class="mb-4">
-        <%= f.label :curriculo, "Currículo Atualizado (PDF)", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <div class="bg-white p-2 rounded border border-blue-200">
-          <%= f.file_field :curriculo, direct_upload: true, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer" %>
-        </div>
-      </div>
-
-      <div class="mb-2">
-        <%= f.label :laudos_medicos, "Documentos Comprobatórios (Laudos)", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <p class="text-sm text-gray-600 mb-2">Selecione novos arquivos caso precise substituir. Deixe em branco para manter os atuais.</p>
-        <div class="bg-white p-2 rounded border border-blue-200">
-          <%= f.file_field :laudos_medicos, multiple: true, direct_upload: true, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer" %>
-        </div>
-        <p class="text-xs text-blue-600 mt-2 font-medium">PDF, PNG ou JPG (Máx 5MB). Até 3 arquivos.</p>
-      </div>
-    </div>
-
-    <div class="flex items-center justify-between pt-6 border-t border-gray-100">
-      <%= link_to "Cancelar", candidato_path, class: "text-gray-500 hover:text-gray-800 font-medium px-4 py-2 transition-colors" %>
-      <%= f.submit "Salvar Alterações", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors cursor-pointer shadow-md" %>
-    </div>
-  <% end %>
+      <p class="text-center text-xs text-[#999] mt-6 px-4">
+        Plataforma acessível – WCAG 2.1 Nível AA
+      </p>
+    </section>
+  </main>
 </div>

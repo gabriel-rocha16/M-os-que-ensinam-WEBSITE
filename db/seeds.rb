@@ -3,6 +3,8 @@ require 'cpf_cnpj'
 puts "Limpando banco de dados..."
 Configuracao.destroy_all
 Usuario.destroy_all
+Curso.destroy_all # <--- Adicionado
+Candidato.destroy_all
 
 puts "Inicializando Configuração..."
 Configuracao.atual
@@ -117,3 +119,4 @@ curso2 = Curso.create!(
   status: :publicado
 )
 puts "Cursos criados!"
+
