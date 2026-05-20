@@ -14,7 +14,20 @@ class Candidato < ApplicationRecord
   has_many_attached :laudos_medicos
   has_one_attached :curriculo
 
-  attr_accessor :beneficios_lista, :outro_beneficio, :deficiencias_lista
+  attr_writer :beneficios_lista, :outro_beneficio, :deficiencias_lista
+
+  def beneficios_lista
+    @beneficios_lista ||= beneficios.pluck(:nome)
+  end
+
+  def deficiencias_lista
+    @deficiencias_lista ||= deficiencias.pluck(:tipo)
+  end
+
+  def outro_beneficio
+    padroes = ["Aposentadoria por Invalidez", "Auxílio-Doença", "Auxílio Brasil", "Bolsa Família", "Pensão por Morte", "BPC/LOAS\n(Benefício de Prestação Continuada)"]
+    @outro_beneficio ||= beneficios.where.not(nome: padroes).pluck(:nome).first
+  end
 
   before_validation :limpar_telefone
   before_create :verificar_aprovacao_automatica
