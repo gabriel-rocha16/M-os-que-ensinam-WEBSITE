@@ -1,3 +1,241 @@
+<%# app/views/pages/about.html.erb %>
+
+<%# Mantém a sua navbar móvel existente no topo %>
+<%= render "shared/navbar" %>
 <%= render "pages/landingPage/mobile_navbar" %>
-<h1>About</h1>
-<p>This is the about page.</p>
+
+<main id="main-content" aria-label="Sobre a ONG Mãos que Ensinam">
+  
+  <section class="relative min-h-[480px] md:min-h-[560px] flex items-center justify-center overflow-hidden" aria-labelledby="sobre-title">
+    <div class="absolute inset-0">
+      <img alt="" aria-hidden="true" class="w-full h-full object-cover object-top" src="https://readdy.ai/api/search-image?query=diverse%20group%20of%20volunteers%20and%20students%20with%20disabilities%20celebrating%20together%20in%20a%20community%20center%20warm%20sunlight%20joyful%20atmosphere%20inclusive%20education%20NGO%20Brazil%20yellow%20and%20blue%20accents%20professional%20photography%20wide%20angle&amp;width=1440&amp;height=700&amp;seq=sobre-hero&amp;orientation=landscape">
+      <div class="absolute inset-0 bg-gradient-to-r from-[#003366]/85 via-[#003366]/65 to-[#003366]/40"></div>
+    </div>
+    <div class="relative z-10 w-full max-w-4xl mx-auto px-6 md:px-10 py-20 text-center">
+      <div class="inline-flex items-center gap-2 bg-[#FFD700]/20 border border-[#FFD700]/40 text-[#FFD700] px-4 py-2 rounded-full text-sm font-semibold mb-6 transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 0ms;">
+        <i class="ri-heart-line" aria-hidden="true"></i>Nossa História
+      </div>
+      <h1 id="sobre-title" class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6 transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 120ms;">Mãos que <span class="text-[#FFD700]">Ensinam</span></h1>
+      <p class="text-lg md:text-xl text-white/85 leading-relaxed max-w-2xl mx-auto transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 240ms;">Desde 2009, transformando vidas através da educação inclusiva e acessível para pessoas com deficiência em todo o Brasil.</p>
+    </div>
+  </section>
+
+  <section class="py-20 px-6 md:px-10 max-w-4xl mx-auto" aria-labelledby="historia-title">
+    <div class="text-center mb-14 transition-all duration-700 ease-out opacity-100 translate-y-0">
+      <h2 id="historia-title" class="text-3xl md:text-4xl font-extrabold text-[#003366] mb-4">Nossa Trajetória</h2>
+      <p class="text-[#666] text-lg max-w-2xl mx-auto">15 anos de dedicação, aprendizado e transformação de vidas</p>
+    </div>
+    
+    <div class="relative">
+      <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-[#E0E0E0] -translate-x-1/2 hidden sm:block" aria-hidden="true"></div>
+      <div class="flex flex-col gap-10">
+        
+        <div class="relative flex flex-col sm:flex-row gap-6 items-start transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 0ms;">
+          <div class="flex-1 sm:text-right sm:pr-10">
+            <div class="bg-white rounded-2xl p-6">
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2009</span>
+              <h3 class="text-lg font-bold text-[#003366] mt-1 mb-2">O Começo de Tudo</h3>
+              <p class="text-sm text-[#666] leading-relaxed">Uma ONG nasceu da iniciativa de Maria Helena Souza, professora de educação especial que percebe uma enorme lacuna de acesso à educação para pessoas com deficiência. Com apenas 3 voluntários e uma sala emprestada in São Paulo, os primeiros cursos de informática básica foram oferecidos gratuitamente.</p>
+            </div>
+          </div>
+          <div class="hidden sm:flex w-12 h-12 flex-shrink-0 items-center justify-center rounded-full bg-[#D1FAE5] text-[#059669] z-10 sm:order-2">
+            <i class="ri-seedling-line text-xl" aria-hidden="true"></i>
+          </div>
+          <div class="flex-1 sm:order-3 sm:pl-10"><div class="hidden sm:block"></div></div>
+          
+          <div class="sm:hidden bg-white rounded-2xl p-5 w-full">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 flex items-center justify-center rounded-full bg-[#D1FAE5] text-[#059669]"><i class="ri-seedling-line text-lg" aria-hidden="true"></i></div>
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2009</span>
+            </div>
+            <h3 class="text-base font-bold text-[#003366] mb-2">O Começo de Tudo</h3>
+            <p class="text-sm text-[#666] leading-relaxed">Uma ONG nasceu da iniciativa de Maria Helena Souza, professora de educação especial que percebe uma enorme lacuna de acesso à educação para pessoas com deficiência. Com apenas 3 voluntários e uma sala emprestada em São Paulo, os primeiros cursos de informática básica foram oferecidos gratuitamente.</p>
+          </div>
+        </div>
+
+        <div class="relative flex flex-col sm:flex-row gap-6 items-start transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 120ms;">
+          <div class="flex-1 sm:order-3 sm:pl-10"><div class="hidden sm:block"></div></div>
+          <div class="hidden sm:flex w-12 h-12 flex-shrink-0 items-center justify-center rounded-full bg-[#FEF3C7] text-[#D97706] z-10 sm:order-2">
+            <i class="ri-award-line text-xl" aria-hidden="true"></i>
+          </div>
+          <div class="flex-1 sm:pl-10">
+            <div class="bg-white rounded-2xl p-6">
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2012</span>
+              <h3 class="text-lg font-bold text-[#003366] mt-1 mb-2">Crescimento e Reconhecimento</h3>
+              <p class="text-sm text-[#666] leading-relaxed">Após atender mais de 300 alunos, a ONG recebeu seu primeiro prêmio nacional de inclusão social. A equipe cresceu para 15 voluntários e os cursos se expandiram para artesanato, culinária adaptada e Libras. Parcerias com empresas locais permitiram a criação de um espaço físico próprio.</p>
+            </div>
+          </div>
+          
+          <div class="sm:hidden bg-white rounded-2xl p-5 w-full">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 flex items-center justify-center rounded-full bg-[#FEF3C7] text-[#D97706]"><i class="ri-award-line text-lg" aria-hidden="true"></i></div>
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2012</span>
+            </div>
+            <h3 class="text-base font-bold text-[#003366] mb-2">Crescimento e Reconhecimento</h3>
+            <p class="text-sm text-[#666] leading-relaxed">Após atender mais de 300 alunos, a ONG recebeu seu primeiro prêmio nacional de inclusão social. A equipe cresceu para 15 voluntários e os cursos se expandiram para artesanato, culinária adaptada e Libras. Parcerias com empresas locais permitiram a criação de um espaço físico próprio.</p>
+          </div>
+        </div>
+
+        <div class="relative flex flex-col sm:flex-row gap-6 items-start transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 240ms;">
+          <div class="flex-1 sm:text-right sm:pr-10">
+            <div class="bg-white rounded-2xl p-6">
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2016</span>
+              <h3 class="text-lg font-bold text-[#003366] mt-1 mb-2">Expansão Nacional</h3>
+              <p class="text-sm text-[#666] leading-relaxed">Com o apoio de parceiros estratégicos, a ONG expandiu suas atividades para 8 estados brasileiros. O programa de formação de instrutores capacitou mais de 50 educadores especializados. O modelo de ensino adaptado passou a ser referência para outras organizações do setor.</p>
+            </div>
+          </div>
+          <div class="hidden sm:flex w-12 h-12 flex-shrink-0 items-center justify-center rounded-full bg-[#E6F2FF] text-[#0066CC] z-10 sm:order-2">
+            <i class="ri-map-pin-line text-xl" aria-hidden="true"></i>
+          </div>
+          <div class="flex-1 sm:order-3 sm:pl-10"><div class="hidden sm:block"></div></div>
+          
+          <div class="sm:hidden bg-white rounded-2xl p-5 w-full">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 flex items-center justify-center rounded-full bg-[#E6F2FF] text-[#0066CC]"><i class="ri-map-pin-line text-lg" aria-hidden="true"></i></div>
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2016</span>
+            </div>
+            <h3 class="text-base font-bold text-[#003366] mb-2">Expansão Nacional</h3>
+            <p class="text-sm text-[#666] leading-relaxed">Com o apoio de parceiros estratégicos, a ONG expandiu suas atividades para 8 estados brasileiros. O programa de formação de instrutores capacitou mais de 50 educadores especializados. O modelo de ensino adaptado passou a ser referência para outras organizações do setor.</p>
+          </div>
+        </div>
+
+        <div class="relative flex flex-col sm:flex-row gap-6 items-start transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 360ms;">
+          <div class="flex-1 sm:order-3 sm:pl-10"><div class="hidden sm:block"></div></div>
+          <div class="hidden sm:flex w-12 h-12 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9FE] text-[#7C3AED] z-10 sm:order-2">
+            <i class="ri-computer-line text-xl" aria-hidden="true"></i>
+          </div>
+          <div class="flex-1 sm:pl-10">
+            <div class="bg-white rounded-2xl p-6">
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2020</span>
+              <h3 class="text-lg font-bold text-[#003366] mt-1 mb-2">Transformação Digital</h3>
+              <p class="text-sm text-[#666] leading-relaxed">A pandemia acelerou a digitalização. Em apenas 60 dias, toda a estrutura de cursos foi migrada para o ambiente online, com tecnologias de acessibilidade de ponta: leitores de tela, legendas automáticas, Libras em vídeo e interface adaptável. O alcance saltou de 500 para 2.000 alunos ativos.</p>
+            </div>
+          </div>
+          
+          <div class="sm:hidden bg-white rounded-2xl p-5 w-full">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 flex items-center justify-center rounded-full bg-[#EDE9FE] text-[#7C3AED]"><i class="ri-computer-line text-lg" aria-hidden="true"></i></div>
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2020</span>
+            </div>
+            <h3 class="text-base font-bold text-[#003366] mb-2">Transformação Digital</h3>
+            <p class="text-sm text-[#666] leading-relaxed">A pandemia acelerou a digitalização. Em apenas 60 dias, toda a estrutura de cursos foi migrada para o ambiente online, com tecnologias de acessibilidade de ponta: leitores de tela, legendas automáticas, Libras em vídeo e interface adaptável. O alcance saltou de 500 para 2.000 alunos ativos.</p>
+          </div>
+        </div>
+
+        <div class="relative flex flex-col sm:flex-row gap-6 items-start transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 480ms;">
+          <div class="flex-1 sm:text-right sm:pr-10">
+            <div class="bg-white rounded-2xl p-6">
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2024</span>
+              <h3 class="text-lg font-bold text-[#003366] mt-1 mb-2">Plataforma Própria</h3>
+              <p class="text-sm text-[#666] leading-relaxed">Lançamento da plataforma digital própria, desenvolvida com os mais altos padrões de acessibilidade (WCAG 2.1 Nível AA). Hoje, mais de 2.400 alunos já foram formados, com 48 cursos disponíveis em áreas como tecnologia, idiomas, gastronomia, arte e empreendedorismo.</p>
+            </div>
+          </div>
+          <div class="hidden sm:flex w-12 h-12 flex-shrink-0 items-center justify-center rounded-full bg-[#FCE7F3] text-[#DB2777] z-10 sm:order-2">
+            <i class="ri-rocket-line text-xl" aria-hidden="true"></i>
+          </div>
+          <div class="flex-1 sm:order-3 sm:pl-10"><div class="hidden sm:block"></div></div>
+          
+          <div class="sm:hidden bg-white rounded-2xl p-5 w-full">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 flex items-center justify-center rounded-full bg-[#FCE7F3] text-[#DB2777]"><i class="ri-rocket-line text-lg" aria-hidden="true"></i></div>
+              <span class="text-xs font-bold text-[#0066CC] uppercase tracking-widest">2024</span>
+            </div>
+            <h3 class="text-base font-bold text-[#003366] mb-2">Plataforma Própria</h3>
+            <p class="text-sm text-[#666] leading-relaxed">Lançamento da plataforma digital própria, desenvolvida com os mais altos padrões de acessibilidade (WCAG 2.1 Nível AA). Hoje, mais de 2.400 alunos já foram formados, com 48 cursos disponíveis em áreas como tecnologia, idiomas, gastronomia, arte e empreendedorismo.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+<section class="py-16 px-6 md:px-10 bg-slate-200" aria-labelledby="missao-title">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12 transition-all duration-700 ease-out opacity-100 translate-y-0">
+      <h2 id="missao-title" class="text-3xl md:text-4xl font-extrabold text-[#003366] mb-4">O que nos move</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <div class="bg-white rounded-2xl p-7 transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 0ms;">
+        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[#FCE7F3] text-[#DB2777] mb-5">
+          <i class="ri-heart-line text-2xl" aria-hidden="true"></i>
+        </div>
+        <h3 class="text-lg font-bold text-[#003366] mb-3">missão</h3>
+        <p class="text-sm text-[#666] leading-relaxed">Promover a inclusão social e o desenvolvimento humano de pessoas com deficiência por meio da educação gratuita, acessível e de qualidade.</p>
+      </div>
+      
+      <div class="bg-white rounded-2xl p-7 transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 120ms;">
+        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[#E6F2FF] text-[#0066CC] mb-5">
+          <i class="ri-eye-line text-2xl" aria-hidden="true"></i>
+        </div>
+        <h3 class="text-lg font-bold text-[#003366] mb-3">Visão</h3>
+        <p class="text-sm text-[#666] leading-relaxed">Ser a maior plataforma de educação inclusiva do Brasil, referência em acessibilidade digital e transformação social até 2030.</p>
+      </div>
+      
+      <div class="bg-white rounded-2xl p-7 transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 240ms;">
+        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-[#FEF3C7] text-[#D97706] mb-5">
+          <i class="ri-shield-star-line text-2xl" aria-hidden="true"></i>
+        </div>
+        <h3 class="text-lg font-bold text-[#003366] mb-3">Valores</h3>
+        <p class="text-sm text-[#666] leading-relaxed">Inclusão, respeito à diversidade, transparência, inovação acessível e compromisso com o impacto social positivo e duradouro.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <section class="py-16 px-6 md:px-10" aria-labelledby="equipe-title">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12 transition-all duration-700 ease-out opacity-100 translate-y-0">
+        <h2 id="equipe-title" class="text-3xl md:text-4xl font-extrabold text-[#003366] mb-4">Nossa Equipe</h2>
+        <p class="text-[#666] text-lg max-w-xl mx-auto">Pessoas apaixonadas por educação e inclusão que fazem a diferença todos os dias</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="flex flex-col items-center text-center transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 0ms;">
+          <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mb-3 border-4 border-[#E6F2FF]"><img alt="Maria Helena Souza" class="w-full h-full object-cover object-top" src="https://readdy.ai/api/search-image?query=professional%20portrait%20of%20a%20middle-aged%20brazilian%20woman%20educator%20warm%20smile%20confident%20leadership%20neutral%20background%20clean%20studio%20photography%20natural%20light&amp;width=200&amp;height=200&amp;seq=team1&amp;orientation=squarish"></div>
+          <p class="font-bold text-[#003366] text-sm leading-tight">Maria Helena Souza</p>
+          <p class="text-xs text-[#888] mt-1 leading-tight">Fundadora e Diretora Executiva</p>
+        </div>
+        <div class="flex flex-col items-center text-center transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 100ms;">
+          <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mb-3 border-4 border-[#E6F2FF]"><img alt="Carlos Eduardo Lima" class="w-full h-full object-cover object-top" src="https://readdy.ai/api/search-image?query=professional%20portrait%20of%20a%20young%20brazilian%20man%20teacher%20friendly%20smile%20educator%20neutral%20background%20clean%20studio%20photography%20natural%20light&amp;width=200&amp;height=200&amp;seq=team2&amp;orientation=squarish"></div>
+          <p class="font-bold text-[#003366] text-sm leading-tight">Carlos Eduardo Lima</p>
+          <p class="text-xs text-[#888] mt-1 leading-tight">Coordenador Pedagógico</p>
+        </div>
+        <div class="flex flex-col items-center text-center transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 200ms;">
+          <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mb-3 border-4 border-[#E6F2FF]"><img alt="Fernanda Alves" class="w-full h-full object-cover object-top" src="https://readdy.ai/api/search-image?query=professional%20portrait%20of%20a%20young%20brazilian%20woman%20accessibility%20specialist%20warm%20smile%20neutral%20background%20clean%20studio%20photography%20natural%20light&amp;width=200&amp;height=200&amp;seq=team3&amp;orientation=squarish"></div>
+          <p class="font-bold text-[#003366] text-sm leading-tight">Fernanda Alves</p>
+          <p class="text-xs text-[#888] mt-1 leading-tight">Especialista em Acessibilidade</p>
+        </div>
+        <div class="flex flex-col items-center text-center transition-all duration-700 ease-out opacity-100 translate-y-0" style="transition-delay: 300ms;">
+          <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mb-3 border-4 border-[#E6F2FF]"><img alt="Roberto Nascimento" class="w-full h-full object-cover object-top" src="https://readdy.ai/api/search-image?query=professional%20portrait%20of%20a%20middle-aged%20brazilian%20man%20business%20manager%20confident%20smile%20neutral%20background%20clean%20studio%20photography%20natural%20light&amp;width=200&amp;height=200&amp;seq=team4&amp;orientation=squarish"></div>
+          <p class="font-bold text-[#003366] text-sm leading-tight">Roberto Nascimento</p>
+          <p class="text-xs text-[#888] mt-1 leading-tight">Gestor de Parcerias</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-6 md:px-10 bg-[#003366]" aria-labelledby="cta-sobre-title">
+    <div class="max-w-3xl mx-auto text-center transition-all duration-700 ease-out opacity-100 translate-y-0">
+      <div class="inline-flex items-center gap-2 bg-[#FFD700]/20 border border-[#FFD700]/40 text-[#FFD700] px-4 py-2 rounded-full text-sm font-semibold mb-6">
+        <i class="ri-hand-heart-line" aria-hidden="true"></i>Faça parte dessas histórias
+      </div>
+      <h2 id="cta-sobre-title" class="text-3xl md:text-4xl font-extrabold text-white mb-5">Quer aprender ou ajudar?</h2>
+      <p class="text-white/80 text-lg leading-relaxed mb-10 max-w-xl mx-auto">Seja como aluno, voluntário ou parceiro, você pode fazer parte da transformação. Entre em contato e descubra como contribuir.</p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <%# Helper de link dinâmico integrado ao sistema de rotas do Rails %>
+        <%= link_to "/cadastro", class: "inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#FFD700] text-[#003366] font-bold text-base hover:bg-[#e6c200] transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-[#FFD700]/50 whitespace-nowrap cursor-pointer" do %>
+          <i class="ri-user-add-line" aria-hidden="true"></i>Criar Conta Grátis
+        <% end %>
+        
+        <%= link_to "/#contato", class: "inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 border-white text-white font-bold text-base hover:bg-white/10 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-white/30 whitespace-nowrap cursor-pointer" do %>
+          <i class="ri-mail-send-line" aria-hidden="true"></i>Falar Conosco
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%= render "shared/accessibility_panel" %>
+  <%= render "shared/footer" %>
+</main>
