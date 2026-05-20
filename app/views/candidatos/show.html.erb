@@ -199,11 +199,11 @@
       </div>
 
       <%# Lista Dinâmica de Benefícios Vinculados (Apenas se possuir) %>
-      <% if @candidato.possui_beneficio && (@candidato.beneficias.any? || @candidato.outro_beneficio.present?) %>
+      <% if @candidato.possui_beneficio && (@candidato.beneficios.any? || @candidato.outro_beneficio.present?) %>
         <div class="p-4 rounded-xl bg-[#FBF9FE] border border-[#F3E8FF]">
           <p class="text-xs text-[#8B5CF6] font-bold uppercase tracking-wider mb-2">Benefícios Cadastrados</p>
           <div class="flex flex-wrap gap-2">
-            <% @candidato.beneficias.each do |beneficio| %>
+            <% @candidato.beneficios.each do |beneficio| %>
               <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-[#E9D5FF] text-xs font-semibold text-[#6B21A8]">
                 <span class="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]"></span>
                 <%= beneficio.nome %>
