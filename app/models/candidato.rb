@@ -30,8 +30,8 @@ class Candidato < ApplicationRecord
   end
 
   before_validation :limpar_telefone
+  before_validation :processar_listas
   before_create :verificar_aprovacao_automatica
-  before_save :processar_listas
 
   validates :laudos_medicos, attached: true,
                              content_type: ['application/pdf', 'image/jpeg', 'image/png'],

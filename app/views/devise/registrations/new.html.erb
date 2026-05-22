@@ -52,7 +52,7 @@
             <% end %>
             <div class="relative flex items-center">
               <i data-lucide="contact" class="absolute left-4 text-[#999] w-5 h-5"></i>
-              <%= f.text_field :cpf, data: { controller: "cpf-mask" }, maxlength: 14, placeholder: "000.000.000-00",
+              <%= f.text_field :cpf, data: { controller: "cpf-mask" }, maxlength: 14, placeholder: "000.000.000-00", required: true,
                   class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-4 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
             </div>
           </div>
