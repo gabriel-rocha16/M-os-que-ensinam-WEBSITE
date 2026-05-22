@@ -4,7 +4,7 @@ class Admin::DashboardController < ApplicationController
 
   def index
     if perfil_ativo == "gestor"
-      @cursos = Curso.all.order(created_at: :desc)
+      @cursos = Curso.includes(:usuario, :matriculas).order(created_at: :desc)
       @total_alunos_pendentes = Candidato.pendente.count
       @total_cursos_revisao = Curso.aguardando_aprovacao.count
       @total_instrutores = Instrutor.count

@@ -4,7 +4,7 @@ class CursosController < ApplicationController
   before_action :autorizar_edicao_curso!, only: [ :edit, :update, :destroy ]
 
   def index
-    @cursos = Curso.publicado
+    @cursos = Curso.publicado.includes(:matriculas).order(nome: :asc)
   end
 
   def show

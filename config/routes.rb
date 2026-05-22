@@ -19,7 +19,11 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get "dashboard", to: "dashboard#index"
-    resources :usuarios, only: [:index, :update, :destroy] do
+    resources :usuarios, only: [ :index, :update, :destroy ] do
+      collection do
+        get :pendentes
+      end
+
       member do
         patch :validar_candidato
         patch :rejeitar_candidato
@@ -27,7 +31,7 @@ Rails.application.routes.draw do
         delete :remover_candidatura
       end
     end
-    
+
     resources :cursos, only: [] do
       member do
         patch :solicitar_aprovacao
@@ -38,8 +42,8 @@ Rails.application.routes.draw do
   end
   get "aluno/dashboard", to: "dashboards#aluno", as: :aluno_dashboard
 
-  get '/dashboard_gateway', to: 'perfis#gateway', as: :dashboard_gateway
-  patch '/alternar_perfil/:role', to: 'perfis#switch', as: :switch_role
+  get "/dashboard_gateway", to: "perfis#gateway", as: :dashboard_gateway
+  patch "/alternar_perfil/:role", to: "perfis#switch", as: :switch_role
   patch "admin/toggle_aprovacao", to: "admin/dashboard#toggle_aprovacao", as: :toggle_aprovacao
 
   get "about", to: "pages#about"

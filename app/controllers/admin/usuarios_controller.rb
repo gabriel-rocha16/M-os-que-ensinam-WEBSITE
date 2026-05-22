@@ -3,7 +3,32 @@ class Admin::UsuariosController < ApplicationController
   before_action :verificar_gestor_ativo!
 
   def index
-    @candidatos_pendentes = Candidato.pendente.includes(:usuario).order(created_at: :desc)
+    @query = params[:q].to_s.strip
+
+    @usuarios = if @query.present?
+      Usuario.where("nome ILIKE :q OR email ILIKE :q OR cpf ILIKE :q", q: "%#{@query}%")
+             .order(:nome)
+    else
+      Usuario.order(:nome)
+    end
+  end
+
+  def pendentes
+    @query = params[:q].to_s.strip
+
+    base_scope = Candidato.pendente
+                         .includes(:usuario)
+                         .with_attached_curriculo
+                         .with_attached_laudos_medicos
+
+    @candidatos_pendentes = if @query.present?
+      base_scope
+        .joins(:usuario)
+        .where("usuarios.nome ILIKE :q OR usuarios.cpf ILIKE :q", q: "%#{@query}%")
+        .order("usuarios.nome")
+    else
+      base_scope.order(created_at: :desc)
+    end
   end
 
   def validar_candidato
