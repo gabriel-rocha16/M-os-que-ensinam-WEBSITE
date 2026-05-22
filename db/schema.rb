@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_19_021442) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_22_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_021442) do
     t.text "descricao"
     t.string "nome"
     t.datetime "updated_at", null: false
+    t.index ["nome"], name: "index_beneficios_on_nome", unique: true
   end
 
   create_table "beneficios_candidatos", id: false, force: :cascade do |t|
@@ -62,7 +63,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_021442) do
     t.date "data_nascimento"
     t.string "escolaridade"
     t.string "estado"
-    t.text "outro_beneficio"
     t.boolean "possui_beneficio"
     t.boolean "possui_deficiencia"
     t.integer "status", default: 0
@@ -115,6 +115,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_021442) do
     t.string "descricao"
     t.string "tipo"
     t.datetime "updated_at", null: false
+    t.index ["tipo"], name: "index_deficiencias_on_tipo", unique: true
   end
 
   create_table "gestores", force: :cascade do |t|
@@ -153,8 +154,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_021442) do
     t.boolean "concluido", default: false
     t.datetime "created_at", null: false
     t.bigint "curso_id", null: false
-    t.integer "progresso", default: 0
-    t.integer "status", default: 0
     t.datetime "updated_at", null: false
     t.index ["candidato_id"], name: "index_matriculas_on_candidato_id"
     t.index ["curso_id"], name: "index_matriculas_on_curso_id"

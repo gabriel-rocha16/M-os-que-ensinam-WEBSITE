@@ -40,7 +40,8 @@ class Usuario < ApplicationRecord
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))
-      where(conditions.to_h).where([ "cpf = :value OR lower(email) = lower(:value)", { value: login } ]).first
+      login_limpo = login.gsub(/[^0-9]/, "")
+      where(conditions.to_h).where([ "lower(email) = :value OR cpf = :cpf_value", { value: login.downcase, cpf_value: login_limpo } ]).first
     elsif conditions.has_key?(:cpf) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end
@@ -49,7 +50,7 @@ class Usuario < ApplicationRecord
   private
 
   def limpar_cpf
-    self.cpf = cpf.gsub(/\D/, '') if cpf.present?
+    self.cpf = cpf.gsub(/\D/, "") if cpf.present?
   end
 
   def cpf_valido

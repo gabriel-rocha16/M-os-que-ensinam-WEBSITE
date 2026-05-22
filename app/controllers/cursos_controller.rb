@@ -1,7 +1,7 @@
 class CursosController < ApplicationController
-  skip_before_action :authenticate_usuario!, only: [:index]
-  before_action :verificar_instrutor_ativo!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :autorizar_edicao_curso!, only: [:edit, :update, :destroy]
+  skip_before_action :authenticate_usuario!, only: [ :index ]
+  before_action :verificar_instrutor_ativo!, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :autorizar_edicao_curso!, only: [ :edit, :update, :destroy ]
 
   def index
     @cursos = Curso.publicado
@@ -9,7 +9,7 @@ class CursosController < ApplicationController
 
   def show
     @curso = Curso.find(params[:id])
-    
+
     unless @curso.publicado? || (current_usuario && (@curso.usuario_id == current_usuario.id || current_usuario.gestor.present?))
       redirect_to cursos_path, alert: "Este curso ainda não está disponível publicamente."
     end
@@ -22,7 +22,7 @@ class CursosController < ApplicationController
   def create
     @curso = Curso.new(curso_params)
     @curso.usuario_id = current_usuario.id
-    
+
     if @curso.save
       redirect_to admin_dashboard_path, notice: "Curso criado com sucesso e está como Rascunho."
     else
@@ -45,8 +45,13 @@ class CursosController < ApplicationController
 
   def destroy
     @curso = Curso.find(params[:id])
-    @curso.destroy
-    redirect_to admin_dashboard_path, notice: "Curso excluído."
+
+    if @curso.matriculas.exists?
+      redirect_to admin_dashboard_path, alert: "Este curso possui alunos e não pode ser excluído. Arquive-o em vez disso."
+    else
+      @curso.destroy
+      redirect_to admin_dashboard_path, notice: "Curso excluído."
+    end
   end
 
   def matricular

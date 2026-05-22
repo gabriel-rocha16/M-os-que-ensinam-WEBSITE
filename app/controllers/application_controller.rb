@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::RoutingError, with: :not_found
+  rescue_from ActiveRecord::RecordNotUnique, with: :handle_duplicate_record
 
   before_action :authenticate_usuario!
   before_action :set_default_role
@@ -11,11 +12,11 @@ class ApplicationController < ActionController::Base
   def set_default_role
     if usuario_signed_in? && session[:active_role].blank?
       if current_usuario.gestor.present?
-        session[:active_role] = 'gestor'
+        session[:active_role] = "gestor"
       elsif current_usuario.instrutor.present?
-        session[:active_role] = 'instrutor'
+        session[:active_role] = "instrutor"
       elsif current_usuario.candidato.present?
-        session[:active_role] = 'aluno'
+        session[:active_role] = "aluno"
       end
     end
   end
@@ -23,9 +24,9 @@ class ApplicationController < ActionController::Base
   def perfis_disponiveis
     return [] unless current_usuario
     perfis = []
-    perfis << 'gestor' if current_usuario.gestor.present?
-    perfis << 'instrutor' if current_usuario.instrutor.present?
-    perfis << 'aluno' if current_usuario.candidato.present?
+    perfis << "gestor" if current_usuario.gestor.present?
+    perfis << "instrutor" if current_usuario.instrutor.present?
+    perfis << "aluno" if current_usuario.candidato.present?
     perfis
   end
 
@@ -35,13 +36,13 @@ class ApplicationController < ActionController::Base
   end
 
   def verificar_gestor_ativo!
-    unless perfil_ativo == 'gestor'
+    unless perfil_ativo == "gestor"
       redirect_back fallback_location: root_path, alert: "Modo Gestor é necessário para acessar esta área. Alterne o seu perfil."
     end
   end
 
   def verificar_instrutor_ativo!
-    unless perfil_ativo == 'instrutor'
+    unless perfil_ativo == "instrutor"
       redirect_back fallback_location: root_path, alert: "Modo Instrutor é necessário para acessar esta área. Alterne o seu perfil."
     end
   end
@@ -60,6 +61,13 @@ class ApplicationController < ActionController::Base
 
   def not_found
     redirect_to root_path, alert: "Ops! A página que você procurava não existe ou foi movida."
+  end
+
+  private
+
+  def handle_duplicate_record(exception)
+    flash[:alert] = "CPF ou E-mail já está cadastrado. Verifique seus dados e tente novamente."
+    redirect_back fallback_location: root_path
   end
 
   protected

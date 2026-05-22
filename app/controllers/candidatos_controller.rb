@@ -1,6 +1,6 @@
 class CandidatosController < ApplicationController
   before_action :authenticate_usuario!
-  skip_before_action :verificar_onboarding, only: [:new, :create, :edit, :update]
+  skip_before_action :verificar_onboarding, only: [ :new, :create, :edit, :update ]
 
   def show
     @candidato = current_usuario.candidato
@@ -14,14 +14,14 @@ class CandidatosController < ApplicationController
 
   def update
     @candidato = current_usuario.candidato
-    
+
     # Previne que o ActiveStorage delete os laudos atuais se o campo vier vazio
     if params[:candidato][:laudos_medicos].blank? || params[:candidato][:laudos_medicos].all?(&:blank?)
       params[:candidato].delete(:laudos_medicos)
     end
 
     if @candidato.update(candidato_params)
-      # Se os dados mudaram, é prudente voltar o status para pendente para reanálise, exceto se for Gestor. 
+      # Se os dados mudaram, é prudente voltar o status para pendente para reanálise, exceto se for Gestor.
       # Mas como o requisito não exige, apenas salvamos.
       redirect_to candidato_path, notice: "Perfil atualizado com sucesso!"
     else
@@ -36,9 +36,17 @@ class CandidatosController < ApplicationController
   def create
     @candidato = current_usuario.build_candidato(candidato_params)
 
-    if @candidato.save
+    begin
+      ActiveRecord::Base.transaction do
+        @candidato.save!
+      end
+
       redirect_to root_path, notice: "Perfil de Candidato criado com sucesso!"
-    else
+    rescue ActiveRecord::RecordInvalid => _exception
+      flash.now[:alert] = "Não foi possível criar o candidato. Verifique os dados e tente novamente."
+      render :new, status: :unprocessable_entity
+    rescue ActiveRecord::RecordNotUnique => _exception
+      flash.now[:alert] = "Falha ao criar o candidato devido a um conflito de dados. Tente novamente."
       render :new, status: :unprocessable_entity
     end
   end
@@ -48,7 +56,7 @@ class CandidatosController < ApplicationController
   def candidato_params
     params.require(:candidato).permit(
       :cidade, :estado, :data_nascimento, :escolaridade,
-      :trabalhando, :possui_beneficio, :possui_deficiencia, 
+      :trabalhando, :possui_beneficio, :possui_deficiencia,
       :tipo_deficiencia, :beneficio_tipo, :curriculo_url,
       :telefone, :curriculo, :outro_beneficio,
       beneficios_lista: [], deficiencias_lista: [],
