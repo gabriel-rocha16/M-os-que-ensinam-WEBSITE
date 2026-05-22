@@ -107,7 +107,7 @@ curso1 = Curso.create!(
   area: "Línguas",
   titulo: "Aprenda o básico de Libras",
   descricao: "Um curso completo para iniciantes na Língua Brasileira de Sinais.",
-  video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  youtube_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   status: :publicado
 )
 curso2 = Curso.create!(
@@ -115,8 +115,7 @@ curso2 = Curso.create!(
   area: "Tecnologia",
   titulo: "Construindo sites para todos",
   descricao: "Aprenda a criar interfaces digitais inclusivas.",
-  video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  youtube_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   status: :publicado
 )
 puts "Cursos criados!"
-
