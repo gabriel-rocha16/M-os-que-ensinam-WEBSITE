@@ -1,6 +1,7 @@
 class Admin::CursosController < ApplicationController
   before_action :authenticate_usuario!
   before_action :set_curso
+  before_action :verificar_gestor_ativo!, only: %i[publicar rejeitar]
 
   def solicitar_aprovacao
     if @curso.usuario_id == current_usuario.id || current_usuario.gestor.present?
@@ -12,21 +13,13 @@ class Admin::CursosController < ApplicationController
   end
 
   def publicar
-    if current_usuario.gestor.present?
-      @curso.publicado!
-      redirect_to admin_dashboard_path, notice: "Curso publicado com sucesso!"
-    else
-      redirect_to admin_dashboard_path, alert: "Apenas gestores podem publicar cursos."
-    end
+    @curso.publicado!
+    redirect_to admin_dashboard_path, notice: "Curso publicado com sucesso!"
   end
 
   def rejeitar
-    if current_usuario.gestor.present?
-      @curso.rascunho!
-      redirect_to admin_dashboard_path, alert: "Curso rejeitado. Ele retornou para o status de rascunho."
-    else
-      redirect_to admin_dashboard_path, alert: "Apenas gestores podem rejeitar cursos."
-    end
+    @curso.rascunho!
+    redirect_to admin_dashboard_path, alert: "Curso rejeitado. Ele retornou para o status de rascunho."
   end
 
   private

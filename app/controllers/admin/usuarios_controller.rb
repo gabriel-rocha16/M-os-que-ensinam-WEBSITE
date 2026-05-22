@@ -9,8 +9,16 @@ class Admin::UsuariosController < ApplicationController
   def validar_candidato
     @usuario = Usuario.find(params[:id])
     if @usuario.candidato.present?
-      @usuario.candidato.validado!
-      redirect_to admin_usuarios_path, notice: "Candidato #{@usuario.nome} validado com sucesso!"
+      begin
+        ActiveRecord::Base.transaction do
+          @usuario.candidato.validado!
+        end
+        redirect_to admin_usuarios_path, notice: "Candidato #{@usuario.nome} validado com sucesso!"
+      rescue ActiveRecord::RecordInvalid => e
+        redirect_to admin_usuarios_path, alert: "Falha ao validar candidato: #{e.record.errors.full_messages.to_sentence}"
+      rescue StandardError => e
+        redirect_to admin_usuarios_path, alert: "Falha ao validar candidato: #{e.message}"
+      end
     else
       redirect_to admin_usuarios_path, alert: "Usuário não possui perfil de candidato."
     end
@@ -19,17 +27,42 @@ class Admin::UsuariosController < ApplicationController
   def rejeitar_candidato
     @usuario = Usuario.find(params[:id])
     if @usuario.candidato.present?
-      @usuario.candidato.rejeitado!
-      redirect_to admin_usuarios_path, alert: "Candidato #{@usuario.nome} rejeitado."
+      begin
+        ActiveRecord::Base.transaction do
+          @usuario.candidato.rejeitado!
+        end
+        redirect_to admin_usuarios_path, alert: "Candidato #{@usuario.nome} rejeitado."
+      rescue ActiveRecord::RecordInvalid => e
+        redirect_to admin_usuarios_path, alert: "Falha ao rejeitar candidato: #{e.record.errors.full_messages.to_sentence}"
+      rescue StandardError => e
+        redirect_to admin_usuarios_path, alert: "Falha ao rejeitar candidato: #{e.message}"
+      end
+    else
+      redirect_to admin_usuarios_path, alert: "Usuário não possui perfil de candidato."
     end
   end
 
   def promover_instrutor
     @usuario = Usuario.find(params[:id])
-    if @usuario.promover_a_instrutor!
+    if @usuario.instrutor.present?
+      redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} já é um Instrutor oficial."
+      return
+    end
+
+    begin
+      ActiveRecord::Base.transaction do
+        instrutor = @usuario.build_instrutor(
+          formacao_academica: "Pendente",
+          capacitacao: "Pendente",
+          bio: "Pendente"
+        )
+        instrutor.save!
+      end
       redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} agora é um Instrutor oficial."
-    else
-      redirect_to admin_usuarios_path, alert: "Falha ao promover usuário."
+    rescue ActiveRecord::RecordInvalid => e
+      redirect_to admin_usuarios_path, alert: "Falha ao promover usuário: #{e.record.errors.full_messages.to_sentence}"
+    rescue StandardError => e
+      redirect_to admin_usuarios_path, alert: "Falha ao promover usuário: #{e.message}"
     end
   end
 
