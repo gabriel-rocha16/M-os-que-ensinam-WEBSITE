@@ -34,14 +34,18 @@ class CandidatosController < ApplicationController
   end
 
   def create
-    @candidato = current_usuario.build_candidato(candidato_params)
+  @candidato = current_usuario.build_candidato(candidato_params)
 
-    if @candidato.save
-      redirect_to root_path, notice: "Perfil de Candidato criado com sucesso!"
-    else
-      render :new, status: :unprocessable_entity
-    end
+  if @candidato.save
+    redirect_to root_path, notice: "Perfil de Candidato criado com sucesso!"
+  else
+    # 1. Printa o erro real no seu terminal para você ler agora!
+    Rails.logger.info "❌ ERROS DE VALIDAÇÃO: #{@candidato.errors.full_messages.join(', ')}"
+    
+    # 2. Força a renderização em HTML tradicional, que resolve o erro de MissingTemplate
+    render :new, status: :unprocessable_entity, formats: [:html]
   end
+end
 
   private
 

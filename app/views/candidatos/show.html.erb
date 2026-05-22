@@ -184,8 +184,7 @@
                 <% end %>
               <% end %>
 
-              <% if @candidato.tipo_deficiencia.present? %>
-                <% deficiencias_lista << @candidato.tipo_deficiencia %>
+              <% if @candidato.tipo_deficiencia.present? && !deficiencias_lista.include?(@candidato.tipo_deficiencia) %>
               <% end %>
 
               <% if deficiencias_lista.any? %>
