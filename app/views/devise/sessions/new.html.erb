@@ -32,14 +32,14 @@
 
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-4 md:gap-5", aria: { label: "Formulário de acesso" } }) do |f| %>
           
-          <%# Sessão de email %>
+          <%# Sessão de login %>
           <div class="flex flex-col gap-1">
-            <%= f.label :email, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
-              E-mail <span class="text-red-500">*</span>
+            <%= f.label :login, class: "text-xs md:text-sm font-semibold text-[#003366]" do %>
+              E-mail ou CPF <span class="text-red-500">*</span>
             <% end %>
             <div class="relative flex items-center">
-              <span class="absolute left-4 text-[#666]" aria-hidden="true"><i class="ri-mail-line"></i></span>
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "seu@email.com", required: true,
+              <span class="absolute left-4 text-[#666]" aria-hidden="true"><i class="ri-user-line"></i></span>
+              <%= f.text_field :login, autofocus: true, placeholder: "Seu E-mail ou CPF", required: true,
                   class: "w-full h-12 md:h-14 rounded-xl border-2 border-[#D0D0D0] pl-11 pr-4 text-sm md:text-base outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all" %>
             </div>
           </div>
