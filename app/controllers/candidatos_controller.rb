@@ -41,7 +41,7 @@ class CandidatosController < ApplicationController
         @candidato.save!
       end
 
-      redirect_to root_path, notice: "Perfil de Candidato criado com sucesso!"
+      redirect_to dashboard_gateway_path, notice: "Perfil de Candidato criado com sucesso!"
     rescue ActiveRecord::RecordInvalid => _exception
       flash.now[:alert] = "Não foi possível criar o candidato. Verifique os dados e tente novamente."
       render :new, status: :unprocessable_entity
