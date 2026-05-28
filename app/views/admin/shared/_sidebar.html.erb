@@ -1,0 +1,27 @@
+<aside class="hidden xl:block">
+  <div class="sticky top-24 space-y-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div class="mb-4">
+      <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Menu Gestor</p>
+      <p class="mt-2 text-sm text-slate-600">Acesso rápido às áreas de revisão e controle.</p>
+    </div>
+    <nav class="space-y-2">
+      <%= link_to admin_dashboard_path, class: "block rounded-2xl px-4 py-3 text-sm font-semibold transition-colors #{current_page?(admin_dashboard_path) ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100'}" do %>
+        Dashboard
+      <% end %>
+      <%= link_to admin_usuarios_path, class: "block rounded-2xl px-4 py-3 text-sm font-semibold transition-colors #{current_page?(admin_usuarios_path) ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100'}" do %>
+        Usuários
+      <% end %>
+      <%= link_to admin_instrutores_path, class: "block rounded-2xl px-4 py-3 text-sm font-semibold transition-colors #{current_page?(admin_instrutores_path) ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100'}" do %>
+        Instrutores
+      <% end %>
+      <%= link_to admin_relatorios_path, class: "block rounded-2xl px-4 py-3 text-sm font-semibold transition-colors #{current_page?(admin_relatorios_path) ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100'}" do %>
+        Relatórios
+      <% end %>
+    </nav>
+    <div class="border-t border-slate-200 pt-4 mt-4">
+      <%= link_to root_path, class: "block rounded-2xl px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition-colors" do %>
+        ← Voltar ao site
+      <% end %>
+    </div>
+  </div>
+</aside>

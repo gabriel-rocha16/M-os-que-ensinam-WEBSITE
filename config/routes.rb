@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get "dashboard", to: "dashboard#index"
+    get "relatorios", to: "relatorios#index"
+
     resources :usuarios, only: [ :index, :update, :destroy ] do
       collection do
         get :pendentes
@@ -28,15 +30,21 @@ Rails.application.routes.draw do
         patch :validar_candidato
         patch :rejeitar_candidato
         patch :promover_instrutor
+        patch :promover_gestor
+        patch :rebaixar_instrutor
+        patch :rebaixar_gestor
         delete :remover_candidatura
       end
     end
+
+    resources :instrutores, only: [ :index ]
 
     resources :cursos, only: [] do
       member do
         patch :solicitar_aprovacao
         patch :publicar
         patch :rejeitar
+        delete :destroy
       end
     end
   end
