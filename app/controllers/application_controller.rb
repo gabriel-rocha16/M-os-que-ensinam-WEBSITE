@@ -87,11 +87,11 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    # Permite nome e cpf no cadastro (sign_up)
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :nome, :cpf ])
+    # Permite nome, cpf e email no cadastro (sign_up)
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :nome, :cpf, :email, :password, :password_confirmation ])
 
-    # Permite nome e cpf na edição de conta (account_update)
-    devise_parameter_sanitizer.permit(:account_update, keys: [ :nome, :cpf ])
+    # Permite nome, cpf e email na edição de conta (account_update)
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :nome, :cpf, :email ])
 
     # Permite que o campo híbrido :login seja usado no login (sign_in)
     devise_parameter_sanitizer.permit(:sign_in, keys: [ :login ])

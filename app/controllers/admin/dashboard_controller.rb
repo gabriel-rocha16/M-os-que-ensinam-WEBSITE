@@ -5,12 +5,44 @@ class Admin::DashboardController < ApplicationController
   def index
     if perfil_ativo == "gestor"
       @cursos = Curso.includes(:usuario, :matriculas).order(created_at: :desc)
-      @total_alunos_pendentes = Candidato.pendente.count
-      @total_cursos_revisao = Curso.aguardando_aprovacao.count
+      @cursos_aguardando_aprovacao = Curso.aguardando_aprovacao.order(created_at: :desc).limit(6)
+      @total_alunos = Candidato.count
+      @total_cursos = Curso.count
+      @total_inscricoes = Matricula.count
       @total_instrutores = Instrutor.count
+      @total_cursos_revisao = Curso.aguardando_aprovacao.count
+      @atividades_recentes = build_atividades_recentes
     elsif perfil_ativo == "instrutor"
       @cursos = current_usuario.cursos.order(created_at: :desc)
     end
+  end
+
+  def build_atividades_recentes
+    atividades = []
+    Usuario.order(created_at: :desc).limit(4).each do |usuario|
+      atividades << {
+        icon: "user",
+        text: "#{usuario.nome} se cadastrou na plataforma",
+        time: usuario.created_at
+      }
+    end
+
+    Curso.order(updated_at: :desc).limit(4).each do |curso|
+      label = if curso.publicado?
+                "publicado"
+      elsif curso.aguardando_aprovacao?
+                "enviado para revisão"
+      else
+                "atualizado"
+      end
+      atividades << {
+        icon: "book-open",
+        text: "Curso \"#{curso.nome}\" #{label}",
+        time: curso.updated_at
+      }
+    end
+
+    atividades.sort_by { |item| item[:time] }.reverse.first(6)
   end
 
   def toggle_aprovacao

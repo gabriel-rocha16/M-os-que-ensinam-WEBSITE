@@ -91,8 +91,59 @@ class Admin::UsuariosController < ApplicationController
     end
   end
 
+  def promover_gestor
+    @usuario = Usuario.find(params[:id])
+    if @usuario.gestor.present?
+      redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} já é Gestor."
+      return
+    end
+
+    begin
+      ActiveRecord::Base.transaction do
+        @usuario.create_gestor!(cargo: "Gestor", departamento: "Diretoria", nivel_acesso: 2, data_admissao: Date.today)
+      end
+      redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} agora é Gestor."
+    rescue ActiveRecord::RecordInvalid => e
+      redirect_to admin_usuarios_path, alert: "Falha ao promover usuário: #{e.record.errors.full_messages.to_sentence}"
+    rescue StandardError => e
+      redirect_to admin_usuarios_path, alert: "Falha ao promover usuário: #{e.message}"
+    end
+  end
+
+  def rebaixar_instrutor
+    @usuario = Usuario.find(params[:id])
+    if @usuario.instrutor.blank?
+      redirect_to admin_usuarios_path, alert: "Usuário não é Instrutor."
+      return
+    end
+
+    @usuario.instrutor.destroy
+    redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} foi rebaixado de Instrutor."
+  end
+
+  def rebaixar_gestor
+    @usuario = Usuario.find(params[:id])
+    if @usuario.gestor.blank?
+      redirect_to admin_usuarios_path, alert: "Usuário não é Gestor."
+      return
+    end
+
+    if @usuario.email.present? && @usuario.email.downcase == "admin@maos.com"
+      redirect_to admin_usuarios_path, alert: "Não é permitido rebaixar o Gestor Supremo."
+      return
+    end
+
+    @usuario.gestor.destroy
+    redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} foi rebaixado de Gestor."
+  end
+
   def destroy
     @usuario = Usuario.find(params[:id])
+    if @usuario.email.present? && @usuario.email.downcase == "admin@maos.com"
+      redirect_to admin_usuarios_path, alert: "Não é permitido excluir o Gestor Supremo."
+      return
+    end
+
     @usuario.destroy
     redirect_to admin_usuarios_path, notice: "Usuário excluído fisicamente com sucesso."
   end

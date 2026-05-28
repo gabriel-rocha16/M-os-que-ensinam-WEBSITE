@@ -1,76 +1,105 @@
-<div class="max-w-7xl mx-auto mt-10 px-4 pb-10">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
-    <div>
-      <h1 class="text-3xl font-bold text-gray-800">Gestão Geral de Usuários</h1>
-      <p class="text-sm text-gray-500">Busque por nome, e-mail ou CPF para gerenciar perfis e acessos.</p>
+<div class="max-w-7xl mx-auto mt-10 px-4 pb-10 grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-6">
+  <%= render "admin/shared/sidebar" %>
+
+  <main class="space-y-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">Gestão Geral de Usuários</h1>
+        <p class="text-sm text-gray-500">Busque por nome, e-mail ou CPF para gerenciar perfis e acessos.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <%= link_to "Fila de Aprovação", pendentes_admin_usuarios_path, class: "px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition" %>
+        <%= link_to "Voltar ao Dashboard", admin_dashboard_path, class: "text-blue-600 hover:text-blue-800 font-medium transition-colors" %>
+      </div>
     </div>
-    <div class="flex items-center gap-3">
-      <%= link_to "Fila de Aprovação", pendentes_admin_usuarios_path, class: "px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition" %>
-      <%= link_to "Voltar ao Dashboard", admin_dashboard_path, class: "text-blue-600 hover:text-blue-800 font-medium transition-colors" %>
+
+    <div class="mb-6">
+      <%= form_with url: admin_usuarios_path, method: :get, local: true, class: "flex flex-col sm:flex-row gap-3" do |form| %>
+        <%= form.text_field :q, value: @query, placeholder: "Buscar por nome, email ou CPF", class: "w-full sm:w-96 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+        <%= form.submit "Buscar", class: "px-5 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition" %>
+      <% end %>
     </div>
-  </div>
 
-  <div class="mb-6">
-    <%= form_with url: admin_usuarios_path, method: :get, local: true, class: "flex flex-col sm:flex-row gap-3" do |form| %>
-      <%= form.text_field :q, value: @query, placeholder: "Buscar por nome, email ou CPF", class: "w-full sm:w-96 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
-      <%= form.submit "Buscar", class: "px-5 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition" %>
-    <% end %>
-  </div>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-blue-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">Nome</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">CPF</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">Perfis ativos</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">Status</th>
+            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-blue-900 uppercase tracking-wider">Ações</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @usuarios.each do |usuario| %>
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm font-bold text-gray-900"><%= usuario.nome %></div>
+                <div class="text-xs text-gray-500"><%= usuario.email %></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><%= usuario.cpf %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                <div class="flex flex-wrap gap-2">
+                  <% if usuario.gestor.present? %>
+                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">Gestor</span>
+                  <% end %>
+                  <% if usuario.instrutor.present? %>
+                    <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-semibold">Instrutor</span>
+                  <% end %>
+                  <% if usuario.candidato.present? %>
+                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">Candidato</span>
+                  <% end %>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                <% if usuario.candidato.present? %>
+                  <% if usuario.candidato.pendente? %>
+                    <span class="inline-flex rounded-full bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">Pendente</span>
+                  <% elsif usuario.candidato.rejeitado? %>
+                    <span class="inline-flex rounded-full bg-red-100 px-2 py-1 text-xs font-semibold text-red-800">Rejeitado</span>
+                  <% else %>
+                    <span class="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">Ativo</span>
+                  <% end %>
+                <% else %>
+                  <span class="inline-flex rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">Sem perfil</span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-end gap-2">
+                  <% if usuario.instrutor.present? %>
+                    <%= button_to "Rebaixar Instrutor", rebaixar_instrutor_admin_usuario_path(usuario), method: :patch, class: "bg-slate-100 text-slate-900 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition-colors" %>
+                  <% else %>
+                    <%= button_to "Tornar Instrutor", promover_instrutor_admin_usuario_path(usuario), method: :patch, class: "bg-purple-100 text-purple-800 hover:bg-purple-200 px-3 py-1 rounded text-xs font-bold transition-colors" %>
+                  <% end %>
+                  <% if usuario.gestor.present? %>
+                    <% unless usuario.email.present? && usuario.email.downcase == "admin@maos.com" %>
+                      <%= button_to "Rebaixar Gestor", rebaixar_gestor_admin_usuario_path(usuario), method: :patch, class: "bg-slate-100 text-slate-900 hover:bg-slate-200 px-3 py-1 rounded text-xs font-bold transition-colors" %>
+                    <% end %>
+                  <% else %>
+                    <%= button_to "Promover a Gestor", promover_gestor_admin_usuario_path(usuario), method: :patch, class: "bg-green-100 text-green-800 hover:bg-green-200 px-3 py-1 rounded text-xs font-bold transition-colors" %>
+                  <% end %>
+                  <% if usuario.candidato.present? %>
+                    <!-- Remover Perfil PcD button removed per preference; use 'Excluir' to remove account entirely -->
+                  <% end %>
+                  <% unless usuario.email.present? && usuario.email.downcase == "admin@maos.com" %>
+                    <%= button_to "Excluir", admin_usuario_path(usuario), method: :delete, class: "bg-gray-100 text-gray-800 hover:bg-gray-200 px-3 py-1 rounded text-xs font-bold transition-colors" %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
 
-  <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-blue-50">
-        <tr>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">Nome</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">CPF</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-blue-900 uppercase tracking-wider">Perfis ativos</th>
-          <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-blue-900 uppercase tracking-wider">Ações</th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-      <% @usuarios.each do |usuario| %>
-        <tr class="hover:bg-gray-50 transition-colors">
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm font-bold text-gray-900"><%= usuario.nome %></div>
-            <div class="text-xs text-gray-500"><%= usuario.email %></div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><%= usuario.cpf %></td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-            <div class="flex flex-wrap gap-2">
-              <% if usuario.gestor.present? %>
-                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">Gestor</span>
-              <% end %>
-              <% if usuario.instrutor.present? %>
-                <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-semibold">Instrutor</span>
-              <% end %>
-              <% if usuario.candidato.present? %>
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">Candidato</span>
-              <% end %>
-            </div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-end gap-2">
-              <% unless usuario.instrutor.present? %>
-                <%= button_to "Tornar Instrutor", promover_instrutor_admin_usuario_path(usuario), method: :patch, class: "bg-purple-100 text-purple-800 hover:bg-purple-200 px-3 py-1 rounded text-xs font-bold transition-colors" %>
-              <% end %>
-              <% if usuario.candidato.present? %>
-                <%= button_to "Remover Perfil PcD", remover_candidatura_admin_usuario_path(usuario), method: :delete, class: "bg-orange-100 text-orange-800 hover:bg-orange-200 px-3 py-1 rounded text-xs font-bold transition-colors" %>
-              <% end %>
-              <%= button_to "Excluir", admin_usuario_path(usuario), method: :delete, class: "bg-gray-100 text-gray-800 hover:bg-gray-200 px-3 py-1 rounded text-xs font-bold transition-colors" %>
-            </div>
-          </td>
-        </tr>
-      <% end %>
-
-      <% if @usuarios.empty? %>
-        <tr>
-          <td colspan="4" class="px-6 py-12 text-center text-gray-500">
-            <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            Nenhum usuário encontrado com os critérios informados.
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+          <% if @usuarios.empty? %>
+            <tr>
+              <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+                <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Nenhum usuário encontrado com os critérios informados.
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </main>
 </div>
