@@ -27,12 +27,14 @@ import {
   MessageCircle,
   MapPin,
   Send,
+  XCircle,
   // --- Ícones da tela de Cadastro ---
   Lock,
   Eye,
   EyeOff,
   Contact,
   BadgePlus,
+  BadgeCheck,
   // --- Novos ícones para a tela de Completar Perfil ---
   Map,
   Briefcase,
@@ -90,6 +92,7 @@ export default class extends Controller {
         EyeOff,
         Contact,
         BadgePlus,
+        BadgeCheck,
         // --- Novos ícones ---
         Map,
         Briefcase,
@@ -102,6 +105,7 @@ export default class extends Controller {
         Folder,
         FileText,
         CloudUpload,
+        XCircle,
         // --- Ícones mapeados  ---
         Edit3,
         IdCard,
