@@ -5,11 +5,17 @@ class PerfisController < ApplicationController
   def gateway
     set_default_role
 
-    papel = session[:active_role]
-    if papel == 'gestor' || papel == 'instrutor'
+    papel = perfil_ativo
+    if papel == "gestor"
       redirect_to admin_dashboard_path
-    elsif papel == 'aluno'
-      if current_usuario.candidato&.pendente? || current_usuario.candidato&.rejeitado?
+    elsif papel == "instrutor"
+      redirect_to instrutor_dashboard_path
+    elsif papel == "aluno"
+      if current_usuario.candidato.blank?
+        redirect_to new_candidato_path
+      elsif !current_usuario.instrutor?
+        redirect_to candidato_path
+      elsif current_usuario.candidato.pendente? || current_usuario.candidato.rejeitado?
         redirect_to candidato_path
       else
         redirect_to aluno_dashboard_path
@@ -22,6 +28,7 @@ class PerfisController < ApplicationController
   def switch
     novo_perfil = params[:role]
     if perfis_disponiveis.include?(novo_perfil)
+      current_usuario.update!(active_role: novo_perfil)
       session[:active_role] = novo_perfil
       redirect_to dashboard_gateway_path, notice: "Perfil alterado para #{novo_perfil.capitalize}"
     else

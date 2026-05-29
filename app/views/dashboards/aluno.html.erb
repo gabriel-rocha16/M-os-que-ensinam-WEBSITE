@@ -7,6 +7,7 @@
 
     <div class="flex items-center gap-3">
       <% if perfis_disponiveis.count > 1 %>
+        <% alternate_roles = perfis_disponiveis.reject { |perfil| perfil == perfil_ativo } %>
         <div class="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 shadow-sm">
           <span class="text-sm font-medium text-slate-500">Navegando como:</span>
           <div class="relative group">
@@ -23,6 +24,9 @@
             </div>
           </div>
         </div>
+        <% if alternate_roles.one? %>
+          <%= button_to "Mudar para perfil de #{alternate_roles.first.capitalize}", switch_role_path(role: alternate_roles.first), method: :patch, class: "inline-flex items-center rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700 transition" %>
+        <% end %>
       <% end %>
       <%= link_to root_path, class: "inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors" do %>
         ← Voltar ao site
