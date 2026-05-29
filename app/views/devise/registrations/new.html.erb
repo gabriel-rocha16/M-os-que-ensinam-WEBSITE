@@ -89,10 +89,11 @@
                   data: { password_visibility_target: "input" },
                   class: "w-full h-12 md:h-14 rounded-xl border border-[#D0D0D0] pl-11 pr-12 text-sm outline-none focus:border-[#0066CC] focus:ring-4 focus:ring-[#0066CC]/10 transition-all text-[#333]" %>
               <button type="button" 
-                      data-action="click->password-visibility#toggle"
-                class="absolute right-4 text-[#999] hover:text-[#0066CC] p-1 transition-colors" 
+                data-action="click->password-visibility#toggle"
+                data-password-visibility-target="icon"
+                class="absolute right-4 text-[#666] hover:text-[#0066CC] p-1" 
                 aria-label="Mostrar ou ocultar senha">
-                <i data-lucide="eye" class="w-5 h-5" data-password_visibility_target="icon"></i>
+                <i data-lucide="eye-off" class="w-5 h-5"></i>
               </button>
             </div>
           </div>
