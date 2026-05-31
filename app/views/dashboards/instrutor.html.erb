@@ -1,0 +1,93 @@
+<div class="min-h-screen bg-[#F8FAFC] font-sans">
+  <div class="max-w-[1200px] mx-auto px-4 py-10">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-[#003366]">Painel do Instrutor</h1>
+        <p class="text-sm text-slate-500 mt-2">Gerencie seus cursos e envie-os para revisão.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <%= link_to "Novo Curso", new_curso_path, class: "inline-flex items-center justify-center rounded-full bg-yellow-400 px-5 py-3 text-[#003366] font-semibold hover:bg-yellow-300 transition" %>
+        <%= link_to "Voltar para Página Inicial", root_path, class: "inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition" %>
+      </div>
+    </div>
+
+    <% if perfis_disponiveis.count > 1 %>
+      <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-sm text-slate-600">Navegando como <span class="font-semibold capitalize"><%= perfil_ativo %></span></p>
+        <% alternate_roles = perfis_disponiveis.reject { |perfil| perfil == perfil_ativo } %>
+        <% if alternate_roles.one? %>
+          <%= button_to "Mudar para perfil de #{alternate_roles.first.capitalize}", switch_role_path(role: alternate_roles.first), method: :patch, class: "inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700 transition" %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="grid grid-cols-1 xl:grid-cols-[360px_1fr] gap-6">
+      <section class="space-y-6">
+        <% if @cursos.present? %>
+          <div class="grid gap-6">
+            <% @cursos.each do |curso| %>
+              <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+                <div class="p-6 space-y-4">
+                  <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                    <div>
+                      <h2 class="text-2xl font-bold text-slate-900"><%= curso.nome %></h2>
+                      <p class="text-sm text-slate-500 mt-2"><%= curso.area.presence || 'Área não informada' %></p>
+                    </div>
+                    <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold <%= curso.aguardando_aprovacao? ? 'bg-yellow-100 text-yellow-700' : curso.publicado? ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-700' %>"><%= curso.status.titleize %></span>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-4 text-sm text-slate-500">
+                    <div>
+                      <p class="font-semibold text-slate-900">Aulas</p>
+                      <p><%= curso.quantidade_aulas || 0 %></p>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-slate-900">Carga horária</p>
+                      <p><%= curso.carga_horaria || 0 %>h</p>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-slate-900">Alunos inscritos</p>
+                      <p><%= curso.matriculas.count %></p>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-slate-900">Última atualização</p>
+                      <p><%= l(curso.updated_at, format: :short) %></p>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap gap-3">
+                    <%= link_to "Editar", edit_curso_path(curso), class: "inline-flex items-center justify-center rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition" %>
+                    <%= link_to "Ver Curso", curso_path(curso), class: "inline-flex items-center justify-center rounded-full bg-[#003366] text-white px-5 py-2 text-sm font-semibold hover:bg-slate-900 transition" %>
+                    <% if curso.rascunho? %>
+                      <%= button_to "Enviar para revisão", solicitar_aprovacao_curso_path(curso), method: :patch, class: "inline-flex items-center justify-center rounded-full bg-yellow-400 text-[#003366] px-5 py-2 text-sm font-semibold hover:bg-yellow-300 transition" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="bg-white rounded-3xl border border-dashed border-slate-200 p-10 text-center">
+            <p class="text-slate-500">Você ainda não criou nenhum curso. Clique em Novo Curso para começar.</p>
+          </div>
+        <% end %>
+      </section>
+
+      <aside class="space-y-6">
+        <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
+          <h2 class="text-lg font-bold text-[#003366]">Resumo rápido</h2>
+          <div class="mt-6 grid gap-4">
+            <div class="rounded-3xl bg-slate-50 p-4">
+              <p class="text-sm text-slate-500">Cursos em revisão</p>
+              <p class="mt-2 text-3xl font-bold text-[#003366]"><%= @cursos.select(&:aguardando_aprovacao?).count %></p>
+            </div>
+            <div class="rounded-3xl bg-slate-50 p-4">
+              <p class="text-sm text-slate-500">Cursos publicados</p>
+              <p class="mt-2 text-3xl font-bold text-[#003366]"><%= @cursos.select(&:publicado?).count %></p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>

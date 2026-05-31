@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :cursos do
     member do
       post :matricular
+      patch :solicitar_aprovacao
     end
   end
 
@@ -39,9 +40,10 @@ Rails.application.routes.draw do
 
     resources :instrutores, only: [ :index ]
 
-    resources :cursos, only: [] do
+    resource :configuracao, only: [ :edit, :update ], path: "configuracoes"
+
+    resources :cursos, only: [ :index ] do
       member do
-        patch :solicitar_aprovacao
         patch :publicar
         patch :rejeitar
         delete :destroy
@@ -49,6 +51,7 @@ Rails.application.routes.draw do
     end
   end
   get "aluno/dashboard", to: "dashboards#aluno", as: :aluno_dashboard
+  get "instrutor/dashboard", to: "dashboards#instrutor", as: :instrutor_dashboard
 
   get "/dashboard_gateway", to: "perfis#gateway", as: :dashboard_gateway
   patch "/alternar_perfil/:role", to: "perfis#switch", as: :switch_role

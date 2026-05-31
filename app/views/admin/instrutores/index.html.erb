@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <div class="max-w-7xl mx-auto mt-10 px-4 pb-10 grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-6">
   <%= render "admin/shared/sidebar" %>
 
@@ -11,7 +10,6 @@
       <div class="flex items-center gap-3">
         <%= link_to "Voltar ao Dashboard", admin_dashboard_path, class: "px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition" %>
       </div>
-    </div>
 
     <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100">
       <table class="min-w-full divide-y divide-gray-200">
@@ -42,125 +40,6 @@
           <% end %>
         </tbody>
       </table>
-=======
-<div class="flex flex-col xl:flex-row min-h-screen w-full bg-[#F4F7FB] font-sans" data-controller="lucide sidebar-mobile">
-  <%# --- RENDER DA SIDEBAR MOBILE --- %>
-  <%= render "admin/shared/mobile_sidebar" %>
-  <%# --- BARRA SUPERIOR MOBILE --- %>
-  <div class="flex xl:hidden items-center justify-between bg-[#00264D] text-white px-4 py-3.5 shadow-md z-30 sticky top-0 w-full">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-lg bg-[#FFD700]/10 text-[#FFD700] flex items-center justify-center">
-        <i data-lucide="shield" class="w-4 h-4"></i>
-      </div>
-      <span class="text-xs font-bold tracking-tight uppercase">Painel Admin</span>
-    </div>
-    <button data-action="click->sidebar-mobile#open" class="p-2 rounded-lg hover:bg-white/10 transition-colors cursor-pointer text-white flex items-center justify-center">
-      <i data-lucide="menu" class="w-6 h-6"></i>
-    </button>
-  </div>
-  <%# --- SIDEBAR DESKTOP --- %>
-  <aside class="hidden xl:block w-[280px] h-screen bg-[#00264D] shrink-0 sticky top-0 overflow-y-auto">
-    <%= render "admin/shared/sidebar" %>
-  </aside>
-  <%# Área de conteúdo principal rolável %>
-  <main class="flex-1 w-full h-full xl:h-screen overflow-y-auto p-4 sm:p-6 lg:p-8">
-    <div class="max-w-[1400px] mx-auto space-y-8">
-      <%# --- HEADER EXATAMENTE IGUAL AO DASHBOARD --- %>
-      <header class="flex items-center justify-between bg-white px-8 py-5 rounded-2xl border border-gray-100 shadow-sm">
-        <div>
-          <h1 class="text-2xl font-bold text-[#00264D]">Instrutores</h1>
-          <p class="text-sm text-gray-500 mt-0.5">Visão geral dos instrutores e seus cursos</p>
-        </div>
-        <%# Área de Perfil do Usuário %>
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-[#00264D] text-white flex items-center justify-center font-bold text-sm shadow-sm">
-            AD
-          </div>
-          <div class="flex flex-col hidden sm:flex">
-            <span class="text-sm font-bold text-[#00264D] leading-tight">Administrador</span>
-            <span class="text-[11px] text-gray-500 leading-tight">admin@maosqueensinam.org</span>
-          </div>
-          <span class="ml-2 px-3 py-1 bg-[#FFD700] text-[#00264D] text-[10px] font-extrabold uppercase rounded-full tracking-wider shadow-sm hidden md:block">
-            Admin
-          </span>
-        </div>
-      </header>
-      <%# --- GRID DE INSTRUTORES --- %>
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <% @instrutores.each_with_index do |instrutor, index| %>
-          <%# Definir cores dinâmicas para o Avatar baseado no index %>
-          <% bg_colors = ['bg-blue-600', 'bg-green-600', 'bg-orange-500', 'bg-purple-600', 'bg-red-600', 'bg-teal-600'] %>
-          <% avatar_color = bg_colors[index % bg_colors.length] %>
-          <% iniciais = instrutor.usuario.nome.split.map(&:first).join[0..1].upcase rescue "IN" %>
-          <div class="bg-white rounded-[1.25rem] border border-gray-100 shadow-sm p-6 flex flex-col hover:shadow-md transition-shadow">
-            <%# Topo do Card: Avatar, Nome, E-mail e Badge %>
-            <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-full <%= avatar_color %> text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-sm">
-                <%= iniciais %>
-              </div>
-              <div class="flex-1 min-w-0">
-                <h3 class="font-bold text-[#00264D] text-base truncate"><%= instrutor.usuario.nome %></h3>
-                <p class="text-xs text-gray-500 truncate mt-0.5"><%= instrutor.usuario.email %></p>
-                <%# Localização mockada para manter a fidelidade ao design caso o modelo não tenha %>
-                <p class="text-[11px] text-gray-400 mt-0.5"><%= ["São Paulo, SP", "Rio de Janeiro, RJ", "Belo Horizonte, MG", "Curitiba, PR", "Salvador, BA", "Fortaleza, CE"].sample %></p>
-              </div>
-              <div class="shrink-0">
-                <span class="inline-flex items-center justify-center px-2.5 py-1 bg-orange-50 text-orange-600 text-[10px] font-bold rounded-md">
-                  Instrutor
-                </span>
-              </div>
-            </div>
-            <%# Métricas Resumidas (Background Cinza Claro) %>
-            <% 
-              total_cursos = instrutor.cursos.count 
-              # Contagem segura para não quebrar caso os métodos não existam
-              cursos_publicados = instrutor.cursos.count { |c| !c.try(:rascunho?) && !c.try(:aguardando_aprovacao?) } rescue 0
-              total_alunos = instrutor.cursos.sum { |c| c.try(:matriculas)&.count || 0 } rescue 0
-            %>
-            <div class="flex items-center justify-between bg-[#F8FAFC] rounded-xl p-4 my-6">
-              <div class="flex flex-col items-center flex-1 border-r border-gray-200 last:border-0">
-                <span class="text-xl font-extrabold text-[#00264D]"><%= total_cursos %></span>
-                <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-1">Cursos</span>
-              </div>
-              <div class="flex flex-col items-center flex-1 border-r border-gray-200 last:border-0">
-                <span class="text-xl font-extrabold text-[#00264D]"><%= cursos_publicados %></span>
-                <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-1">Publicados</span>
-              </div>
-              <div class="flex flex-col items-center flex-1">
-                <span class="text-xl font-extrabold text-[#00264D]"><%= total_alunos %></span>
-                <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider mt-1">Alunos</span>
-              </div>
-            </div>
-            <%# Lista de Cursos (Até 2 cursos) %>
-            <div class="flex-1">
-              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-3">Cursos</p>
-              <div class="space-y-3">
-                <% se_cursos_vazios = true %>
-                <% instrutor.cursos.limit(2).each do |curso| %>
-                  <% se_cursos_vazios = false %>
-                  <div class="flex items-center justify-between gap-2">
-                    <p class="text-sm text-[#00264D] font-medium truncate"><%= curso.nome %></p>
-                    <% if curso.try(:rascunho?) %>
-                      <span class="shrink-0 text-[10px] font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded">Rascunho</span>
-                    <% elsif curso.try(:aguardando_aprovacao?) %>
-                      <span class="shrink-0 text-[10px] font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded">Em revisão</span>
-                    <% else %>
-                      <span class="shrink-0 text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded">Publicado</span>
-                    <% end %>
-                  </div>
-                <% end %>
-                <% if se_cursos_vazios %>
-                  <p class="text-xs text-gray-400 italic">Nenhum curso cadastrado ainda.</p>
-                <% end %>
-              </div>
-            </div>
-            <%# Rodapé do Card %>
-            <div class="mt-6 pt-4 border-t border-gray-50">
-              <p class="text-[11px] text-gray-400 font-medium">Instrutor desde <%= instrutor.created_at.strftime("%d/%m/%Y") %></p>
-            </div>
-          </div>
-        <% end %>
-      </div>
       <%# Empty State caso não existam instrutores %>
       <% if @instrutores.empty? %>
         <div class="flex flex-col items-center justify-center bg-white rounded-2xl border border-gray-100 p-12 text-center shadow-sm">
@@ -171,7 +50,6 @@
           <p class="text-sm text-gray-500 mt-2">Ainda não há instrutores cadastrados na plataforma.</p>
         </div>
       <% end %>
->>>>>>> Stashed changes
     </div>
   </main>
 </div>

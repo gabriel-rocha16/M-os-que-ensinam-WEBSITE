@@ -1,16 +1,15 @@
 class CursosController < ApplicationController
-  skip_before_action :authenticate_usuario!, only: [ :index ]
-  before_action :verificar_instrutor_ativo!, only: [ :new, :create, :edit, :update, :destroy ]
-  before_action :autorizar_edicao_curso!, only: [ :edit, :update, :destroy ]
+  skip_before_action :authenticate_usuario!, only: [ :index, :show ]
+  before_action :verificar_instrutor_ativo!, only: [ :new, :create, :edit, :update, :destroy, :solicitar_aprovacao ]
+  before_action :set_curso, only: [ :show, :edit, :update, :destroy, :solicitar_aprovacao ]
+  before_action :authorize_own_course!, only: [ :edit, :update, :destroy, :solicitar_aprovacao ]
 
   def index
     @cursos = Curso.publicado.includes(:matriculas).order(nome: :asc)
   end
 
   def show
-    @curso = Curso.find(params[:id])
-
-    unless @curso.publicado? || (current_usuario && (@curso.usuario_id == current_usuario.id || current_usuario.gestor.present?))
+    unless @curso.publicado? || (current_usuario && (@curso.usuario_id == current_usuario.id || current_usuario.gestor?))
       redirect_to cursos_path, alert: "Este curso ainda não está disponível publicamente."
     end
   end
@@ -21,37 +20,38 @@ class CursosController < ApplicationController
 
   def create
     @curso = Curso.new(curso_params)
-    @curso.usuario_id = current_usuario.id
+    @curso.usuario = current_usuario
+    @curso.instrutor = current_usuario.instrutor
 
     if @curso.save
-      redirect_to admin_dashboard_path, notice: "Curso criado com sucesso e está como Rascunho."
+      redirect_to dashboard_path_for(current_usuario), notice: "Curso criado com sucesso e está como Rascunho."
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def edit
-    @curso = Curso.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @curso = Curso.find(params[:id])
     if @curso.update(curso_params)
-      redirect_to admin_dashboard_path, notice: "Curso atualizado com sucesso."
+      redirect_to dashboard_path_for(current_usuario), notice: "Curso atualizado com sucesso."
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @curso = Curso.find(params[:id])
-
     if @curso.matriculas.exists?
-      redirect_to admin_dashboard_path, alert: "Este curso possui alunos e não pode ser excluído. Arquive-o em vez disso."
+      redirect_to dashboard_path_for(current_usuario), alert: "Este curso possui alunos e não pode ser excluído. Arquive-o em vez disso."
     else
       @curso.destroy
-      redirect_to admin_dashboard_path, notice: "Curso excluído."
+      redirect_to dashboard_path_for(current_usuario), notice: "Curso excluído."
     end
+  end
+
+  def solicitar_aprovacao
+    @curso.aguardando_aprovacao!
+    redirect_to dashboard_path_for(current_usuario), notice: "Curso enviado para revisão."
   end
 
   def matricular
@@ -66,11 +66,14 @@ class CursosController < ApplicationController
 
   private
 
-  def autorizar_edicao_curso!
-    @curso = Curso.find(params[:id])
-    unless current_usuario.gestor.present? || @curso.usuario_id == current_usuario.id
-      redirect_to admin_dashboard_path, alert: "Você não tem permissão para editar este curso."
+  def authorize_own_course!
+    unless @curso.usuario_id == current_usuario.id
+      redirect_to dashboard_path_for(current_usuario), alert: "Acesso não autorizado."
     end
+  end
+
+  def set_curso
+    @curso = Curso.find(params[:id])
   end
 
   def curso_params

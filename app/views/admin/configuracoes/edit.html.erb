@@ -1,0 +1,46 @@
+<div class="min-h-screen bg-[#F8FAFC] font-sans">
+  <div class="max-w-[1200px] mx-auto px-4 py-10">
+    <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-3xl font-bold text-[#003366]">Configurações de Aprovação</h1>
+          <p class="text-sm text-gray-500 mt-2">Defina se novos cadastros devem ser aprovados automaticamente ou manualmente.</p>
+        </div>
+        <%= link_to "Voltar ao Dashboard", admin_dashboard_path, class: "px-5 py-3 rounded-full bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition" %>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6">
+        <div class="bg-slate-50 rounded-3xl p-8">
+          <%= form_with model: @configuracao, url: admin_configuracao_path, method: :patch, local: true, class: "space-y-6" do |form| %>
+            <div class="space-y-3">
+              <h2 class="text-xl font-bold text-[#003366]">Aprovação de novos usuários</h2>
+              <p class="text-sm text-slate-500">Escolha como deseja aprovar novos cadastros na plataforma.</p>
+            </div>
+
+            <div class="grid gap-4">
+              <label class="flex items-center gap-3 rounded-3xl border border-slate-200 bg-white p-4 cursor-pointer hover:border-slate-300 transition">
+                <%= form.radio_button :aprovacao_automatica, true, checked: @configuracao.aprovacao_automatica? %>
+                <div>
+                  <p class="font-semibold text-slate-900">Aprovação automática</p>
+                  <p class="text-sm text-slate-500">Novos usuários são validados automaticamente e têm acesso após cadastro.</p>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-3 rounded-3xl border border-slate-200 bg-white p-4 cursor-pointer hover:border-slate-300 transition">
+                <%= form.radio_button :aprovacao_automatica, false, checked: !@configuracao.aprovacao_automatica? %>
+                <div>
+                  <p class="font-semibold text-slate-900">Aprovação manual</p>
+                  <p class="text-sm text-slate-500">Novos usuários ficam em pendência até o gestor aprovar a conta.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="flex justify-end">
+              <%= form.submit "Salvar configuração", class: "inline-flex items-center justify-center rounded-full bg-[#003366] text-white px-6 py-3 font-semibold hover:bg-slate-900 transition" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

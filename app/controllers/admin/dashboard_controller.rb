@@ -1,20 +1,17 @@
 class Admin::DashboardController < ApplicationController
   before_action :authenticate_usuario!
-  before_action :verificar_acesso_ao_painel!
+  before_action :verificar_gestor_ativo!
 
   def index
-    if perfil_ativo == "gestor"
-      @cursos = Curso.includes(:usuario, :matriculas).order(created_at: :desc)
-      @cursos_aguardando_aprovacao = Curso.aguardando_aprovacao.order(created_at: :desc).limit(6)
-      @total_alunos = Candidato.count
-      @total_cursos = Curso.count
-      @total_inscricoes = Matricula.count
-      @total_instrutores = Instrutor.count
-      @total_cursos_revisao = Curso.aguardando_aprovacao.count
-      @atividades_recentes = build_atividades_recentes
-    elsif perfil_ativo == "instrutor"
-      @cursos = current_usuario.cursos.order(created_at: :desc)
-    end
+    @cursos = Curso.includes(:usuario, :matriculas).order(created_at: :desc)
+    @cursos_aguardando_aprovacao = Curso.aguardando_aprovacao.order(created_at: :desc).limit(6)
+    @total_alunos = Candidato.count
+    @total_cursos = Curso.count
+    @total_inscricoes = Matricula.count
+    @total_instrutores = Instrutor.count
+    @total_cursos_revisao = Curso.aguardando_aprovacao.count
+    @atividades_recentes = build_atividades_recentes
+    @configuracao = Configuracao.atual
   end
 
   def build_atividades_recentes
@@ -55,7 +52,7 @@ class Admin::DashboardController < ApplicationController
   private
 
   def verificar_acesso_ao_painel!
-    unless %w[gestor instrutor].include?(perfil_ativo)
+    unless perfil_ativo == "gestor"
       redirect_to dashboard_gateway_path, alert: "Acesso negado"
     end
   end

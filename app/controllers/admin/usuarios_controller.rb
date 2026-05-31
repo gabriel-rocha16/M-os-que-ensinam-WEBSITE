@@ -4,13 +4,31 @@ class Admin::UsuariosController < ApplicationController
 
   def index
     @query = params[:q].to_s.strip
+    @role_filter = params[:role].to_s.presence_in(%w[todos alunos instrutor gestores])
 
-    @usuarios = if @query.present?
-      Usuario.where("nome ILIKE :q OR email ILIKE :q OR cpf ILIKE :q", q: "%#{@query}%")
-             .order(:nome)
+    @usuarios = Usuario.all
+    @usuarios = case @role_filter
+    when "instrutor"
+                   @usuarios.left_outer_joins(:instrutor)
+                            .where("instrutors.id IS NOT NULL")
+                            .distinct
+    when "gestores"
+                   @usuarios.left_outer_joins(:gestor)
+                            .where("usuarios.role = :gestor OR gestores.id IS NOT NULL", gestor: Usuario.roles[:gestor])
+                            .distinct
+    when "alunos"
+                   @usuarios.left_outer_joins(:candidato)
+                            .where.not(candidatos: { id: nil })
+                            .distinct
     else
-      Usuario.order(:nome)
+                   @usuarios
     end
+
+    if @query.present?
+      @usuarios = @usuarios.where("usuarios.nome ILIKE :q OR usuarios.email ILIKE :q OR usuarios.cpf ILIKE :q", q: "%#{@query}%")
+    end
+
+    @usuarios = @usuarios.order(:nome)
   end
 
   def pendentes
@@ -69,6 +87,11 @@ class Admin::UsuariosController < ApplicationController
 
   def promover_instrutor
     @usuario = Usuario.find(params[:id])
+    if @usuario.gestor?
+      redirect_to admin_usuarios_path, alert: "Não é permitido tornar um Gestor em Instrutor."
+      return
+    end
+
     if @usuario.instrutor.present?
       redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} já é um Instrutor oficial."
       return
@@ -82,6 +105,9 @@ class Admin::UsuariosController < ApplicationController
           bio: "Pendente"
         )
         instrutor.save!
+        # If the user had a candidato profile, remove it to keep roles exclusive
+        @usuario.candidato.destroy if @usuario.candidato.present?
+        @usuario.update!(role: :instrutor, active_role: :instrutor)
       end
       redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} agora é um Instrutor oficial."
     rescue ActiveRecord::RecordInvalid => e
@@ -101,6 +127,7 @@ class Admin::UsuariosController < ApplicationController
     begin
       ActiveRecord::Base.transaction do
         @usuario.create_gestor!(cargo: "Gestor", departamento: "Diretoria", nivel_acesso: 2, data_admissao: Date.today)
+        @usuario.update!(role: :gestor)
       end
       redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} agora é Gestor."
     rescue ActiveRecord::RecordInvalid => e
@@ -117,7 +144,14 @@ class Admin::UsuariosController < ApplicationController
       return
     end
 
-    @usuario.instrutor.destroy
+    instrutor = @usuario.instrutor
+    # Se o instrutor tem cursos, desassociá-los (instrutor_id -> NULL) para não violar FK
+    if instrutor.cursos.exists?
+      instrutor.cursos.update_all(instrutor_id: nil)
+    end
+
+    instrutor.destroy
+    @usuario.update!(role: :aluno, active_role: :aluno)
     redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} foi rebaixado de Instrutor."
   end
 
@@ -134,6 +168,7 @@ class Admin::UsuariosController < ApplicationController
     end
 
     @usuario.gestor.destroy
+    @usuario.update!(role: :aluno)
     redirect_to admin_usuarios_path, notice: "Usuário #{@usuario.nome} foi rebaixado de Gestor."
   end
 
