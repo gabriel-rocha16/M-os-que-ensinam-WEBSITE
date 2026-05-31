@@ -1,5 +1,5 @@
-<%# --- ENVELOPE GLOBAL: Fixa a altura na tela e impede rolagem do body --- %>
-<div class="flex h-screen w-full bg-[#F4F7FB] font-sans overflow-hidden" data-controller="lucide sidebar-mobile">
+<%# --- 1. ENVELOPE GLOBAL DO CONTROLLER --- %>
+<div class="flex flex-col xl:flex-row min-h-screen w-full bg-[#F4F7FB] font-sans" data-controller="lucide sidebar-mobile">
   <%# --- 2. RENDER DA SIDEBAR MOBILE (Dentro do escopo do controller) --- %>
   <%= render "admin/shared/mobile_sidebar" %>
   <%# --- 3. BARRA SUPERIOR EXCLUSIVA DO MOBILE (Abaixo de XL) --- %>
@@ -23,7 +23,7 @@
   </aside>
   <%# --- CONTEÚDO PRINCIPAL (O único que rola) --- %>
   <main class="flex-1 w-full h-full xl:h-screen overflow-y-auto p-4 sm:p-6 lg:p-8">
-    <div class="max-w-[1400px] mx-auto space-y-6 sm:space-y-8">
+    <div class="max-w-[1400px] mx-auto space-y-8">
       <header class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
         <h1 class="text-3xl font-bold text-[#003366]">Relatórios</h1>
         <p class="text-sm text-gray-500 mt-1">Métricas, dados demográficos e desempenho da plataforma.</p>
