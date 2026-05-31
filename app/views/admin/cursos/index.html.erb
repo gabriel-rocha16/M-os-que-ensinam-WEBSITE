@@ -1,16 +1,32 @@
-<div class="min-h-screen bg-[#F8FAFC] font-sans" data-controller="lucide">
-  <div class="max-w-[1400px] mx-auto px-4 py-8 grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-8">
-    <div class="hidden xl:block">
-      <%= render "admin/shared/sidebar" %>
+<%# --- 1. ENVELOPE GLOBAL DO CONTROLLER --- %>
+<div class="flex flex-col xl:flex-row min-h-screen w-full bg-[#F4F7FB] font-sans" data-controller="lucide sidebar-mobile">
+  <%# --- 2. RENDER DA SIDEBAR MOBILE --- %>
+  <%= render "admin/shared/mobile_sidebar" %>
+  <%# --- 3. BARRA SUPERIOR MOBILE --- %>
+  <div class="flex xl:hidden items-center justify-between bg-[#00264D] text-white px-4 py-3.5 shadow-md z-30 sticky top-0 w-full">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-[#FFD700]/10 text-[#FFD700] flex items-center justify-center">
+        <i data-lucide="shield" class="w-4 h-4"></i>
+      </div>
+      <span class="text-xs font-bold tracking-tight uppercase">Painel Admin</span>
     </div>
-
-    <main class="space-y-8">
-      <header class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <button data-action="click->sidebar-mobile#open" class="p-2 rounded-lg hover:bg-white/10 transition-colors cursor-pointer text-white flex items-center justify-center">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+  <%# --- 4. SIDEBAR DESKTOP --- %>
+  <aside class="hidden xl:block w-[280px] h-screen bg-[#00264D] shrink-0 sticky top-0 overflow-y-auto">
+    <%= render "admin/shared/sidebar" %>
+  </aside>
+  <%# --- 5. MAIN CONTENT (PADRONIZADO) --- %>
+  <main class="flex-1 w-full h-full xl:h-screen overflow-y-auto p-4 sm:p-6 lg:p-8">
+    <div class="max-w-[1400px] mx-auto space-y-8">
+      <%# Header do Módulo %>
+      <header class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
         <div>
           <h1 class="text-3xl font-bold text-[#003366]">Gestão de Cursos</h1>
           <p class="text-sm text-gray-500 mt-1">Reveja, publique e gerencie os cursos enviados pelos instrutores.</p>
         </div>
-
         <div class="flex flex-wrap gap-3">
           <% tabs = { "all" => "Todos", "publicado" => "Publicado", "aguardando_aprovacao" => "Em revisão", "rascunho" => "Rascunhos" } %>
           <% tabs.each do |key, label| %>
@@ -18,8 +34,8 @@
           <% end %>
         </div>
       </header>
-
-      <div class="grid grid-cols-1 lg:grid-cols-[1.5fr_0.9fr] gap-6">
+      <%# Conteúdo Principal %>
+      <div class="grid grid-cols-1 lg:grid-cols-[1.5fr_0.9fr] gap-8">
         <section class="space-y-6">
           <% if @cursos.any? %>
             <% @cursos.each do |curso| %>
@@ -39,72 +55,48 @@
                       <p class="text-sm text-slate-500">Instrutor: <%= curso.usuario&.nome || 'Não informado' %></p>
                     </div>
                   </div>
-
                   <div class="grid grid-cols-2 gap-4">
-                    <div class="space-y-2">
-                      <p class="text-[11px] uppercase tracking-[0.25em] text-slate-500">Alunos</p>
-                      <p class="text-xl font-bold text-[#003366]"><%= curso.matriculas.count %></p>
-                    </div>
-                    <div class="space-y-2">
-                      <p class="text-[11px] uppercase tracking-[0.25em] text-slate-500">Aulas</p>
-                      <p class="text-xl font-bold text-[#003366]"><%= curso.quantidade_aulas || 0 %></p>
-                    </div>
-                    <div class="space-y-2">
-                      <p class="text-[11px] uppercase tracking-[0.25em] text-slate-500">Carga</p>
-                      <p class="text-xl font-bold text-[#003366]"><%= curso.carga_horaria || 0 %>h</p>
-                    </div>
-                    <div class="space-y-2">
-                      <p class="text-[11px] uppercase tracking-[0.25em] text-slate-500">Criado em</p>
-                      <p class="text-xl font-bold text-[#003366]"><%= curso.created_at.strftime('%d/%m/%Y') %></p>
-                    </div>
+                    <% { "Alunos" => curso.matriculas.count, "Aulas" => curso.quantidade_aulas || 0, "Carga" => "#{curso.carga_horaria || 0}h", "Criado em" => curso.created_at.strftime('%d/%m/%Y') }.each do |label, value| %>
+                      <div class="space-y-1">
+                        <p class="text-[11px] uppercase tracking-[0.25em] text-slate-500"><%= label %></p>
+                        <p class="text-lg font-bold text-[#003366]"><%= value %></p>
+                      </div>
+                    <% end %>
                   </div>
                 </div>
-
                 <div class="border-t border-gray-100 bg-slate-50 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <% status_classes = {
-                      'rascunho' => 'bg-slate-100 text-slate-700',
-                      'aguardando_aprovacao' => 'bg-yellow-100 text-yellow-700',
-                      'publicado' => 'bg-emerald-100 text-emerald-700'
-                    } %>
-                    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold <%= status_classes[curso.status] %>"><%= curso.status.titleize %></span>
-                    <span class="text-xs text-slate-500">Criado por <%= curso.usuario&.nome || 'Sistema' %></span>
+                  <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold <%= curso.publicado? ? 'bg-emerald-100 text-emerald-700' : 'bg-yellow-100 text-yellow-700' %>"><%= curso.status.titleize %></span>
                   </div>
-
-                  <div class="flex flex-wrap items-center gap-3">
+                  <div class="flex gap-3">
                     <% if curso.aguardando_aprovacao? %>
-                      <%= button_to "Publicar", publicar_admin_curso_path(curso), method: :patch, class: "inline-flex items-center justify-center gap-2 bg-emerald-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-emerald-700 transition" %>
+                      <%= button_to "Publicar", publicar_admin_curso_path(curso), method: :patch, class: "bg-emerald-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-emerald-700 transition" %>
                     <% end %>
-                    <%= link_to "Ver Curso", curso_path(curso), class: "inline-flex items-center justify-center px-5 py-2 rounded-full border border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-100 transition" %>
+                    <%= link_to "Ver Curso", curso_path(curso), class: "px-5 py-2 rounded-full border border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-100 transition" %>
                   </div>
                 </div>
               </div>
             <% end %>
           <% else %>
-            <div class="bg-white rounded-3xl border border-dashed border-slate-200 p-10 text-center">
-              <p class="text-slate-500">Nenhum curso encontrado para esta seleção.</p>
-            </div>
+            <div class="bg-white rounded-3xl border border-dashed border-slate-200 p-10 text-center text-slate-500">Nenhum curso encontrado.</div>
           <% end %>
         </section>
-
         <aside class="space-y-6">
-          <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
+          <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sticky top-8">
             <h3 class="text-lg font-bold text-[#003366]">Status rápido</h3>
-            <p class="text-sm text-slate-500 mt-3">Filtre por status para aprovar cursos mais facilmente.</p>
             <div class="mt-6 grid grid-cols-2 gap-4">
               <div class="bg-slate-50 rounded-2xl p-4">
-                <p class="text-xs uppercase tracking-[0.2em] text-slate-500">Total em revisão</p>
-                <p class="mt-2 text-3xl font-bold text-[#003366]"><%= Curso.aguardando_aprovacao.count %></p>
+                <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500">Em revisão</p>
+                <p class="mt-1 text-2xl font-bold text-[#003366]"><%= Curso.aguardando_aprovacao.count %></p>
               </div>
               <div class="bg-slate-50 rounded-2xl p-4">
-                <p class="text-xs uppercase tracking-[0.2em] text-slate-500">Total publicados</p>
-                <p class="mt-2 text-3xl font-bold text-[#003366]"><%= Curso.publicado.count %></p>
+                <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500">Publicados</p>
+                <p class="mt-1 text-2xl font-bold text-[#003366]"><%= Curso.publicado.count %></p>
               </div>
             </div>
           </div>
-
         </aside>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 </div>

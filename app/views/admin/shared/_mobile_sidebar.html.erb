@@ -1,0 +1,22 @@
+<%# app/views/admin/shared/_mobile_sidebar.html.erb %>
+<div class="xl:hidden">
+  <%# --- 1. BACKDROP (Fundo escuro) --- %>
+  <div data-sidebar-mobile-target="backdrop"
+       data-action="click->sidebar-mobile#close"
+    class="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 ease-in-out hidden opacity-0">
+  </div>
+  <%# --- 2. CONTAINER DA SIDEBAR (O menu que desliza) --- %>
+  <div data-sidebar-mobile-target="container"
+       class="fixed inset-y-0 left-0 w-[290px] bg-[#00264D] z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl">
+    <%# Botão de fechar (X) %>
+    <div class="absolute top-4 right-4 z-50">
+      <button data-action="click->sidebar-mobile#close" 
+        class="text-white/60 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer" 
+        aria-label="Fechar menu">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <%# Renderiza o conteúdo da sua sidebar original %>
+    <%= render "admin/shared/sidebar" %>
+  </div>
+</div>

@@ -1,3 +1,15 @@
-<%= render "pages/landingPage/mobile_navbar" %>
-<h1>Contato</h1>
-<p>Entre em contato conosco.</p>
+<div class="w-full bg-white border-b border-gray-100 py-5 px-5 md:px-6 fixed top-0 left-0 z-50 shadow-sm h-24 flex items-center">
+  
+<div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+  <button onclick="history.back()" class="inline-flex items-center gap-2 text-[#003366] hover:text-blue-600 font-bold text-base group transition-colors duration-300 select-none outline-none appearance-none bg-transparent border-0 cursor-pointer">
+    <i class="ri-arrow-left-line text-xl transition-transform group-hover:-translate-x-1"></i>
+    Voltar
+  </button>
+    <%= link_to root_path, class: "block transition-transform hover:scale-105 shrink-0" do %>
+      <%= image_tag "logo.png", class: "h-12 md:h-14 w-auto object-contain" %>
+    <% end %>
+  </div>
+</div>
+<div class="pt-24 bg-[#f8fafc]">
+  <%= render "pages/landingPage/contact" %>
+</div>
