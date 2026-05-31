@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 import {
   createIcons,
   Home,
@@ -11,6 +11,7 @@ import {
   Calendar,
   Star,
   ArrowRight,
+  ArrowLeft,
   Clock,
   PlayCircle,
   Users,
@@ -55,6 +56,17 @@ import {
   FileCheck,
   Paperclip,
   ExternalLink,
+  // -- Icones de dashboard
+  LayoutDashboard,
+  BarChart2,
+  UserCheck,
+  AlertCircle,
+  FileClock,
+  Check,
+  X,
+  Image,
+  Shield,
+  Menu
 } from "lucide"
 
 export default class extends Controller {
@@ -71,6 +83,7 @@ export default class extends Controller {
         Calendar,
         Star,
         ArrowRight,
+        ArrowLeft,
         Clock,
         PlayCircle,
         Users,
@@ -106,6 +119,17 @@ export default class extends Controller {
         FileText,
         CloudUpload,
         XCircle,
+        // Icones novos dashboard
+        LayoutDashboard,
+        BarChart2,
+        UserCheck,
+        AlertCircle,
+        FileClock,
+        Check,
+        X,
+        Image,
+        Shield,
+        Menu,
         // --- Ícones mapeados  ---
         Edit3,
         IdCard,

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <aside class="hidden xl:block">
   <div class="sticky top-24 space-y-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm">
     <div class="mb-4">
@@ -25,3 +26,66 @@
     </div>
   </div>
 </aside>
+=======
+<% pending_cursos_count = Curso.aguardando_aprovacao.count %>
+<div class="flex flex-col h-full bg-[#00264D] text-white shadow-xl">
+  <%# --- CABEÇALHO DA SIDEBAR --- %>
+  <div class="flex items-center justify-between px-6 py-8 border-b border-white/5 mb-2">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-[#001F3F]/60 border border-[#FFD700]/20 flex items-center justify-center text-[#FFD700] shadow-md shadow-black/10">
+        <i data-lucide="shield" class="w-4.5 h-4.5 font-bold"></i>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-md font-extrabold text-white tracking-tight antialiased">Painel Administrativo</span>
+      </div>
+    </div>
+    <%# Opcional: Esse botão pode ocultar a sidebar no desktop se você tiver JS para isso %>
+    <button class="hidden xl:block text-white/40 hover:text-white transition-colors cursor-pointer" aria-label="Recolher menu">
+      <i data-lucide="align-left" class="w-5 h-5"></i>
+    </button>
+  </div>
+  <%# --- MENU DE NAVEGAÇÃO --- %>
+  <nav class="flex-1 flex flex-col space-y-1 mt-4">
+    <%# Dashboard %>
+    <%= link_to admin_dashboard_path, class: "flex items-center gap-4 px-6 py-3.5 text-sm transition-colors #{current_page?(admin_dashboard_path) ? 'bg-[#1A3F68] text-white font-semibold' : 'text-white/60 hover:bg-white/5 hover:text-white font-medium'}" do %>
+      <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+      Dashboard
+    <% end %>
+    <%# Usuários %>
+    <%= link_to admin_usuarios_path, class: "flex items-center gap-4 px-6 py-3.5 text-sm transition-colors #{current_page?(admin_usuarios_path) ? 'bg-[#1A3F68] text-white font-semibold' : 'text-white/60 hover:bg-white/5 hover:text-white font-medium'}" do %>
+      <i data-lucide="users" class="w-5 h-5"></i>
+      Usuários
+    <% end %>
+    <%# Cursos %>
+    <%= link_to defined?(admin_cursos_path) ? admin_cursos_path : "#", class: "flex items-center gap-4 px-6 py-3.5 text-sm transition-colors #{current_page?(defined?(admin_cursos_path) ? admin_cursos_path : '#') ? 'bg-[#1A3F68] text-white font-semibold' : 'text-white/60 hover:bg-white/5 hover:text-white font-medium'}" do %>
+      <i data-lucide="book-open" class="w-5 h-5"></i>
+      Cursos
+      <% if pending_cursos_count.positive? %>
+        <span class="ml-auto flex items-center justify-center min-w-[1.25rem] h-5 bg-[#FFD700] text-[#00264D] rounded-full text-[10px] font-extrabold shadow-sm px-1.5"><%= pending_cursos_count %></span>
+      <% end %>
+    <% end %>
+    <%# Instrutores %>
+    <%= link_to admin_instrutores_path, class: "flex items-center gap-4 px-6 py-3.5 text-sm transition-colors #{current_page?(admin_instrutores_path) ? 'bg-[#1A3F68] text-white font-semibold' : 'text-white/60 hover:bg-white/5 hover:text-white font-medium'}" do %>
+      <i data-lucide="user-plus" class="w-5 h-5"></i>
+      Instrutores
+    <% end %>
+    <%# Relatórios %>
+    <%= link_to admin_relatorios_path, class: "flex items-center gap-4 px-6 py-3.5 text-sm transition-colors #{current_page?(admin_relatorios_path) ? 'bg-[#1A3F68] text-white font-semibold' : 'text-white/60 hover:bg-white/5 hover:text-white font-medium'}" do %>
+      <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+      Relatórios
+    <% end %>
+  </nav>
+  <%# --- RODAPÉ DA SIDEBAR --- %>
+  <div class="px-4 py-6 mt-auto border-t border-white/5">
+    <%= link_to root_path, class: "flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white hover:bg-white/[0.08] hover:border-white/20 transition-all group shadow-sm" do %>
+      <div class="w-8 h-8 rounded-lg bg-[#FFD700]/10 text-[#FFD700] flex items-center justify-center shrink-0 transition-colors group-hover:bg-[#FFD700]/20">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-md font-extrabold tracking-tight">Sair do Painel</span>
+        <span class="text-sm text-white/50 -mt-0.5 font-medium">Voltar ao site principal</span>
+      </div>
+    <% end %>
+  </div>
+</div>
+>>>>>>> Stashed changes

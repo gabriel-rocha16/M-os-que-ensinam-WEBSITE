@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <div class="max-w-7xl mx-auto mt-10 px-4 pb-10 grid grid-cols-1 xl:grid-cols-[260px_1fr] gap-6">
   <%= render "admin/shared/sidebar" %>
 
@@ -180,3 +181,366 @@
     </div>
   </main>
 </div>
+=======
+<%# --- 1. ENVELOPE GLOBAL DO CONTROLLER --- %>
+<div class="flex flex-col xl:flex-row min-h-screen w-full bg-[#F4F7FB] font-sans" data-controller="lucide sidebar-mobile">
+  <%# --- 2. RENDER DA SIDEBAR MOBILE (Dentro do escopo do controller) --- %>
+  <%= render "admin/shared/mobile_sidebar" %>
+  <%# --- 3. BARRA SUPERIOR EXCLUSIVA DO MOBILE (Abaixo de XL) --- %>
+  <div class="flex xl:hidden items-center justify-between bg-[#00264D] text-white px-4 py-3.5 shadow-md z-30 sticky top-0 w-full">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-[#FFD700]/10 text-[#FFD700] flex items-center justify-center">
+        <i data-lucide="shield" class="w-4 h-4"></i>
+      </div>
+      <span class="text-xs font-bold tracking-tight uppercase">Painel Admin</span>
+    </div>
+    <%# --- O BOTÃO NA DIREITA --- %>
+    <button data-action="click->sidebar-mobile#open" 
+      class="p-2 rounded-lg hover:bg-white/10 transition-colors cursor-pointer text-white flex items-center justify-center" 
+      aria-label="Abrir menu de navegação">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+  <%# --- 4. SIDEBAR DESKTOP FIXA (Visível apenas em telas grandes) --- %>
+  <aside class="hidden xl:block w-[280px] h-screen bg-[#00264D] shrink-0 sticky top-0 overflow-y-auto">
+    <%= render "admin/shared/sidebar" %>
+  </aside>
+  <%# Área de conteúdo principal rolável de forma independente %>
+  <main class="flex-1 w-full h-full xl:h-screen overflow-y-auto p-4 sm:p-6 lg:p-8">
+    <div class="max-w-[1400px] mx-auto space-y-6 sm:space-y-8">
+      <%# --- HEADER UNIFICADO COM ROLE SWITCHER --- %>
+      <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white px-4 sm:px-8 py-5 rounded-2xl border border-gray-100 shadow-sm gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+            <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h1 class="text-xl sm:text-2xl font-bold text-[#00264D]">
+              <%= perfil_ativo == 'gestor' ? 'Dashboard' : 'Dashboard Instrutor' %>
+            </h1>
+            <p class="text-xs sm:text-sm text-gray-500 mt-0.5">
+              <%= perfil_ativo == 'gestor' ? 'Visão geral da plataforma' : 'Gerencie seus cursos e acompanhe publicações.' %>
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end self-stretch sm:self-center">
+          <% if perfil_ativo == 'gestor' %>
+            <div class="flex gap-2">
+              <%= link_to admin_usuarios_path, class: "p-2 text-gray-400 hover:text-[#0066CC] hover:bg-blue-50 rounded-full transition", aria: { label: "Gerenciar Usuários" } do %>
+                <i data-lucide="users" class="w-5 h-5"></i>
+              <% end %>
+              <%= link_to admin_relatorios_path, class: "p-2 text-gray-400 hover:text-[#0066CC] hover:bg-blue-50 rounded-full transition", aria: { label: "Ver Relatórios" } do %>
+                <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+              <% end %>
+            </div>
+          <% end %>
+          <%# --- ROLE SWITCHER ESTILIZADO --- %>
+          <% if perfis_disponiveis.count > 1 %>
+            <div class="relative group cursor-pointer flex items-center gap-3 bg-[#F8FAFC] pl-2 pr-3 sm:pr-4 py-1.5 rounded-full border border-gray-200 transition-all z-40 hover:bg-gray-50">
+              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#00264D] text-white flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 shadow-sm">
+                <%= perfil_ativo == 'gestor' ? 'AD' : perfil_ativo[0..1].upcase %>
+              </div>
+              <div class="flex flex-col hidden sm:flex">
+                <span class="text-sm font-bold text-[#00264D] capitalize leading-tight">
+                  <%= perfil_ativo == 'gestor' ? 'Administrador' : perfil_ativo.capitalize %>
+                </span>
+                <span class="text-[11px] text-gray-500 leading-tight">
+                  <%= current_usuario&.email %>
+                </span>
+              </div>
+              <% if perfil_ativo == 'gestor' %>
+                <span class="ml-1 px-2 py-0.5 bg-[#FFD700] text-[#00264D] text-[9px] sm:text-[10px] font-extrabold uppercase rounded-full tracking-wider shadow-sm hidden md:block">
+                  Admin
+                </span>
+              <% end %>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 ml-1 transition-transform group-hover:rotate-180"></i>
+              <%# Dropdown Alinhado %>
+              <div class="absolute right-0 top-full mt-2 w-52 sm:w-56 bg-white border border-gray-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden transform origin-top-right scale-95 group-hover:scale-100">
+                <div class="py-2">
+                  <div class="px-4 py-2 border-b border-gray-50 mb-1">
+                    <p class="text-xs text-gray-400 font-semibold tracking-wide uppercase">Alternar perfil para:</p>
+                  </div>
+                  <% perfis_disponiveis.each do |perfil| %>
+                    <% unless perfil.to_s == perfil_ativo.to_s %>
+                      <%= button_to switch_role_path(role: perfil), method: :patch, class: "block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-[#F0F7FF] hover:text-[#0066CC] transition-colors font-medium cursor-pointer flex items-center gap-2.5 border-0 bg-transparent" do %>
+                        <% if perfil.to_s == 'gestor' %>
+                          <i data-lucide="shield-check" class="w-4 h-4 text-gray-400"></i> <span>Gestor</span>
+                        <% elsif perfil.to_s == 'instrutor' %>
+                          <i data-lucide="briefcase" class="w-4 h-4 text-gray-400"></i> <span>Instrutor</span>
+                        <% else %>
+                          <i data-lucide="graduation-cap" class="w-4 h-4 text-gray-400"></i> <span>Aluno</span>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </header>
+      <%# ========================================== %>
+      <%# --- CONTEÚDO: VIEW GESTOR / ADMINISTRADOR --- %>
+      <%# ========================================== %>
+      <% if perfil_ativo == 'gestor' %>
+        <%# --- TOP METRICS CARDS --- %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <article class="bg-white p-5 sm:p-6 rounded-[1.25rem] border border-gray-100 shadow-sm flex gap-4 items-center">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
+              <i data-lucide="users" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total de Alunos</h2>
+              <p class="mt-0.5 text-xl sm:text-2xl font-extrabold text-[#00264D]"><%= @total_alunos %></p>
+            </div>
+          </article>
+          <article class="bg-white p-5 sm:p-6 rounded-[1.25rem] border border-gray-100 shadow-sm flex gap-4 items-center">
+            <div class="w-12 h-12 rounded-xl bg-green-50 text-green-500 flex items-center justify-center shrink-0">
+              <i data-lucide="user-check" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Instrutores Ativos</h2>
+              <p class="mt-0.5 text-xl sm:text-2xl font-extrabold text-[#00264D]"><%= @total_instrutores %></p>
+            </div>
+          </article>
+          <article class="bg-white p-5 sm:p-6 rounded-[1.25rem] border border-gray-100 shadow-sm flex gap-4 items-center">
+            <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
+              <i data-lucide="book-open" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Cursos Cadastrados</h2>
+              <p class="mt-0.5 text-xl sm:text-2xl font-extrabold text-[#00264D]"><%= @total_cursos %></p>
+            </div>
+          </article>
+          <article class="bg-white p-5 sm:p-6 rounded-[1.25rem] border border-gray-100 shadow-sm flex gap-4 items-center">
+            <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center shrink-0">
+              <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total de Inscrições</h2>
+              <p class="mt-0.5 text-xl sm:text-2xl font-extrabold text-[#00264D]"><%= @total_inscricoes %></p>
+            </div>
+          </article>
+        </div>
+        <% # --- GRID DE CONTEÚDO PRINCIPAL (DASHBOARD GESTOR) --- %>
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 sm:gap-8">
+          <div class="xl:col-span-2 space-y-6 sm:space-y-8">
+            <section class="bg-white rounded-[1.25rem] border border-gray-100 shadow-sm p-5 sm:p-6">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="text-base sm:text-lg font-bold text-[#00264D]">Aprovação de novos usuários</h3>
+                  <p class="text-xs sm:text-sm text-gray-500 mt-1">Configure se os novos cadastros ganham acesso imediato ou passam por triagem.</p>
+                </div>
+                <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold shrink-0 <%= @configuracao.aprovacao_automatica ? 'bg-emerald-50 text-emerald-600' : 'bg-yellow-50 text-yellow-600' %>">
+                  <%= @configuracao.aprovacao_automatica ? 'Automática' : 'Manual' %>
+                </span>
+              </div>
+              <div class="mt-5 pt-4 border-t border-gray-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <p class="text-xs text-gray-500 max-w-md">Ao desativar, cada novo integrante precisará ser validado manualmente em "Gerenciar Usuários".</p>
+                <%= button_to(@configuracao.aprovacao_automatica ? "Desativar automática" : "Ativar automática", toggle_aprovacao_path, method: :patch, class: "inline-flex items-center justify-center rounded-xl bg-[#00264D] text-white px-5 py-2.5 text-xs font-bold hover:bg-opacity-90 transition cursor-pointer shadow-sm w-full sm:w-auto") %>
+              </div>
+            </section>
+            <% if @cursos_aguardando_aprovacao.any? %>
+              <div class="bg-[#FFF8E1] border border-[#FFD700]/40 rounded-xl px-4 py-4 flex flex-col sm:flex-row sm:items-center gap-3">
+                <i data-lucide="alert-circle" class="w-5 h-5 text-[#d97706] flex-shrink-0" aria-hidden="true"></i>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-bold text-[#003366]"><%= @cursos_aguardando_aprovacao.size %>º curso aguardando revisão</p>
+                  <p class="text-xs text-[#666] mt-0.5">Revise e publique ou solicite ajustes ao instrutor.</p>
+                </div>
+                <%= link_to "Ver cursos", admin_cursos_path, class: "px-4 py-2.5 rounded-lg text-xs font-bold bg-[#FFD700] text-[#003366] hover:bg-[#e6c200] transition-colors cursor-pointer whitespace-nowrap w-full sm:w-auto text-center font-sans" %>
+              </div>
+            <% end %>
+            <% if @cursos_aguardando_aprovacao.any? %>
+              <section id="cursos-revisao" class="bg-white rounded-[1.25rem] border border-gray-100 shadow-sm p-5 sm:p-6 space-y-4">
+                <div class="border-b border-gray-50 pb-3">
+                  <h2 class="text-base sm:text-lg font-bold text-[#00264D]">Cursos em Lista de Espera</h2>
+                </div>
+                <div class="space-y-3">
+                  <% @cursos_aguardando_aprovacao.each do |curso| %>
+                    <article class="flex flex-col sm:flex-row sm:items-center justify-between bg-[#F8FAFC] p-4 rounded-xl gap-4">
+                      <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-lg bg-yellow-50 text-yellow-600 flex items-center justify-center shrink-0">
+                          <i data-lucide="file-clock" class="w-5 h-5"></i>
+                        </div>
+                        <div class="min-w-0">
+                          <h4 class="font-bold text-[#00264D] text-sm truncate"><%= curso.nome %></h4>
+                          <p class="text-xs text-gray-500 truncate">Por: <%= curso.usuario&.nome || "Não informado" %></p>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-2 w-full sm:w-auto justify-end sm:justify-center">
+                        <%= button_to publicar_admin_curso_path(curso), method: :patch, class: "flex-1 sm:flex-none flex items-center justify-center gap-1 bg-green-50 text-green-700 hover:bg-green-100 px-3 py-1.5 rounded-lg text-xs font-bold transition border-0 cursor-pointer" do %>
+                          <i data-lucide="check" class="w-3.5 h-3.5"></i> Publicar
+                        <% end %>
+                        <%= button_to rejeitar_admin_curso_path(curso), method: :patch, class: "flex-1 sm:flex-none flex items-center justify-center gap-1 bg-red-50 text-red-700 hover:bg-red-100 px-3 py-1.5 rounded-lg text-xs font-bold transition border-0 cursor-pointer" do %>
+                          <i data-lucide="x" class="w-3.5 h-3.5"></i> Recusar
+                        <% end %>
+                      </div>
+                    </article>
+                  <% end %>
+                </div>
+              </section>
+            <% end %>
+            <section class="bg-white rounded-[1.25rem] border border-gray-100 shadow-sm p-5 sm:p-6">
+              <div class="flex items-center justify-between mb-6 border-b border-gray-50 pb-3">
+                <h2 class="text-base sm:text-lg font-bold text-[#00264D]">Cursos na Plataforma</h2>
+                <%= link_to "Ver todos", admin_cursos_path, class: "text-xs font-bold text-[#0066CC] hover:underline" %>
+              </div>
+              <div class="divide-y divide-gray-100 space-y-4">
+                <% @cursos.each do |curso| %>
+                  <article class="flex flex-col sm:flex-row sm:items-center justify-between pt-4 first:pt-0 gap-4">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <div class="w-11 h-11 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center shrink-0 border border-gray-100">
+                        <i data-lucide="image" class="w-5 h-5"></i>
+                      </div>
+                      <div class="min-w-0">
+                        <h4 class="font-bold text-[#00264D] text-sm truncate"><%= curso.nome %></h4>
+                        <p class="text-xs text-gray-500 truncate">Instrutor: <%= curso.usuario&.nome %></p>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between sm:justify-end gap-4 sm:gap-6 w-full sm:w-auto">
+                      <span class="text-xs font-semibold text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md hidden md:block">
+                        <%= curso.area.presence || "Geral" %>
+                      </span>
+                      <div class="shrink-0">
+                        <% if curso.rascunho? %>
+                          <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2.5 py-0.5 rounded uppercase">Rascunho</span>
+                        <% elsif curso.aguardando_aprovacao? %>
+                          <span class="text-[10px] font-bold text-yellow-600 bg-yellow-50 px-2.5 py-0.5 rounded uppercase">Em Revisão</span>
+                        <% else %>
+                          <span class="text-[10px] font-bold text-green-600 bg-green-50 px-2.5 py-0.5 rounded uppercase">Publicado</span>
+                        <% end %>
+                      </div>
+                      <div class="text-right min-w-[55px] sm:min-w-[65px]">
+                        <p class="text-sm font-extrabold text-[#00264D]"><%= curso.matriculas.count %></p>
+                        <p class="text-[10px] text-gray-400 -mt-0.5">Alunos</p>
+                      </div>
+                      <div class="relative group cursor-pointer shrink-0">
+                        <div class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400" aria-label="Ações">
+                          <i data-lucide="edit-3" class="w-4 h-4"></i>
+                        </div>
+                        <div class="absolute right-0 top-full mt-1 w-32 bg-white border border-gray-100 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
+                          <%= link_to "Ver Curso", curso_path(curso), class: "block px-4 py-2.5 text-xs text-gray-700 hover:bg-slate-50 font-medium" %>
+                          <% if !curso.matriculas.exists? %>
+                            <%= button_to "Excluir", admin_curso_path(curso), method: :delete, data: { confirm: "Tem certeza?" }, class: "block w-full text-left px-4 py-2.5 text-xs text-red-600 hover:bg-red-50 font-medium border-0 bg-transparent cursor-pointer" %>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                <% end %>
+                <% if @cursos.empty? %>
+                  <div class="text-center py-6 text-sm text-gray-400 italic">Nenhum curso registrado até o momento.</div>
+                <% end %>
+              </div>
+            </section>
+          </div>
+          <aside class="w-full space-y-6">
+            <section class="bg-white rounded-[1.25rem] border border-gray-100 shadow-sm p-5 sm:p-6 xl:sticky xl:top-8">
+              <h2 class="text-base sm:text-lg font-bold text-[#00264D] mb-6 border-b border-gray-50 pb-3">Atividades Recentes</h2>
+              <div class="space-y-5">
+                <% @atividades_recentes.each do |atividade| %>
+                  <div class="flex items-start gap-3">
+                    <% icon_color = ["text-blue-500 bg-blue-50", "text-green-500 bg-green-50", "text-yellow-500 bg-yellow-50", "text-purple-500 bg-purple-50"].sample %>
+                    <div class="w-8 h-8 rounded-full <%= icon_color %> flex items-center justify-center shrink-0">
+                      <i data-lucide="<%= atividade[:icon] == 'user' ? 'user' : 'file-text' %>" class="w-3.5 h-3.5"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs font-medium text-gray-700 leading-normal"><%= atividade[:text] %></p>
+                      <p class="text-[10px] text-gray-400 mt-0.5 font-medium">há <%= time_ago_in_words(atividade[:time]) %></p>
+                    </div>
+                  </div>
+                <% end %>
+                <% if @atividades_recentes.empty? %>
+                  <p class="text-xs text-gray-400 text-center py-4 italic">Sem novidades registradas.</p>
+                <% end %>
+              </div>
+            </section>
+          </aside>
+        </div>
+      <% elsif perfil_ativo == 'instrutor' %>
+        <div class="space-y-6 sm:space-y-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <article class="bg-white p-5 sm:p-6 rounded-[1.25rem] border border-gray-100 shadow-sm flex gap-4 items-center">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
+                <i data-lucide="book-open" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Meus Cursos</h2>
+                <p class="mt-0.5 text-xl sm:text-2xl font-extrabold text-[#00264D]"><%= @total_cursos %></p>
+              </div>
+            </article>
+            <article class="bg-white p-5 sm:p-6 rounded-[1.25rem] border border-gray-100 shadow-sm flex gap-4 items-center">
+              <div class="w-12 h-12 rounded-xl bg-green-50 text-green-500 flex items-center justify-center shrink-0">
+                <i data-lucide="badge-check" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Publicados</h2>
+                <p class="mt-0.5 text-xl sm:text-2xl font-extrabold text-[#00264D]"><%= @total_publicados %></p>
+              </div>
+            </article>
+            <article class="bg-white p-5 sm:p-6 rounded-[1.25rem] border border-gray-100 shadow-sm flex gap-4 items-center">
+              <div class="w-12 h-12 rounded-xl bg-yellow-50 text-yellow-500 flex items-center justify-center shrink-0">
+                <i data-lucide="clock" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Em Revisão</h2>
+                <p class="mt-0.5 text-xl sm:text-2xl font-extrabold text-[#00264D]"><%= @total_em_revisao %></p>
+              </div>
+            </article>
+            <article class="bg-white p-5 sm:p-6 rounded-[1.25rem] border border-gray-100 shadow-sm flex gap-4 items-center">
+              <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center shrink-0">
+                <i data-lucide="users" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Alunos Inscritos</h2>
+                <p class="mt-0.5 text-xl sm:text-2xl font-extrabold text-[#00264D]"><%= @total_alunos %></p>
+              </div>
+            </article>
+          </div>
+          <div class="bg-blue-50 border-l-4 border-[#0066CC] rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 shadow-sm">
+            <div>
+              <h4 class="font-bold text-[#00264D] text-base">Fluxo de Publicação</h4>
+              <p class="text-sm text-gray-600 mt-0.5">Monte a ementa de suas aulas, envie para revisão da banca gestora e acompanhe em tempo real.</p>
+            </div>
+            <%= link_to "Novo Curso", new_curso_path, class: "inline-flex items-center justify-center gap-2 bg-[#FFD700] text-[#00264D] font-bold px-5 py-3 rounded-xl hover:bg-yellow-300 transition shadow-sm text-sm w-full sm:w-auto text-center" %>
+          </div>
+          <section class="bg-white rounded-[1.25rem] border border-gray-100 shadow-sm p-5 sm:p-6">
+            <div class="flex items-center justify-between mb-6 border-b border-gray-50 pb-3">
+              <div>
+                <h2 class="text-base sm:text-lg font-bold text-[#00264D]">Gerenciar Minhas Turmas</h2>
+                <p class="text-xs text-gray-400 mt-0.5">Listagem completa dos seus cursos submetidos.</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <% @cursos.each do |curso| %>
+                <article class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-[#F8FAFC] border border-gray-50 rounded-2xl gap-4">
+                  <div class="min-w-0">
+                    <h3 class="font-bold text-[#00264D] text-sm truncate"><%= curso.nome %></h3>
+                    <p class="text-xs text-gray-400 mt-0.5"><%= curso.area.presence || "Categoria Geral" %></p>
+                  </div>
+                  <div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto">
+                    <% status_classes = {
+                      "rascunho" => "bg-gray-100 text-gray-600",
+                      "aguardando_aprovacao" => "bg-yellow-50 text-yellow-600",
+                      "publicado" => "bg-green-50 text-green-700"
+                    } %>
+                    <span class="inline-flex items-center rounded-md px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider <%= status_classes[curso.status] %>">
+                      <%= curso.status.titleize %>
+                    </span>
+                    <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+                      <%= link_to "Editar Ementa", edit_curso_path(curso), class: "text-xs font-bold text-[#0066CC] bg-blue-50 px-3 py-1.5 rounded-lg hover:bg-blue-100 transition text-center w-full md:w-auto" rescue nil %>
+                    </div>
+                  </div>
+                </article>
+              <% end %>
+              <% if @cursos.empty? %>
+                <p class="text-sm text-gray-400 italic text-center py-6">Você ainda não tem cursos criados. Clique em "Novo Curso" para começar!</p>
+              <% end %>
+            </div>
+          </section>
+        </div>
+      <% end %>
+    </div>
+  </main>
+</div>
+>>>>>>> Stashed changes
