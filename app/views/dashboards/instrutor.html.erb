@@ -3,7 +3,7 @@
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
       <div>
         <h1 class="text-3xl font-bold text-[#003366]">Painel do Instrutor</h1>
-        <p class="text-sm text-slate-500 mt-2">Gerencie seus cursos e envie-os para revisão.</p>
+        <p class="text-sm text-slate-700 mt-2">Gerencie seus cursos e envie-os para revisão.</p>
       </div>
       <div class="flex flex-wrap items-center gap-3">
         <%= link_to "Novo Curso", new_curso_path, class: "inline-flex items-center justify-center rounded-full bg-yellow-400 px-5 py-3 text-[#003366] font-semibold hover:bg-yellow-300 transition" %>
@@ -31,12 +31,12 @@
                   <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div>
                       <h2 class="text-2xl font-bold text-slate-900"><%= curso.nome %></h2>
-                      <p class="text-sm text-slate-500 mt-2"><%= curso.area.presence || 'Área não informada' %></p>
+                      <p class="text-sm text-slate-700 mt-2"><%= curso.area.presence || 'Área não informada' %></p>
                     </div>
                     <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold <%= curso.aguardando_aprovacao? ? 'bg-yellow-100 text-yellow-700' : curso.publicado? ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-700' %>"><%= curso.status.titleize %></span>
                   </div>
 
-                  <div class="grid grid-cols-2 gap-4 text-sm text-slate-500">
+                  <div class="grid grid-cols-2 gap-4 text-sm text-slate-700">
                     <div>
                       <p class="font-semibold text-slate-900">Aulas</p>
                       <p><%= curso.quantidade_aulas || 0 %></p>
@@ -68,7 +68,7 @@
           </div>
         <% else %>
           <div class="bg-white rounded-3xl border border-dashed border-slate-200 p-10 text-center">
-            <p class="text-slate-500">Você ainda não criou nenhum curso. Clique em Novo Curso para começar.</p>
+            <p class="text-slate-700">Você ainda não criou nenhum curso. Clique em Novo Curso para começar.</p>
           </div>
         <% end %>
       </section>
@@ -78,11 +78,11 @@
           <h2 class="text-lg font-bold text-[#003366]">Resumo rápido</h2>
           <div class="mt-6 grid gap-4">
             <div class="rounded-3xl bg-slate-50 p-4">
-              <p class="text-sm text-slate-500">Cursos em revisão</p>
+              <p class="text-sm text-slate-700">Cursos em revisão</p>
               <p class="mt-2 text-3xl font-bold text-[#003366]"><%= @cursos.select(&:aguardando_aprovacao?).count %></p>
             </div>
             <div class="rounded-3xl bg-slate-50 p-4">
-              <p class="text-sm text-slate-500">Cursos publicados</p>
+              <p class="text-sm text-slate-700">Cursos publicados</p>
               <p class="mt-2 text-3xl font-bold text-[#003366]"><%= @cursos.select(&:publicado?).count %></p>
             </div>
           </div>

@@ -191,7 +191,7 @@
               <% if deficiencias_lista.any? %>
                 <%= deficiencias_lista.join(", ") %>
               <% else %>
-                <span class="text-gray-500 font-medium italic">Não possui / Nenhuma informada</span>
+                <span class="text-gray-700 font-medium italic">Não possui / Nenhuma informada</span>
               <% end %>
             </p>
           </div>
@@ -233,7 +233,7 @@
         <div class="flex flex-col gap-2 p-4 rounded-xl border border-gray-100 bg-[#FAFAFA]">
           <div class="flex items-center justify-between">
             <span class="text-sm font-bold text-[#333]">Currículo Profissional</span>
-            <i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i>
+            <i data-lucide="file-text" class="w-5 h-5 text-gray-700"></i>
           </div>
           <hr class="border-gray-200 my-1">
           <% if @candidato.curriculo.attached? %>
@@ -252,7 +252,7 @@
         <div class="flex flex-col gap-2 p-4 rounded-xl border border-gray-100 bg-[#FAFAFA]">
           <div class="flex items-center justify-between">
             <span class="text-sm font-bold text-[#333]">Laudos Médicos Comprovantes</span>
-            <i data-lucide="paperclip" class="w-5 h-5 text-gray-400"></i>
+            <i data-lucide="paperclip" class="w-5 h-5 text-gray-700"></i>
           </div>
           <hr class="border-gray-200 my-1">
           <% if @candidato.laudos_medicos.attached? %>
