@@ -28,11 +28,9 @@ class ApplicationController < ActionController::Base
     return [] unless current_usuario
     perfis = []
     perfis << "gestor" if current_usuario.gestor?
-    unless current_usuario.gestor?
-      perfis << "instrutor" if current_usuario.instrutor?
-    end
+    perfis << "instrutor" if current_usuario.instrutor?
     perfis << "aluno" if current_usuario.candidato.present?
-    perfis
+    perfis.uniq
   end
 
   def perfil_ativo

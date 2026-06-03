@@ -1,7 +1,13 @@
 <div class="max-w-4xl mx-auto mt-10 px-4 pb-10">
-  <div class="mb-4">
-    <button onclick="history.back()" class="text-sm font-semibold text-slate-600 hover:text-slate-800 transition-colors">← Voltar</button>
-  </div>
+  <nav class="mb-6" aria-label="Navegação de página">
+    <button type="button"
+            onclick="history.back()"
+            aria-label="Voltar para página anterior"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 font-semibold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      <span>Voltar</span>
+    </button>
+  </nav>
   <div class="mb-8">
     <h1 class="text-3xl font-bold text-gray-800">Editar Curso</h1>
     <p class="text-gray-500 mt-2">Atualize as informações e links do curso <strong class="text-blue-600"><%= @curso.nome %></strong>.</p>
