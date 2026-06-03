@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_29_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_03_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -97,17 +97,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_29_000001) do
     t.integer "carga_horaria"
     t.datetime "created_at", null: false
     t.text "descricao"
-    t.bigint "instrutor_id"
+    t.bigint "instrutor_id", null: false
     t.string "moodle_url"
     t.string "nome"
     t.integer "status", default: 0
     t.string "titulo"
     t.datetime "updated_at", null: false
-    t.bigint "usuario_id"
+    t.bigint "usuario_id", null: false
     t.string "video_url"
     t.string "youtube_url"
     t.index ["instrutor_id"], name: "index_cursos_on_instrutor_id"
+    t.index ["nome"], name: "index_cursos_on_nome", unique: true
     t.index ["usuario_id"], name: "index_cursos_on_usuario_id"
+    t.index ["youtube_url"], name: "index_cursos_on_youtube_url", unique: true, where: "(youtube_url IS NOT NULL)"
   end
 
   create_table "deficiencias", force: :cascade do |t|
