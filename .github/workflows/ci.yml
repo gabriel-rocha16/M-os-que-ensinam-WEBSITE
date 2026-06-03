@@ -73,7 +73,6 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_PASSWORD: postgres
-          POSTGRES_INITDB_ARGS: "-c max_connections=200"
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -117,7 +116,6 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_PASSWORD: postgres
-          POSTGRES_INITDB_ARGS: "-c max_connections=200"
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
