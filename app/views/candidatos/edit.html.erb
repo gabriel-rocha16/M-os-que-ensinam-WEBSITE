@@ -175,7 +175,7 @@
 
                       <div class="rounded-xl border border-[#D0D0D0] flex flex-col transition-colors overflow-hidden" data-multi-dropdown-target="otherContainer">
                         <label class="flex items-center gap-3 p-3 cursor-pointer group">
-                          <input type="checkbox" name="candidato[beneficios_lista][]" value="Outros..." 
+                          <input type="checkbox" name="candidato[custom_benefit_flag]" value="true" 
                                  <%= 'checked' if @candidato.outro_beneficio.present? %>
                                  data-action="change->multi-dropdown#toggleOther" data-multi-dropdown-target="otherCheckbox" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
                           <span class="text-sm md:text-base text-[#333] font-medium">Outros...</span>
@@ -228,7 +228,7 @@
 
                     <div class="rounded-xl border border-[#D0D0D0] flex flex-col transition-colors overflow-hidden" data-multi-dropdown-target="otherContainer">
                       <label class="flex items-center gap-3 p-3 cursor-pointer group">
-                        <input type="checkbox" name="candidato[deficiencias_lista][]" value="Outros..." 
+                        <input type="checkbox" name="candidato[custom_deficiency_flag]" value="true" 
                                <%= 'checked' if @candidato.tipo_deficiencia.present? %>
                                data-action="change->multi-dropdown#toggleOther" data-multi-dropdown-target="otherCheckbox" class="w-5 h-5 rounded border-[#D0D0D0] text-[#0066CC] focus:ring-[#0066CC] cursor-pointer">
                         <i data-lucide="folder" class="w-5 h-5 text-[#0066CC]"></i>
