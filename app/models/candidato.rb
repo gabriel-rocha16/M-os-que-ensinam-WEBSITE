@@ -39,7 +39,8 @@ class Candidato < ApplicationRecord
                              limit: { min: 1, max: 3 }
 
   # Validações para garantir que o formulário obrigatório seja preenchido
-  validates :cidade, :estado, :data_nascimento, :escolaridade, :telefone, :tipo_deficiencia, presence: true
+  validates :cidade, :estado, :data_nascimento, :escolaridade, :telefone, presence: true
+  validate :deve_ter_deficiencia
   validates :telefone, format: { with: /\A\d+\z/, message: "deve conter apenas números" }, if: -> { telefone.present? }
   validates :curriculo, attached: true,
                         content_type: [ "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ],
@@ -66,6 +67,13 @@ class Candidato < ApplicationRecord
   end
 
   private
+
+  def deve_ter_deficiencia
+    # Verifica se o usuário selecionou alguma deficiência (HABTM) ou preencheu "Outros..."
+    if deficiencias.blank? && tipo_deficiencia.blank?
+      errors.add(:base, "Você deve selecionar pelo menos uma deficiência ou descrever sua deficiência no campo 'Outros...'")
+    end
+  end
 
   def limpar_telefone
     if telefone.present?
@@ -97,18 +105,22 @@ class Candidato < ApplicationRecord
     end
 
     if instance_variable_defined?(:@deficiencias_lista)
+      # Processa APENAS as deficiências das CHECKBOXES (exclui "Outros...")
       lista_def = Array(@deficiencias_lista).map(&:to_s).map(&:strip).reject { |d| d == "Outros..." || d.blank? }.uniq
 
+      # Cria associações HABTM com as deficiências pré-definidas
       self.deficiencias = lista_def.map do |nome|
-        Deficiencia.find_or_create_by!(tipo: nome) do |d|
-          d.descricao = nome
+        begin
+          Deficiencia.create_with(descricao: nome).find_or_create_by!(tipo: nome)
+        rescue ActiveRecord::RecordNotUnique
+          # Em caso de condição de corrida, recupera o registro já existente
+          Deficiencia.where("lower(tipo) = ?", nome.to_s.downcase).first!
         end
       end
 
-      # Salvar também no campo texto nativo para retrocompatibilidade
-      lista_texto = lista_def.dup
-      lista_texto << self.tipo_deficiencia if self.tipo_deficiencia.present?
-      self.tipo_deficiencia = lista_texto.join(", ") if lista_texto.any?
+      # O campo 'tipo_deficiencia' é APENAS para o texto livre do "Outros..."
+      # Não deve conter as deficiências pré-definidas (isso é duplicação!)
+      self.tipo_deficiencia = self.tipo_deficiencia.to_s.strip.presence
     end
   end
 end
